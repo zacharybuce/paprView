@@ -10,6 +10,7 @@
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "latest",
     "clsx": "latest",
+    "mongoose": "^6.0.10",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
