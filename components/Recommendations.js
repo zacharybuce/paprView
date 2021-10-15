@@ -14,7 +14,8 @@ const Recommendations = () => {
         boxShadow: 3,
         mt: "5vh",
         mb: "2vh",
-        mr: "5vw",
+        ml: "2vw",
+        mr: "2vw",
         display: { xs: "none", xl: "block" },
       }}
     >
@@ -24,6 +25,7 @@ const Recommendations = () => {
           backgroundColor: "#EEB559",
           textAlign: "center",
           display: "block",
+          borderRadius: "5px",
         }}
       >
         <Typography variant="h6" color="white" sx={{ p: "1rem" }}>

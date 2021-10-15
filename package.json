@@ -11,6 +11,7 @@
     "@mui/material": "latest",
     "braft-editor": "^2.3.9",
     "clsx": "latest",
+    "isomorphic-unfetch": "^3.1.0",
     "mongoose": "^6.0.10",
     "next": "latest",
     "prop-types": "latest",
