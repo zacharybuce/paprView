@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
 
-ObjectId = mongoose.Types.ObjectId;
+ObjectId = mongoose.Schema.Types.ObjectId;
 
 const SummarySchema = new mongoose.Schema({
-  body: {},
+  content: {
+    type: String,
+    required: [true, "Must have a body"],
+  },
   article: {
     type: ObjectId,
     required: [true, "Must have an article"],
@@ -16,13 +19,9 @@ const SummarySchema = new mongoose.Schema({
     type: Number,
     required: [true, "Must have an amount of downvotes"],
   },
-  postdate: {
-    type: Date,
-    required: [true, "Must have a postDate"],
-  },
   lastedit: {
     type: Date,
-    required: [false],
+    required: [true, "Must have a lastedit date"],
   },
 });
 
