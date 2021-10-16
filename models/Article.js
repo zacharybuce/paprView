@@ -17,10 +17,6 @@ const ArticleSchema = new mongoose.Schema({
     type: Date,
     required: [false],
   },
-  link: {
-    type: String,
-    required: [false],
-  },
   authors: {
     type: [ObjectId],
     required: [true, "Author is required"],
@@ -31,9 +27,11 @@ const ArticleSchema = new mongoose.Schema({
   },
   summaries: {
     type: [ObjectId],
+    required: [false],
   },
   comments: {
     type: [ObjectId],
+    required: [false],
   },
 });
 
