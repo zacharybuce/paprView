@@ -1,16 +1,25 @@
-import { Typography, Box, TextField, Grid, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Grid,
+  Button,
+  IconButton,
+  OutlinedInput,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Chip,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
 import React, { useState } from "react";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import { useRouter } from "next/router";
+import fetch from "isomorphic-unfetch";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,23 +41,57 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const ArticleCreateForm = () => {
+const ArticleCreateForm = ({ tags }) => {
   const theme = useTheme();
+  const router = useRouter();
   const [dateValue, setDateValue] = useState(null);
   const [docTags, setTags] = useState([]);
   const [docTitle, setTitle] = useState("");
-  const [docAuthors, setAuthors] = useState("");
+  const [docAuthors, setAuthors] = useState([]);
+  const [authorText, setAuthorText] = useState("");
+  const [publisher, setPublisher] = useState("");
 
-  const handleSubmit = (e) => {
+  const article = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: {},
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const docData = {
       title: docTitle,
+      views: 0,
       authors: docAuthors,
+      publisher: publisher,
       publishDate: dateValue,
       tags: docTags,
+      summaries: [],
+      comments: [],
     };
 
+    docData.authors.unshift(authorText);
+
     console.log(docData);
+
+    article.body = JSON.stringify(docData);
+
+    try {
+      const res = await fetch("/api/articles", article)
+        .then((response) => response.json())
+        .then((data) => {
+          router.push({
+            pathname: "/editor",
+            query: { articleId: data.data._id },
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (event) => {
@@ -61,23 +104,25 @@ const ArticleCreateForm = () => {
     );
   };
 
-  const names = [
-    "Psycology",
-    "Engineering",
-    "Physics",
-    "Economics",
-    "Astronomy",
-    "Biology",
-    "Chemistry",
-    "Medicine",
-    "Health",
-    "Nutrition",
-    "Historical",
-    "Technology",
-    "Mathematics",
-    "Social Science",
-    "Politics",
-  ];
+  const handleChangeText = (e) => {
+    setAuthorText(e.target.value);
+  };
+  const addValue = () => {
+    setAuthors([...docAuthors, ""]);
+  };
+  const handleValueChange = (index, e) => {
+    const updatedValues = docAuthors.map((value, i) => {
+      if (i === index) {
+        return e.target.value;
+      } else {
+        return value;
+      }
+    });
+    setAuthors(updatedValues);
+  };
+  const deleteValue = (jump) => {
+    setAuthors(docAuthors.filter((j) => j !== jump));
+  };
 
   return (
     <Box
@@ -101,14 +146,65 @@ const ArticleCreateForm = () => {
           id="outlined-required"
           label="Article Title"
         />
-        <TextField
+        {/* <TextField
           onChange={(e) => setAuthors(e.target.value)}
-          fullWidth
           required
           id="outlined-required"
           label="Authors"
           sx={{ mt: "2vh" }}
-        />
+        /> */}
+        <div>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                autoFocus
+                value={authorText}
+                onChange={handleChangeText}
+                required
+                fullWidth
+                label="Author"
+                sx={{ mt: "2vh" }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                onChange={(e) => setPublisher(e.target.value)}
+                fullWidth
+                label="Publisher"
+                sx={{ mt: "2vh" }}
+              />
+            </Grid>
+          </Grid>
+          {docAuthors.map((jump, index) => (
+            <Box key={"jump" + index}>
+              <Grid container alignItems="flex-end">
+                <Grid item xs={12}>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Author"
+                    value={jump || ""}
+                    onChange={(e) => handleValueChange(index, e)}
+                    sx={{ width: "50%" }}
+                  />
+
+                  <IconButton
+                    onClick={() => deleteValue(jump)}
+                    aria-label="delete"
+                    sx={{ mt: "2vh" }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Box>
+          ))}
+          <Box>
+            <Button onClick={addValue} color="primary" sx={{ ml: "1vw" }}>
+              Add Author
+            </Button>
+          </Box>
+        </div>
         <Grid container alignItems="center">
           <Grid item xs={6}>
             <Box sx={{ mt: "2vh", width: "100%" }}>
@@ -128,7 +224,9 @@ const ArticleCreateForm = () => {
           <Grid item xs={6}>
             <Box sx={{ mt: "2vh", width: "100%" }}>
               <FormControl sx={{ width: "100%" }}>
-                <InputLabel id="demo-multiple-chip-label">Tags</InputLabel>
+                <InputLabel required id="demo-multiple-chip-label">
+                  Tags
+                </InputLabel>
                 <Select
                   labelId="demo-multiple-chip-label"
                   id="demo-multiple-chip"
@@ -147,13 +245,13 @@ const ArticleCreateForm = () => {
                   )}
                   MenuProps={MenuProps}
                 >
-                  {names.map((name) => (
+                  {tags.map((tag) => (
                     <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, docTags, theme)}
+                      key={tag.name}
+                      value={tag.name}
+                      style={getStyles(tag.name, docTags, theme)}
                     >
-                      {name}
+                      {tag.name}
                     </MenuItem>
                   ))}
                 </Select>

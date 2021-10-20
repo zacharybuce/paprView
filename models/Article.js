@@ -7,7 +7,7 @@ const ArticleSchema = new mongoose.Schema({
     type: String,
     required: [true, "An Article must have a title"],
     unique: true,
-    maxlength: [100, "Title cannot be greater than 100 characters"],
+    maxlength: [1000, "Title cannot be greater than 1000 characters"],
   },
   views: {
     type: Number,
@@ -18,11 +18,15 @@ const ArticleSchema = new mongoose.Schema({
     required: [false],
   },
   authors: {
-    type: [ObjectId],
+    type: [String],
     required: [true, "Author is required"],
   },
+  publisher: {
+    type: String,
+    required: [false],
+  },
   tags: {
-    type: [ObjectId],
+    type: [String],
     required: [true, "Tags are required"],
   },
   summaries: {
