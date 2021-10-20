@@ -7,9 +7,8 @@ import fetch from "isomorphic-unfetch";
 import { useRouter } from "next/router";
 
 let BraftEditor = () => <p>Loading...</p>;
-const MyEditor = () => {
+const MyEditor = (props) => {
   const router = useRouter();
-
   const [editorState, setEditorState] = useState("");
   const [outputHtml, setOutputHtml] = useState("");
 
@@ -21,7 +20,7 @@ const MyEditor = () => {
     },
     body: {
       content: "",
-      article: "61683ff3a878e57a8f3625b9",
+      article: "",
       upvotes: "0",
       downvotes: "0",
       lastedit: String(new Date()),
@@ -43,8 +42,10 @@ const MyEditor = () => {
   };
 
   const saveContent = async () => {
+    summary.body.article = props.articleId;
     summary.body.content = String(editorState.toHTML());
     summary.body = JSON.stringify(summary.body);
+
     console.log(summary);
 
     try {

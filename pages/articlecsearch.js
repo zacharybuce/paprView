@@ -2,9 +2,9 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Container, Grid, Typography } from "@mui/material";
-import CreateArticle from "../components/CreateArticle";
+import SearchArticleCreate from "../components/SearchArticleCreate";
 
-export default function article() {
+export default function articlecsearch() {
   return (
     <>
       <Box sx={{ mt: "2vh", alignItems: "center", textAlign: "center" }}>
@@ -12,7 +12,7 @@ export default function article() {
           Type the article title you wish to make a summary for
         </Typography>
       </Box>
-      <CreateArticle />
+      <SearchArticleCreate />
     </>
   );
 }
