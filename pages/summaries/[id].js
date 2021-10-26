@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 import fetch from "isomorphic-unfetch";
 import {
   Box,
@@ -10,20 +9,22 @@ import {
   Grid,
 } from "@mui/material";
 import Summary from "../../components/Summary";
+import ArticleHeading from "../../components/ArticleHeading";
 
-const summaries = ({ summaries, docTitle, docId }) => {
+const summaries = ({ summaries, docData }) => {
   if (!summaries)
     return (
       <Box sx={{ mt: "2vh", mr: "10vw", ml: "10vw", textAlign: "center" }}>
         <CircularProgress />
       </Box>
     );
-
   return (
     <>
-      <Box sx={{ mt: "2vh", mr: "10vw", ml: "10vw", textAlign: "center" }}>
-        <Typography variant="h5">{docTitle}</Typography>
-      </Box>
+      <ArticleHeading
+        title={docData.title}
+        authors={docData.authors}
+        tags={docData.tags}
+      />
       <Box>
         {summaries.map((summary) => {
           return (
@@ -31,10 +32,15 @@ const summaries = ({ summaries, docTitle, docId }) => {
           );
         })}
       </Box>
-      <Grid container alignContent="center" alignItems="center" textAlign="center">
+      <Grid
+        container
+        alignContent="center"
+        alignItems="center"
+        textAlign="center"
+      >
         <Grid item xs={12}>
           <Link
-            href={"/editor?articleId=" + docId}
+            href={"/editor?articleId=" + docData._id}
             passHref
             style={{ textDecoration: "none" }}
           >
@@ -89,7 +95,7 @@ export const getStaticProps = async (context) => {
   }
 
   return {
-    props: { summaries: summaries, docTitle: data.title, docId: data._id },
+    props: { summaries: summaries, docData: data },
     revalidate: 1,
   };
 };
