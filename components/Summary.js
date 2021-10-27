@@ -87,9 +87,6 @@ const Summary = (props) => {
       <Collapse in={checked} collapsedSize={400}>
         <Box sx={{ pt: 1, pb: 1, pl: 3, pr: 3 }}>
           {ReactHtmlParser(props.content)}
-          {ReactHtmlParser(props.content)}
-          {ReactHtmlParser(props.content)}
-          {ReactHtmlParser(props.content)}
         </Box>
       </Collapse>
       <Box

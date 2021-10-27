@@ -17,6 +17,7 @@ import CalculateIcon from "@mui/icons-material/Calculate";
 import PeopleIcon from "@mui/icons-material/People";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import BusinessIcon from "@mui/icons-material/Business";
+import ParkIcon from "@mui/icons-material/Park";
 
 const setIcon = (tagName) => {
   switch (tagName) {
@@ -54,6 +55,8 @@ const setIcon = (tagName) => {
       return <GavelIcon />;
     case "Business":
       return <BusinessIcon />;
+    case "Environment":
+      return <ParkIcon />;
   }
 };
 

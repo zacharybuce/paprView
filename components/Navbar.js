@@ -136,14 +136,16 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar color="info" position="sticky">
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            paprView
-          </Typography>
+          <Link href="/" passHref style={{ textDecoration: "none" }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              paprView
+            </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Link
             href="/articlecsearch"
