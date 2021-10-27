@@ -23,6 +23,10 @@ const SummarySchema = new mongoose.Schema({
     type: Date,
     required: [true, "Must have a lastedit date"],
   },
+  // user: {
+  //   type: ObjectId,
+  //   required: [true, "Must have a User"],
+  // },
 });
 
 module.exports =

@@ -26,10 +26,14 @@ export default async (req, res) => {
 
     case "PUT":
       try {
-        const article = await Article.findByIdAndUpdate(id, req.body, {
-          new: true,
-          runValidators: true,
-        });
+        const article = await Article.findByIdAndUpdate(
+          id,
+          { $push: { summaries: req.body.id } },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
 
         if (!article) {
           return res.status(400).json({ success: false });

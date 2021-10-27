@@ -4,25 +4,28 @@ import Article from "../../../models/Article";
 dbConnect();
 
 export default async (req, res) => {
-  const { method } = req;
+  const {
+    query: { id },
+    method,
+  } = req;
 
   switch (method) {
     case "GET":
       try {
-        const articles = await Article.find({});
+        const articles = await Article.aggregate([
+          {
+            $search: {
+              index: "DocumentSearch",
+              text: {
+                query: id,
+                path: "title",
+                fuzzy: {},
+              },
+            },
+          },
+        ]);
 
         res.status(200).json({ success: true, data: articles });
-      } catch (error) {
-        console.log(error);
-        res.status(400).json({ success: false });
-      }
-      break;
-    case "POST":
-      try {
-        const article = await Article.create(req.body);
-
-        res.status(201).json({ success: true, data: article });
-        console.log("DOC CREATE SUCCESS");
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

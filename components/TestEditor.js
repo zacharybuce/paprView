@@ -27,6 +27,14 @@ const MyEditor = (props) => {
     },
   };
 
+  const article = {
+    method: "PUT",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: {
+      id: "",
+    },
+  };
+
   useEffect(() => {
     //here window is available
     const initBraft = async () => {
@@ -46,10 +54,20 @@ const MyEditor = (props) => {
     summary.body.content = String(editorState.toHTML());
     summary.body = JSON.stringify(summary.body);
 
-    console.log(summary);
-
     try {
-      await fetch("/api/summaries", summary);
+      const res = await fetch("/api/summaries", summary);
+      const data = await res.json();
+
+      console.log(data);
+
+      article.body.id = data.data._id;
+      article.body = JSON.stringify(article.body);
+      const putRes = await fetch("api/articles/" + data.data.article, article);
+
+      const putData = await putRes.json();
+
+      console.log(putData);
+
       router.push("/");
     } catch (error) {
       console.log(error);
