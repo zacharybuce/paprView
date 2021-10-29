@@ -12,11 +12,11 @@ const documents = (props) => {
     );
 
   return (
-    <div>
+    <Box sx={{ mt: "10vh" }}>
       {props.documents.map((doc) => {
         return <Document doc={doc} />;
       })}
-    </div>
+    </Box>
   );
 };
 

@@ -1,17 +1,17 @@
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 
 const SearchContainer = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius + 5,
-  backgroundColor: alpha(theme.palette.common.white, 1.0),
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.primary.main, 1.0),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.75),
+    backgroundColor: alpha(theme.palette.primary.main, 0.75),
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -23,7 +23,7 @@ const SearchContainer = styled("div")(({ theme }) => ({
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
-  color: "grey",
+  color: "white",
   padding: theme.spacing(0, 2),
   height: "100%",
   position: "absolute",
@@ -34,16 +34,15 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "grey",
+  color: "white",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(3)})`,
-    // transition: theme.transitions.create("width"),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      marginLeft: theme.spacing(3),
-      width: "100%",
+      width: "20ch",
     },
   },
 }));
@@ -64,32 +63,27 @@ const Search = () => {
     }
   };
 
+  if (router.route == "/") return <div></div>;
+
   return (
-    <Box onSubmit={handleSubmit} component="form" autoComplete="off" noValidate>
-      <SearchContainer>
+    <SearchContainer>
+      <Box
+        onSubmit={handleSubmit}
+        component="form"
+        autoComplete="off"
+        noValidate
+      >
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search documents"
+          placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
           sx={{ width: "100%" }}
-        />
-      </SearchContainer>
-
-      <Box sx={{ mt: "3vh", textAlign: "center" }}>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="secondary"
-          sx={{ width: "30%" }}
-        >
-          Search
-        </Button>
+        />{" "}
       </Box>
-    </Box>
+    </SearchContainer>
   );
 };
 

@@ -9,7 +9,7 @@ const printAuthors = (authors) => {
     returnStr += author + ", ";
   }
 
-  returnStr = returnStr.substring(0, returnStr.length - 1);
+  returnStr = returnStr.substring(0, returnStr.length - 2);
 
   return returnStr;
 };

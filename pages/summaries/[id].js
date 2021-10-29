@@ -19,7 +19,7 @@ const summaries = ({ summaries, docData }) => {
       </Box>
     );
   return (
-    <>
+    <Box sx={{ mt: "8vh" }}>
       <ArticleHeading
         title={docData.title}
         authors={docData.authors}
@@ -50,28 +50,28 @@ const summaries = ({ summaries, docData }) => {
           </Link>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 
 export const getStaticPaths = async () => {
-  const res = await fetch(process.env.ROOT_URL + "/api/articles/");
-  const data = await res.json();
+  // const res = await fetch(process.env.ROOT_URL + "/api/articles/");
+  // const data = await res.json();
 
-  const paths = data.data.map((article) => {
-    return {
-      params: { id: article._id },
-    };
-  });
+  // const paths = data.data.map((article) => {
+  //   return {
+  //     params: { id: article._id },
+  //   };
+  // });
 
   return {
-    paths,
+    paths: [],
     fallback: true,
   };
 };
 
-export const getStaticProps = async (context) => {
-  const id = context.params.id;
+export const getStaticProps = async ({ params }) => {
+  const { id } = params;
   var summaries = [];
 
   const articalRes = await fetch(process.env.ROOT_URL + "/api/articles/" + id);
