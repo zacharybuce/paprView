@@ -16,7 +16,7 @@ export default function editor() {
   }, [router.isReady]);
 
   return (
-    <div>
+    <Box sx={{ mt: "10vh" }}>
       <Box sx={{ mt: "1vh", alignItems: "center", textAlign: "center" }}>
         <Typography color="primary" variant="h3">
           Write a Summary
@@ -47,6 +47,6 @@ export default function editor() {
           <Recommendations />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 }

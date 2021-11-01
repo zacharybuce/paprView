@@ -1,6 +1,6 @@
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, Button } from "@mui/material";

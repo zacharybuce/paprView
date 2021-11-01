@@ -6,6 +6,7 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2,
 } from "react-html-parser";
+import "braft-editor/dist/index.css";
 
 const Summary = (props) => {
   const [checked, setChecked] = useState(false);

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Summary from "../../components/Summary";
 import ArticleHeading from "../../components/ArticleHeading";
+import "braft-editor/dist/index.css";
 
 const summaries = ({ summaries, docData }) => {
   if (!summaries)

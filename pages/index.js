@@ -19,7 +19,7 @@ export default function Index() {
             "linear-gradient(180deg, rgba(45,156,200,1) 0%, rgba(29,102,131,1) 68%)",
           height: "70vh",
           boxShadow: 3,
-          m: "0vh 1vw 0vw 1vw",
+          m: "6vh 1vw 0vw 1vw",
           flexGrow: 1,
           alignItems: "center",
           justifyContent: "center",

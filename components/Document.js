@@ -9,6 +9,21 @@ const Title = styled("Typography")(({ theme }) => ({
   "&:hover": {
     color: theme.palette.primary.light,
   },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: 16,
+  },
+}));
+
+const AmountText = styled("Typography")(({ theme }) => ({
+  [theme.breakpoints.between("xs", "sm")]: {
+    fontSize: 10,
+  },
+  [theme.breakpoints.between("sm", "lg")]: {
+    fontSize: 12,
+  },
+  [theme.breakpoints.up("lg")]: {
+    fontSize: 15,
+  },
 }));
 
 const printAuthors = (authors) => {
@@ -51,9 +66,9 @@ const Document = (props) => {
   const primary = theme.palette.primary.main;
 
   return (
-    <Box sx={{ ml: "10vw", mr: "10vw", mt: "2vh" }}>
+    <Box sx={{ mt: "2vh" }}>
       <Grid container sx={{ mb: "1vh" }}>
-        <Grid item xs={2}>
+        <Grid item xs={3} sm={2}>
           <Box
             sx={{
               backgroundColor: primary,
@@ -65,7 +80,7 @@ const Document = (props) => {
             }}
           >
             <Typography>{props.doc.summaries.length}</Typography>
-            <Typography>Summaries</Typography>
+            <AmountText>Summaries</AmountText>
           </Box>
           <Box
             sx={{
@@ -77,10 +92,10 @@ const Document = (props) => {
             }}
           >
             <Typography>{props.doc.comments.length}</Typography>
-            <Typography>Comments</Typography>
+            <AmountText>Comments</AmountText>
           </Box>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={9} sm={10}>
           <Grid container>
             <Grid item xs={12}>
               <Link
@@ -107,7 +122,7 @@ const Document = (props) => {
               <Grid container justifyContent="flex-end" spacing={1}>
                 {props.doc.tags.map((tag) => {
                   return (
-                    <Grid item sx={{ mt: "1vh" }}>
+                    <Grid key={tag} item sx={{ mt: "1vh" }}>
                       <TagChip name={tag} />
                     </Grid>
                   );

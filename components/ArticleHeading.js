@@ -17,7 +17,7 @@ const printAuthors = (authors) => {
 const ArticleHeading = (props) => {
   return (
     <Grid container sx={{ mt: "2vh", textAlign: "center" }} spacing={1}>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ mr: "2vw", ml: "2vw" }}>
         <Typography variant="h5">{props.title}</Typography>
       </Grid>
       <Grid item xs={12}>
