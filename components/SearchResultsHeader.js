@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid, Button, Link } from "@mui/material";
+import NextLink from "next/link";
 import { styled } from "@mui/material/styles";
 import SearchRefinement from "./SearchRefinement";
 
@@ -20,14 +21,27 @@ const ResultsAmount = styled("Typography")(({ theme }) => ({
 const SearchResultsHeader = (props) => {
   return (
     <Box>
-      <Box sx={{ mb: "2vh" }}>
-        <ResultsHeader>Showing results for: "{props.query}"</ResultsHeader>
-      </Box>
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
+          <Box sx={{ mb: "2vh" }}>
+            <ResultsHeader>Showing results for: "{props.query}"</ResultsHeader>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Grid container justifyContent="flex-end">
+            <NextLink href="/articlecform" passHref>
+              <Link style={{ textDecoration: "none" }}>
+                <Button variant="contained">Add an Article</Button>
+              </Link>
+            </NextLink>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid container>
+        <Grid item xs={12} sm={6}>
           <ResultsAmount>{props.results} results</ResultsAmount>
         </Grid>
-        <Grid item xs={6} sx={{ mb: "1vh" }}>
+        <Grid item xs={12} sm={6} sx={{ mb: "1vh" }}>
           <Grid container justifyContent="flex-end">
             <SearchRefinement />
           </Grid>

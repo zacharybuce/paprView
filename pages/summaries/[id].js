@@ -20,16 +20,18 @@ const summaries = ({ summaries, docData }) => {
       </Box>
     );
   return (
-    <Box sx={{ mt: "8vh" }}>
+    <Box sx={{ mt: "8vh", ml: "20vw", mr: "20vw" }}>
       <ArticleHeading
         title={docData.title}
         authors={docData.authors}
         tags={docData.tags}
       />
       <Box>
-        {summaries.map((summary) => {
+        {summaries.map((summary, index) => {
           return (
-            <Summary content={summary.content} lastedit={summary.lastedit} />
+            <Box key={index}>
+              <Summary content={summary.content} lastedit={summary.lastedit} />
+            </Box>
           );
         })}
       </Box>
