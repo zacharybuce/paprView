@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Summary from "../../components/Summary";
 import ArticleHeading from "../../components/ArticleHeading";
+import "braft-editor/dist/index.css";
 
 const summaries = ({ summaries, docData }) => {
   if (!summaries)
@@ -19,16 +20,18 @@ const summaries = ({ summaries, docData }) => {
       </Box>
     );
   return (
-    <>
+    <Box sx={{ mt: "8vh", ml: "20vw", mr: "20vw" }}>
       <ArticleHeading
         title={docData.title}
         authors={docData.authors}
         tags={docData.tags}
       />
       <Box>
-        {summaries.map((summary) => {
+        {summaries.map((summary, index) => {
           return (
-            <Summary content={summary.content} lastedit={summary.lastedit} />
+            <Box key={index}>
+              <Summary content={summary.content} lastedit={summary.lastedit} />
+            </Box>
           );
         })}
       </Box>
@@ -50,28 +53,28 @@ const summaries = ({ summaries, docData }) => {
           </Link>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 
 export const getStaticPaths = async () => {
-  const res = await fetch(process.env.ROOT_URL + "/api/articles/");
-  const data = await res.json();
+  // const res = await fetch(process.env.ROOT_URL + "/api/articles/");
+  // const data = await res.json();
 
-  const paths = data.data.map((article) => {
-    return {
-      params: { id: article._id },
-    };
-  });
+  // const paths = data.data.map((article) => {
+  //   return {
+  //     params: { id: article._id },
+  //   };
+  // });
 
   return {
-    paths,
+    paths: [],
     fallback: true,
   };
 };
 
-export const getStaticProps = async (context) => {
-  const id = context.params.id;
+export const getStaticProps = async ({ params }) => {
+  const { id } = params;
   var summaries = [];
 
   const articalRes = await fetch(process.env.ROOT_URL + "/api/articles/" + id);

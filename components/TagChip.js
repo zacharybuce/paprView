@@ -61,7 +61,9 @@ const setIcon = (tagName) => {
 };
 
 const TagChip = (props) => {
-  return <Chip icon={setIcon(props.name)} label={props.name}></Chip>;
+  return (
+    <Chip key={props.name} icon={setIcon(props.name)} label={props.name}></Chip>
+  );
 };
 
 export default TagChip;

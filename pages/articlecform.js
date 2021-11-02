@@ -8,7 +8,7 @@ import Test from "../components/Test";
 
 const articlecform = ({ tags }) => {
   return (
-    <Box>
+    <Box sx={{ mt: "10vh" }}>
       <Typography variant="h5" align="center" sx={{ mt: "2vh" }}>
         Enter Information about the Document
       </Typography>

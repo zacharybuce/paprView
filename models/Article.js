@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-ObjectId = mongoose.Types.ObjectId;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const ArticleSchema = new mongoose.Schema({
   title: {

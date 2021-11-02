@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Button, Collapse, Avatar, Typography, Grid } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ReactHtmlParser, {
@@ -6,9 +6,18 @@ import ReactHtmlParser, {
   convertNodeToElement,
   htmlparser2,
 } from "react-html-parser";
+import "braft-editor/dist/index.css";
 
 const Summary = (props) => {
   const [checked, setChecked] = useState(false);
+  const [overflow, setOverflow] = useState(false);
+  const [height, setHeight] = useState(0);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    setHeight(ref.current.clientHeight);
+    if (height > 400) setOverflow(true);
+  });
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -41,8 +50,6 @@ const Summary = (props) => {
     <Box
       sx={{
         mt: "4vh",
-        mr: "10vw",
-        ml: "10vw",
         mb: "4vh",
         borderRadius: "5px",
         boxShadow: 3,
@@ -84,24 +91,28 @@ const Summary = (props) => {
           </Grid>
         </Grid>
       </Box>
-      <Collapse in={checked} collapsedSize={400}>
-        <Box sx={{ pt: 1, pb: 1, pl: 3, pr: 3 }}>
+      <Collapse in={checked} collapsedSize={401}>
+        <Box ref={ref} sx={{ pt: 1, pb: 1, pl: 3, pr: 3 }}>
           {ReactHtmlParser(props.content)}
         </Box>
       </Collapse>
-      <Box
-        sx={{
-          pb: "1vh",
-          ml: "1vw",
-          mr: "1vw",
-          textAlign: "center",
-          boxShadow: !checked ? "0 -5px 5px -5px #333" : "",
-        }}
-      >
-        <Button color="secondary" onClick={handleChange}>
-          <MoreHorizIcon sx={{ fontSize: "2rem" }} />
-        </Button>
-      </Box>
+      {overflow ? (
+        <Box
+          sx={{
+            pb: "1vh",
+            ml: "1vw",
+            mr: "1vw",
+            textAlign: "center",
+            boxShadow: !checked ? "0 -5px 5px -5px #333" : "",
+          }}
+        >
+          <Button color="secondary" onClick={handleChange}>
+            <MoreHorizIcon sx={{ fontSize: "2rem" }} />
+          </Button>
+        </Box>
+      ) : (
+        <div></div>
+      )}
     </Box>
   );
 };
