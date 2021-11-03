@@ -3,14 +3,13 @@ import { Box, CircularProgress, Grid, Divider } from "@mui/material";
 import fetch from "isomorphic-unfetch";
 import Document from "../components/Document";
 import SearchResultsHeader from "../components/SearchResultsHeader";
-import SearchRefinement from "../components/SearchRefinement";
 import { styled } from "@mui/material/styles";
 
 const ResultsContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
   marginRight: "10vw",
   marginLeft: "10vw",
-
+  marginBottom: "7vh",
   [theme.breakpoints.up("xl")]: {
     marginRight: "25vw",
     marginLeft: "25vw",

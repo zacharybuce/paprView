@@ -6,7 +6,6 @@ export default function Component() {
     return (
       <Box sx={{ mt: "10vh" }}>
         Signed in as {session.user.email} <br />
-        <div>{session.user._id}</div>
         <Button onClick={() => signOut()}>Sign out</Button>
       </Box>
     );

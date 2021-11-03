@@ -13,6 +13,7 @@ import {
   Checkbox,
   Grid,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import fetch from "isomorphic-unfetch";
 import TagChip from "./TagChip";
@@ -21,8 +22,8 @@ const FilterDialog = (props) => {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    getTags();
-  }, []);
+    if (props.open) getTags();
+  }, [props.open]);
 
   const getTags = async () => {
     try {
@@ -62,7 +63,7 @@ const FilterDialog = (props) => {
                     );
                   })
                 ) : (
-                  <div>Loading</div>
+                  <CircularProgress />
                 )}
               </Grid>
               <Grid item xs={6}>

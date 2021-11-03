@@ -102,7 +102,7 @@ export default function Index() {
           </Grid>
         </Grid>
       </Container>
-      <Box sx={{ height: "5vh" }}></Box>
+      <Box sx={{ height: "20vh" }}></Box>
     </>
   );
 }

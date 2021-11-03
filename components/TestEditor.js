@@ -23,11 +23,20 @@ const MyEditor = (props) => {
       article: "",
       upvotes: "0",
       downvotes: "0",
+      user: props.userId,
       lastedit: String(new Date()),
     },
   };
 
   const article = {
+    method: "PUT",
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+    body: {
+      id: "",
+    },
+  };
+
+  const user = {
     method: "PUT",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
     body: {
@@ -68,7 +77,13 @@ const MyEditor = (props) => {
 
       console.log(putData);
 
-      router.push("/");
+      user.body.id = data.data._id;
+      user.body = JSON.stringify(user.body);
+      const userPutRes = await fetch("api/users/" + props.userId, user);
+
+      const userPutData = await userPutRes.json();
+
+      router.push("/summaries/" + props.articleId);
     } catch (error) {
       console.log(error);
     }

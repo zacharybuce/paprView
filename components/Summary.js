@@ -1,17 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Button, Collapse, Avatar, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Collapse,
+  Avatar,
+  Typography,
+  Grid,
+  Divider,
+} from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ReactHtmlParser, {
   processNodes,
   convertNodeToElement,
   htmlparser2,
 } from "react-html-parser";
+import useInView from "react-cool-inview";
 import "braft-editor/dist/index.css";
 
 const Summary = (props) => {
+  const { observe, inView } = useInView({
+    onEnter: ({ unobserve }) => {
+      getUserInfo();
+
+      unobserve();
+    },
+  });
   const [checked, setChecked] = useState(false);
   const [overflow, setOverflow] = useState(false);
   const [height, setHeight] = useState(0);
+  const [user, setUser] = useState(null);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -21,6 +38,21 @@ const Summary = (props) => {
 
   const handleChange = () => {
     setChecked((prev) => !prev);
+  };
+
+  const getUserInfo = async () => {
+    try {
+      console.log();
+      const res = await fetch(
+        process.env.ROOT_URL + "/api/users/" + props.userId
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setUser(data.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const formatDate = (date) => {
@@ -52,45 +84,56 @@ const Summary = (props) => {
         mt: "4vh",
         mb: "4vh",
         borderRadius: "5px",
-        boxShadow: 3,
+        // boxShadow: 3,
+        // border: "solid",
+        // borderWidth: "1px",
+        // borderColor: "#8e9299",
       }}
     >
-      <Box
-        sx={{
-          borderTopLeftRadius: 5,
-          borderTopRightRadius: 5,
-          width: "100%",
-          backgroundColor: "#8e9299",
-        }}
-      >
-        <Grid container spacing={1}>
-          <Grid item xs={6}>
-            <Grid
-              alignItems="center"
-              spacing={1}
-              container
-              sx={{ pb: 1, pl: 1 }}
-            >
-              <Grid item>
-                <Avatar>PV</Avatar>
+      <div ref={observe}>
+        {user ? (
+          <Box
+            sx={{
+              borderTopLeftRadius: 5,
+              borderTopRightRadius: 5,
+              width: "100%",
+              // backgroundColor: "#8e9299",
+              mt: "1vh",
+            }}
+          >
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                <Grid
+                  alignItems="center"
+                  spacing={1}
+                  container
+                  sx={{ pb: 1, pl: 1 }}
+                >
+                  <Grid item>
+                    <Avatar src={user.image} />
+                  </Grid>
+                  <Grid item>
+                    <Typography color="gray">{user.name}</Typography>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography color="white">TestUser</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
 
-          <Grid item xs={6}>
-            <Grid container justifyContent="flex-end">
-              <Grid item sx={{ mt: "1vh", mr: "1vw" }}>
-                <Typography variant="caption" color="white">
-                  {formatDate(props.lastedit)}
-                </Typography>
+              <Grid item xs={6}>
+                <Grid container justifyContent="flex-end">
+                  <Grid item sx={{ mt: "1vh", mr: "1vw" }}>
+                    <Typography variant="caption" color="gray">
+                      {formatDate(props.lastedit)}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-      </Box>
+          </Box>
+        ) : (
+          <div></div>
+        )}
+      </div>
+
       <Collapse in={checked} collapsedSize={401}>
         <Box ref={ref} sx={{ pt: 1, pb: 1, pl: 3, pr: 3 }}>
           {ReactHtmlParser(props.content)}

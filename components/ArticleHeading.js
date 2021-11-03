@@ -18,7 +18,7 @@ const ArticleHeading = (props) => {
   return (
     <Grid container sx={{ mt: "2vh", textAlign: "center" }} spacing={1}>
       <Grid item xs={12} sx={{ mr: "2vw", ml: "2vw" }}>
-        <Typography variant="h5">{props.title}</Typography>
+        <Typography variant="h4">{props.title}</Typography>
       </Grid>
       <Grid item xs={12}>
         {printAuthors(props.authors)}
@@ -29,7 +29,7 @@ const ArticleHeading = (props) => {
         })}
       </Grid>
       <Grid item xs={12}>
-        <Divider />
+        <Divider sx={{ backgroundColor: "#808080" }} />
       </Grid>
     </Grid>
   );

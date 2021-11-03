@@ -19,6 +19,7 @@ export default async function auth(req, res) {
         return true;
       },
       async session({ session, token, user }) {
+        session.user._id = user.id;
         return session;
       },
     },

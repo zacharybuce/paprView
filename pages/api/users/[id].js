@@ -26,10 +26,14 @@ export default async (req, res) => {
 
     case "PUT":
       try {
-        const user = await User.findByIdAndUpdate(id, req.body, {
-          new: true,
-          runValidators: true,
-        });
+        const user = await User.findByIdAndUpdate(
+          id,
+          { $push: { summaries: req.body.id } },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
 
         if (!user) {
           return res.status(400).json({ success: false });
