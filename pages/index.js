@@ -16,7 +16,7 @@ export default function Index() {
       <Box
         sx={{
           background:
-            "linear-gradient(180deg, rgba(45,156,200,1) 0%, rgba(29,102,131,1) 68%)",
+            "linear-gradient(180deg, rgba(46,125,230,1) 0%, rgba(22,67,128,1) 68%)",
           height: "70vh",
           boxShadow: 3,
           m: "6vh 1vw 0vw 1vw",

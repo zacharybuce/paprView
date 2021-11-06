@@ -20,6 +20,7 @@ export default async function auth(req, res) {
       },
       async session({ session, token, user }) {
         session.user._id = user.id;
+        session.user.votes = user.votes;
         return session;
       },
     },

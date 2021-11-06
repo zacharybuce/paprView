@@ -15,7 +15,19 @@ import ArticleHeading from "../../components/ArticleHeading";
 import LoginDialog from "../../components/LoginDialog";
 import NextLink from "next/link";
 import { useSession, signIn } from "next-auth/react";
+import { styled } from "@mui/material/styles";
 import "braft-editor/dist/index.css";
+
+const SummariesContainer = styled("div")(({ theme }) => ({
+  [theme.breakpoints.up("sm")]: {
+    marginRight: "25vw",
+    marginLeft: "25vw",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "5vw",
+    marginLeft: "5vw",
+  },
+}));
 
 const summaries = ({ summaries, docData }) => {
   const { data: session } = useSession();
@@ -46,31 +58,42 @@ const summaries = ({ summaries, docData }) => {
           tags={docData.tags}
         />
       </Box>
-      <Box sx={{ ml: "25vw", mr: "25vw" }}>
+      <SummariesContainer>
         {summaries.map((summary, index) => {
           return (
             <Box key={index}>
               <Summary
+                summaryId={summary._id}
                 content={summary.content}
                 lastedit={summary.lastedit}
                 userId={summary.user}
+                upvotes={summary.upvotes}
+                downvotes={summary.downvotes}
               />
               <Divider />
             </Box>
           );
         })}
-      </Box>
-      <Grid
-        container
-        alignContent="center"
-        alignItems="center"
-        textAlign="center"
-      >
-        <Grid item xs={12} sx={{ mt: "3vh", mb: "3vh" }}>
+      </SummariesContainer>
+      <Grid container alignContent="center" alignItems="center">
+        <Grid item xs={12} sx={{ mt: "3vh", ml: "25vw", mr: "25vw" }}>
+          <Typography variant="h6">
+            Contribute your knowledge to the community
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sx={{ mt: "3vh", mb: "3vh", ml: "25vw", mr: "25vw" }}
+        >
           {session ? (
             <NextLink href={"/editor?articleId=" + docData._id} passHref>
               <Link style={{ textDecoration: "none" }}>
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ pt: "1.5vh", pb: "1.5vh" }}
+                >
                   Submit a Summary
                 </Button>
               </Link>
@@ -78,8 +101,9 @@ const summaries = ({ summaries, docData }) => {
           ) : (
             <Button
               onClick={() => setOpen(true)}
+              fullWidth
               variant="contained"
-              color="primary"
+              color="secondary"
             >
               Submit a Summary
             </Button>

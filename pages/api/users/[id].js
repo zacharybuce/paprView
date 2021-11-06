@@ -26,22 +26,54 @@ export default async (req, res) => {
 
     case "PUT":
       try {
-        const user = await User.findByIdAndUpdate(
-          id,
-          { $push: { summaries: req.body.id } },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
+        var user;
+        console.log(req.body);
+        if (req.body.id) {
+          user = await User.findByIdAndUpdate(
+            id,
+            { $push: { summaries: req.body.id } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else {
+          let hasDoc = await User.countDocuments({
+            _id: id,
+            "votes.summaryId": req.body.vote.summaryId,
+          });
 
+          console.log("hasDoc: " + hasDoc);
+
+          if (hasDoc > 0) {
+            user = await User.updateOne(
+              { _id: id, "votes.summaryId": req.body.vote.summaryId },
+              { $set: { "votes.$": req.body.vote } },
+              {
+                new: true,
+                runValidators: true,
+              }
+            );
+          } else {
+            console.log("add new vote");
+            user = await User.findByIdAndUpdate(
+              id,
+              { $push: { votes: req.body.vote } },
+              {
+                new: true,
+                runValidators: true,
+              }
+            );
+          }
+        }
+        console.log(user);
         if (!user) {
           return res.status(400).json({ success: false });
         }
 
         res.status(200).json({ success: true, data: user });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, error: error });
       }
       break;
 

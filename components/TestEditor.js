@@ -12,6 +12,28 @@ const MyEditor = (props) => {
   const [editorState, setEditorState] = useState("");
   const [outputHtml, setOutputHtml] = useState("");
 
+  const controls = [
+    "undo",
+    "redo",
+    "separator",
+    "headings",
+    "bold",
+    "italic",
+    "text-color",
+    "separator",
+    "superscript",
+    "subscript",
+    "separator",
+    "text-indent",
+    "text-align",
+    "separator",
+    "list-ul",
+    "list-ol",
+    "blockquote",
+    "code",
+    "separator",
+  ];
+
   const summary = {
     method: "POST",
     headers: {
@@ -94,11 +116,11 @@ const MyEditor = (props) => {
       <Head>
         <title>My Editor</title>
       </Head>
-      <Box sx={{ boxShadow: 3, borderRadius: "5px" }}>
+      <Box sx={{ backgroundColor: "white", boxShadow: 3, borderRadius: "5px" }}>
         <BraftEditor
           language="en"
           value={editorState}
-          excludeControls={"media"}
+          controls={controls}
           onChange={handleEditorChange}
         />
       </Box>

@@ -15,20 +15,18 @@ const Recommendations = () => {
         mt: "5vh",
         mb: "2vh",
         ml: "2vw",
-        mr: "2vw",
+        mr: "10vw",
         display: { xs: "none", xl: "block" },
       }}
     >
       <Box
-        color="secondary"
         sx={{
-          backgroundColor: "#EEB559",
           textAlign: "center",
           display: "block",
-          borderRadius: "5px",
+          borderRadius: "3px",
         }}
       >
-        <Typography variant="h6" color="white" sx={{ p: "1rem" }}>
+        <Typography variant="h6" sx={{ p: "1rem" }}>
           Tips for Writing Summaries
         </Typography>
       </Box>

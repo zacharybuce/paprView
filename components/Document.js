@@ -71,7 +71,7 @@ const Document = (props) => {
         <Grid item xs={3} sm={2}>
           <Box
             sx={{
-              backgroundColor: primary,
+              backgroundColor: props.doc.summaries.length ? primary : "none",
               borderRadius: 3,
               color: "white",
               textAlign: "center",
