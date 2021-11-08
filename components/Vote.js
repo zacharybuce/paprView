@@ -1,10 +1,12 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { Box, IconButton, Typography, Grid } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect, useRef } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import fetch from "isomorphic-unfetch";
+const DynamicLoginDialog = dynamic(() => import("./LoginDialog"));
 
 const Vote = (props) => {
   const { data: session } = useSession();
@@ -15,6 +17,7 @@ const Vote = (props) => {
   const [timeout, setTimeOut] = useState(null);
   const [valUV, setValUV] = useState(props.upvotes);
   const [valDV, setValDV] = useState(props.downvotes);
+  const [open, setOpen] = useState(false);
 
   const realVote = useRef();
   realVote.current = vote;
@@ -37,13 +40,17 @@ const Vote = (props) => {
   }, [vote]);
 
   const handleClick = async (id) => {
-    clearTimeout(timeout);
-    changeVote(id);
-    setTimeOut(
-      setTimeout(() => {
-        sendVotes();
-      }, 3000)
-    );
+    if (session) {
+      clearTimeout(timeout);
+      changeVote(id);
+      setTimeOut(
+        setTimeout(() => {
+          sendVotes();
+        }, 2000)
+      );
+    } else {
+      setOpen(true);
+    }
   };
 
   const changeVote = (id) => {
@@ -63,7 +70,7 @@ const Vote = (props) => {
 
   const getUserVote = () => {
     var userVotes = session.user.votes;
-
+    console.log(userVotes);
     if (userVotes.some((e) => e.summaryId == props.summaryId)) {
       var uservote = userVotes.find((id) => id.summaryId == props.summaryId);
       setVote({ upvote: uservote.upvote, downvote: uservote.downvote });
@@ -161,6 +168,7 @@ const Vote = (props) => {
           <KeyboardArrowDownIcon sx={{ fontSize: "3rem" }} />
         </IconButton>
       </Grid>
+      <DynamicLoginDialog open={open} setOpen={setOpen} signIn={signIn} />
     </Grid>
   );
 };

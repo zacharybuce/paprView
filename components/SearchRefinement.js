@@ -9,14 +9,22 @@ const SearchRefinement = (props) => {
   const [open, setOpen] = useState(false);
 
   const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
 
     switch (newAlignment) {
       case "relevant":
+        props.setPopular(false);
+        props.setRelevant(true);
         break;
       case "popular":
+        props.setPopular(true);
+        props.setRelevant(false);
         break;
       case "more":
+        props.setPopular(false);
+        props.setRelevant(false);
         setOpen(true);
         break;
     }
@@ -36,7 +44,7 @@ const SearchRefinement = (props) => {
           More <FilterListIcon sx={{ ml: "3px" }} />
         </ToggleButton>
       </ToggleButtonGroup>
-      <FilterDialog open={open} setOpen={setOpen} />
+      <FilterDialog setFilter={props.setFilter} open={open} setOpen={setOpen} />
     </Box>
   );
 };

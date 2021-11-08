@@ -20,10 +20,21 @@ import TagChip from "./TagChip";
 
 const FilterDialog = (props) => {
   const [tags, setTags] = useState([]);
+  const [state, setState] = useState({});
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
 
   useEffect(() => {
     if (props.open) getTags();
   }, [props.open]);
+
+  useEffect(() => {
+    setState({
+      ...state,
+      ["to"]: toDate,
+      ["from"]: fromDate,
+    });
+  }, [toDate, fromDate]);
 
   const getTags = async () => {
     try {
@@ -31,56 +42,109 @@ const FilterDialog = (props) => {
         .then((response) => response.json())
         .then((data) => {
           setTags(data.data);
+
+          const obj = {};
+
+          for (const key of tags) {
+            obj[key] = false;
+          }
+
+          setState(obj);
         });
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let pattern = /[0-9]{1,4}/;
+
+    const FromDate = fromDate ? fromDate : "2021";
+
+    if (pattern.test(toDate) && pattern.test(FromDate)) props.setFilter(state);
+    else alert("Invalid to and from date");
+    console.log(state);
+  };
+
+  const handleChange = (event) => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.checked,
+    });
+  };
+
   return (
     <div>
       <Dialog fullWidth open={props.open} onClose={() => props.setOpen(false)}>
         <DialogTitle>Filter Content</DialogTitle>
+
         <DialogContent>
-          <FormGroup>
-            <Grid container>
-              <Grid item xs={6}>
-                <DialogContentText>Filter by Tag</DialogContentText>
-                {tags.length ? (
-                  tags.map((tag) => {
-                    return (
-                      <Grid key={tag.name} container>
-                        <Grid item>
-                          <FormControlLabel
-                            key={tag.name}
-                            control={<Checkbox />}
-                            label={""}
-                          />
+          <form id="form" onSubmit={handleSubmit}>
+            <FormGroup>
+              <Grid container>
+                <Grid item xs={6}>
+                  <DialogContentText>Filter by Tag</DialogContentText>
+                  {tags.length ? (
+                    tags.map((tag) => {
+                      return (
+                        <Grid key={tag.name} container>
+                          <Grid item>
+                            <FormControlLabel
+                              key={tag.name}
+                              control={
+                                <Checkbox
+                                  checked={state[tag.name]}
+                                  onChange={handleChange}
+                                  name={tag.name}
+                                />
+                              }
+                              label={""}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <TagChip name={tag.name} />
+                          </Grid>
                         </Grid>
-                        <Grid item>
-                          <TagChip name={tag.name} />
-                        </Grid>
-                      </Grid>
-                    );
-                  })
-                ) : (
-                  <CircularProgress />
-                )}
+                      );
+                    })
+                  ) : (
+                    <CircularProgress />
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  <DialogContentText>Filter by Date (Year)</DialogContentText>
+                  <Box sx={{ mt: "1vh", mb: "1vh" }}>
+                    <TextField
+                      label="From"
+                      value={fromDate}
+                      onChange={(e) => {
+                        setFromDate(e.target.value);
+                      }}
+                    />
+                  </Box>
+                  <Box>
+                    <TextField
+                      label="To"
+                      value={toDate}
+                      onChange={(e) => {
+                        setToDate(e.target.value);
+                      }}
+                    />
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <DialogContentText>Filter by Date (Year)</DialogContentText>
-                <Box sx={{ mt: "1vh", mb: "1vh" }}>
-                  <TextField label="From" />
-                </Box>
-                <Box>
-                  <TextField label="To" />
-                </Box>
-              </Grid>
-            </Grid>
-          </FormGroup>
+            </FormGroup>
+          </form>
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={() => props.setOpen(false)}>Cancel</Button> */}
-          <Button variant="contained" onClick={() => props.setOpen(false)}>
+          <Button
+            type="submit"
+            form="form"
+            variant="contained"
+            onClick={() => props.setOpen(false)}
+          >
             Apply
           </Button>
         </DialogActions>
