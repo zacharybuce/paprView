@@ -1,0 +1,40 @@
+.braft-output-content p {
+  min-height: 1em !important;
+}
+.braft-output-content .image-wrap img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+.braft-output-content ul,
+.braft-output-content ol {
+  margin: 16px 0 !important;
+  padding: 0 !important;
+}
+.braft-output-content blockquote {
+  margin: 0 0 10px 0 !important;
+  padding: 15px 20px !important;
+  background-color: #f1f2f3 !important;
+  border-left: solid 5px #ccc !important;
+  color: #666 !important;
+  font-style: italic !important;
+}
+.braft-output-content pre {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: 10px 0 !important;
+  padding: 15px !important;
+  overflow: auto !important;
+  background-color: #f1f2f3 !important;
+  border-radius: 3px !important;
+  color: #666 !important;
+  font-family: monospace !important;
+  font-size: 14px !important;
+  font-weight: normal !important;
+  line-height: 16px !important;
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
+}
+.braft-output-content pre pre {
+  margin: 0 !important;
+  padding: 0 !important;
+}

@@ -5,48 +5,76 @@ import { Grid, Typography } from "@mui/material";
 import Recommendations from "../components/Recommendations";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import LoginRedirect from "../components/LoginRedirect";
+import { useSession, signIn } from "next-auth/react";
+import { styled } from "@mui/material/styles";
+import ArticleHeading from "../components/ArticleHeading";
+
+const EditorContainer = styled("div")(({ theme }) => ({
+  marginTop: "5vh",
+  [theme.breakpoints.up("sm")]: {
+    marginTop: "5vh",
+    marginLeft: "10vw",
+    marginBottom: "2vh",
+  },
+}));
 
 export default function editor() {
+  const { data: session } = useSession();
   const router = useRouter();
   const [id, setId] = useState("");
+  const [article, setArticle] = useState(null);
   useEffect(() => {
     if (!router.isReady) return;
 
     setId(router.query.articleId);
+    getArticleInfo();
   }, [router.isReady]);
 
-  return (
-    <Box sx={{ mt: "10vh" }}>
-      <Box sx={{ mt: "1vh", alignItems: "center", textAlign: "center" }}>
-        <Typography color="primary" variant="h3">
-          Write a Summary
-        </Typography>
-      </Box>
+  const getArticleInfo = async () => {
+    try {
+      const res = await fetch(
+        process.env.ROOT_URL + "/api/articles/" + router.query.articleId
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setArticle(data.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      <Grid container>
-        <Grid item xs={12} xl={8}>
-          <Box
-            sx={{
-              display: { xs: "none", sm: "block" },
-              mt: "5vh",
-              ml: "10vw",
-              mb: "2vh",
-            }}
-          >
-            <SummaryEditor articleId={id} />
+  return (
+    <Box sx={{ mt: "10vh", mb: "15vh" }}>
+      {session ? (
+        <Box>
+          <Box sx={{ mt: "1vh", ml: "10vw", mr: "10vw" }}>
+            {article ? (
+              <ArticleHeading
+                title={article.title}
+                authors={article.authors}
+                tags={article.tags}
+              />
+            ) : (
+              <div></div>
+            )}
           </Box>
-          <Box
-            sx={{
-              display: { xs: "block", sm: "none" },
-            }}
-          >
-            <SummaryEditor articleId={id} />
-          </Box>
-        </Grid>
-        <Grid item xs={12} xl={4}>
-          <Recommendations />
-        </Grid>
-      </Grid>
+
+          <Grid container>
+            <Grid item xs={12} xl={8}>
+              <EditorContainer>
+                <SummaryEditor userId={session.user._id} articleId={id} />
+              </EditorContainer>
+            </Grid>
+            <Grid item xs={12} xl={4}>
+              <Recommendations />
+            </Grid>
+          </Grid>
+        </Box>
+      ) : (
+        <LoginRedirect signIn={signIn} />
+      )}
     </Box>
   );
 }

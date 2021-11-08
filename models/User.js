@@ -1,6 +1,21 @@
 const mongoose = require("mongoose");
 
-const ObjectId = mongoose.Types.ObjectID;
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
+const voteSchema = new mongoose.Schema({
+  summaryId: {
+    type: ObjectId,
+    required: [true],
+  },
+  upvote: {
+    type: Boolean,
+    required: [true],
+  },
+  downvote: {
+    type: Boolean,
+    required: [true],
+  },
+});
 
 const UserSchema = new mongoose.Schema({
   points: {
@@ -39,6 +54,10 @@ const UserSchema = new mongoose.Schema({
   bookmarks: {
     type: [ObjectId],
     required: [false],
+  },
+  votes: {
+    type: [voteSchema],
+    required: [true],
   },
   authority: {
     type: String,
