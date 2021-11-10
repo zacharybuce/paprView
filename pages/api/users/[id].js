@@ -28,7 +28,16 @@ export default async (req, res) => {
       try {
         var user;
         console.log(req.body);
-        if (req.body.id) {
+        if (req.body.votes) {
+          user = await User.findByIdAndUpdate(
+            id,
+            { $set: { votes: [] } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else if (req.body.id) {
           user = await User.findByIdAndUpdate(
             id,
             { $push: { summaries: req.body.id } },

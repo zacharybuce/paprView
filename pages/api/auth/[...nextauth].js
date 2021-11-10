@@ -16,6 +16,28 @@ export default async function auth(req, res) {
     ],
     callbacks: {
       async signIn({ user, account, profile, email, credentials }) {
+        if (!user.votes) {
+          try {
+            const userPutRes = await fetch(
+              process.env.ROOT_URL + "/api/users/" + user.id,
+              {
+                method: "PUT",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  votes: [],
+                }),
+              }
+            );
+            const userPutData = await userPutRes.json();
+            console.log(userPutData);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
         return true;
       },
       async session({ session, token, user }) {

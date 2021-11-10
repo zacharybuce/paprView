@@ -57,7 +57,7 @@ const UserSchema = new mongoose.Schema({
   },
   votes: {
     type: [voteSchema],
-    required: [true],
+    required: [false],
   },
   authority: {
     type: String,
