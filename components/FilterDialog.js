@@ -59,7 +59,7 @@ const FilterDialog = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let pattern = /[0-9]{1,4}/;
+    let pattern = /[0-9]{0,4}/;
 
     const FromDate = fromDate ? fromDate : "2021";
 

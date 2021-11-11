@@ -9,6 +9,7 @@ import {
   Divider,
 } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EngineeringIcon from "@mui/icons-material/Engineering";
 import ReactHtmlParser, {
   processNodes,
   convertNodeToElement,
@@ -108,11 +109,11 @@ const Summary = (props) => {
                   borderTopLeftRadius: 5,
                   borderTopRightRadius: 5,
                   width: "100%",
-                  // backgroundColor: "#8e9299",
+                  //backgroundColor: "lightgrey",
                   mt: "1vh",
                 }}
               >
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={6}>
                     <Grid
                       alignItems="center"
@@ -120,11 +121,21 @@ const Summary = (props) => {
                       container
                       sx={{ pb: 1, pl: 1 }}
                     >
-                      <Grid item>
-                        <Avatar src={user.image} />
+                      <Grid item sx={{ mb: "1vh" }}>
+                        <Avatar
+                          src={user.image}
+                          sx={{ width: 48, height: 48 }}
+                        />
                       </Grid>
                       <Grid item>
-                        <Typography color="gray">{user.name}</Typography>
+                        <Grid container>
+                          <Grid item xs={12}>
+                            <Typography fontWeight={500}>
+                              {user.name}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}></Grid>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>

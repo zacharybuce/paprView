@@ -101,9 +101,9 @@ const summaries = ({ summaries, docData }) => {
           ) : (
             <Button
               onClick={() => setOpen(true)}
-              fullWidth
               variant="contained"
               color="secondary"
+              sx={{ pt: "1.5vh", pb: "1.5vh" }}
             >
               Submit a Summary
             </Button>

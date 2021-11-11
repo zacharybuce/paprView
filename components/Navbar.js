@@ -74,7 +74,12 @@ export default function PrimarySearchAppBar() {
           )}
         </Toolbar>
       </AppBar>
-      <AccountDrawer state={state} setState={setState} logOut={logOut} />
+      <AccountDrawer
+        state={state}
+        setState={setState}
+        logOut={logOut}
+        userId={session ? session.user._id : undefined}
+      />
     </Box>
   );
 }

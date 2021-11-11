@@ -1,10 +1,16 @@
-import { Box, display } from "@mui/system";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
+import { Box, Divider } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React from "react";
+
+const options = {
+  convertShortnames: true,
+  convertUnicode: true,
+  convertAscii: true,
+  style: {
+    height: 32,
+    margin: 4,
+  },
+};
 
 const Recommendations = () => {
   return (
@@ -27,54 +33,38 @@ const Recommendations = () => {
         }}
       >
         <Typography variant="h6" sx={{ p: "1rem" }}>
-          Tips for Writing Summaries
+          Tips for writing a summary
         </Typography>
+        <Divider />
+        <Box
+          sx={{
+            textAlign: "left",
+            pl: 1,
+            pr: 3,
+            pb: 2,
+            listStylePosition: "outside",
+            li: {
+              mt: 2,
+            },
+          }}
+        >
+          <ul>
+            <li> Avoid biased comments</li>
+            <li>
+              Give key points and discuss the major takeaway of the article.
+            </li>
+            <li>
+              Pretend you’re trying to explain the document to a friend who
+              isn’t familiar with the subject.
+            </li>
+            <li>
+              Avoid using technical terms when possible and provide a quick
+              explanation instead.
+            </li>
+            <li>Provide helpful links to support claims.</li>
+          </ul>
+        </Box>
       </Box>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Accordion 1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Accordion 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography>Accordion 3</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
     </Box>
   );
 };

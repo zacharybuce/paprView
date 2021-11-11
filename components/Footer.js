@@ -27,7 +27,7 @@ const Footer = () => {
           <Grid item xs={6}>
             <NextLink href="/" passHref>
               <Link style={{ textDecoration: "none" }}>
-                <Typography color="white">home</Typography>
+                <Typography color="white">Home</Typography>
               </Link>
             </NextLink>
           </Grid>

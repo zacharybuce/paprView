@@ -36,8 +36,9 @@ const documents = (props) => {
   const filterSort = (value) => {
     const date = new Date(value.publishDate).getFullYear();
     const toDate = filter.to ? filter.to : 2021;
+    const fromDate = filter.from ? filter.from : 0;
 
-    if (filter.from <= date && toDate >= date) {
+    if (fromDate <= date && toDate >= date) {
       for (const tag of value.tags) {
         if (tag in filter) return value;
       }
