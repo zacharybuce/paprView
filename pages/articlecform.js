@@ -37,7 +37,7 @@ const articlecform = ({ tags }) => {
   );
 };
 
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const res = await fetch(process.env.ROOT_URL + "/api/tags");
   const { data } = await res.json();
   return { props: { tags: data } };
