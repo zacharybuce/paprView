@@ -28,7 +28,16 @@ export default async (req, res) => {
       try {
         var user;
         console.log(req.body);
-        if (req.body.votes) {
+        if (req.body.date) {
+          user = await User.findByIdAndUpdate(
+            id,
+            { $set: { joinDate: req.body.date } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else if (req.body.votes) {
           user = await User.findByIdAndUpdate(
             id,
             { $set: { votes: [] } },

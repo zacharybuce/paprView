@@ -59,6 +59,10 @@ const UserSchema = new mongoose.Schema({
     type: [voteSchema],
     required: [false],
   },
+  joinDate: {
+    type: Date,
+    required: [true],
+  },
   authority: {
     type: String,
     required: [true, "Must have an authority"],
