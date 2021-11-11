@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
-ObjectId = mongoose.Types.ObjectId;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const ArticleSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "An Article must have a title"],
     unique: true,
-    maxlength: [100, "Title cannot be greater than 100 characters"],
+    maxlength: [1000, "Title cannot be greater than 1000 characters"],
   },
   views: {
     type: Number,
@@ -17,23 +17,25 @@ const ArticleSchema = new mongoose.Schema({
     type: Date,
     required: [false],
   },
-  link: {
+  authors: {
+    type: [String],
+    required: [true, "Author is required"],
+  },
+  publisher: {
     type: String,
     required: [false],
   },
-  authors: {
-    type: [ObjectId],
-    required: [true, "Author is required"],
-  },
   tags: {
-    type: [ObjectId],
+    type: [String],
     required: [true, "Tags are required"],
   },
   summaries: {
     type: [ObjectId],
+    required: [false],
   },
   comments: {
     type: [ObjectId],
+    required: [false],
   },
 });
 

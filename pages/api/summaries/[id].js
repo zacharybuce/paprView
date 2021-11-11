@@ -26,10 +26,16 @@ export default async (req, res) => {
 
     case "PUT":
       try {
-        const summary = await Summary.findByIdAndUpdate(id, req.body, {
-          new: true,
-          runValidators: true,
-        });
+        const summary = await Summary.findByIdAndUpdate(
+          id,
+          {
+            $inc: { upvotes: req.body.upvote, downvotes: req.body.downvote },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
 
         if (!summary) {
           return res.status(400).json({ success: false });
@@ -37,7 +43,7 @@ export default async (req, res) => {
 
         res.status(200).json({ success: true, data: summary });
       } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, error: error });
       }
       break;
 
