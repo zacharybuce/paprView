@@ -16,51 +16,6 @@ export default async function auth(req, res) {
     ],
     callbacks: {
       async signIn({ user, account, profile, email, credentials }) {
-        if (!user.votes) {
-          try {
-            const userPutRes = await fetch(
-              process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + user.id,
-              {
-                method: "PUT",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  votes: [],
-                }),
-              }
-            );
-            const userPutData = await userPutRes.json();
-            console.log(userPutData);
-          } catch (error) {
-            console.log(error);
-          }
-        }
-        if (!user.joinDate) {
-          try {
-            var d1 = new Date();
-            var str = d1.toISOString().slice(0, -5);
-
-            const userPutRes = await fetch(
-              process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + user.id,
-              {
-                method: "PUT",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  date: str,
-                }),
-              }
-            );
-            const userPutData = await userPutRes.json();
-            console.log(userPutData);
-          } catch (error) {
-            console.log(error);
-          }
-        }
         return true;
       },
       async session({ session, token, user }) {
@@ -69,6 +24,13 @@ export default async function auth(req, res) {
         session.user.joinDate = user.joinDate;
         return session;
       },
+    },
+    pages: {
+      signIn: "/",
+      signOut: "/",
+      error: "/auth/error", // Error code passed in query string as ?error=
+      verifyRequest: "/auth/verify-request", // (used for check email message)
+      newUser: process.env.NEXT_PUBLIC_ROOT_URL + "/newuser",
     },
   });
 }
