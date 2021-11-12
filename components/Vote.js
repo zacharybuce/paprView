@@ -32,8 +32,15 @@ const Vote = (props) => {
 
   useEffect(() => {
     console.log("total vote:" + props.upvotes + "-" + props.downvotes);
-    if (session) getUserVote();
   }, []);
+
+  useEffect(() => {
+    console.log("in use Effect");
+    console.log("session: " + session);
+    if (session) {
+      getUserVote();
+    }
+  }, [session]);
 
   useEffect(() => {
     setTotalVote(upVote - downVote);
