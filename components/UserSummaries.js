@@ -21,11 +21,13 @@ const UserSummaries = (props) => {
     try {
       for (const summary of props.summaries) {
         var summaryRes = await fetch(
-          process.env.ROOT_URL + "/api/summaries/" + summary
+          process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + summary
         );
         const summaryData = await summaryRes.json();
         var articleRes = await fetch(
-          process.env.ROOT_URL + "/api/articles/" + summaryData.data.article
+          process.env.NEXT_PUBLIC_ROOT_URL +
+            "/api/articles/" +
+            summaryData.data.article
         );
         const articleData = await articleRes.json();
 

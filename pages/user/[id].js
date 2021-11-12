@@ -75,7 +75,7 @@ const user = (props) => {
 export async function getServerSideProps(context) {
   try {
     const userRes = await fetch(
-      process.env.ROOT_URL + "/api/users/" + context.params.id
+      process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + context.params.id
     );
     const userData = await userRes.json();
 

@@ -47,7 +47,7 @@ const Summary = (props) => {
     try {
       console.log();
       const res = await fetch(
-        process.env.ROOT_URL + "/api/users/" + props.userId
+        process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + props.userId
       )
         .then((response) => response.json())
         .then((data) => {

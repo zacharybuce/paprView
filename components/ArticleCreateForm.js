@@ -81,7 +81,10 @@ const ArticleCreateForm = ({ tags }) => {
     article.body = JSON.stringify(docData);
 
     try {
-      const res = await fetch("/api/articles", article)
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_ROOT_URL + "/api/articles",
+        article
+      )
         .then((response) => response.json())
         .then((data) => {
           router.push({

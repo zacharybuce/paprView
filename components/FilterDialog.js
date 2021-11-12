@@ -38,7 +38,7 @@ const FilterDialog = (props) => {
 
   const getTags = async () => {
     try {
-      const res = await fetch(process.env.ROOT_URL + "/api/tags")
+      const res = await fetch(process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags")
         .then((response) => response.json())
         .then((data) => {
           setTags(data.data);

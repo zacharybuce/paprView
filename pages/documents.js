@@ -96,7 +96,7 @@ export default documents;
 export async function getServerSideProps(context) {
   try {
     const res = await fetch(
-      process.env.ROOT_URL + "/api/search/" + context.query.s,
+      process.env.NEXT_PUBLIC_ROOT_URL + "/api/search/" + context.query.s,
       {
         method: "GET",
         headers: {

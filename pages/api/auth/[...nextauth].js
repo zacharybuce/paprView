@@ -19,7 +19,7 @@ export default async function auth(req, res) {
         if (!user.votes) {
           try {
             const userPutRes = await fetch(
-              process.env.ROOT_URL + "/api/users/" + user.id,
+              process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + user.id,
               {
                 method: "PUT",
                 headers: {
@@ -43,7 +43,7 @@ export default async function auth(req, res) {
             var str = d1.toISOString().slice(0, -5);
 
             const userPutRes = await fetch(
-              process.env.ROOT_URL + "/api/users/" + user.id,
+              process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + user.id,
               {
                 method: "PUT",
                 headers: {

@@ -116,7 +116,7 @@ const summaries = ({ summaries, docData }) => {
 };
 
 export const getStaticPaths = async () => {
-  // const res = await fetch(process.env.ROOT_URL + "/api/articles/");
+  // const res = await fetch(process.env.NEXT_PUBLIC_ROOT_URL + "/api/articles/");
   // const data = await res.json();
 
   // const paths = data.data.map((article) => {
@@ -135,7 +135,9 @@ export const getStaticProps = async ({ params }) => {
   const { id } = params;
   var summaries = [];
 
-  const articalRes = await fetch(process.env.ROOT_URL + "/api/articles/" + id);
+  const articalRes = await fetch(
+    process.env.NEXT_PUBLIC_ROOT_URL + "/api/articles/" + id
+  );
   const { data } = await articalRes.json();
 
   if (!data) {
@@ -149,7 +151,7 @@ export const getStaticProps = async ({ params }) => {
 
   for (const summary of data.summaries) {
     var summaryRes = await fetch(
-      process.env.ROOT_URL + "/api/summaries/" + summary
+      process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + summary
     );
     const summaryData = await summaryRes.json();
     summaries.push(summaryData.data);

@@ -34,7 +34,9 @@ export default function editor() {
   const getArticleInfo = async () => {
     try {
       const res = await fetch(
-        process.env.ROOT_URL + "/api/articles/" + router.query.articleId
+        process.env.NEXT_PUBLIC_ROOT_URL +
+          "/api/articles/" +
+          router.query.articleId
       )
         .then((response) => response.json())
         .then((data) => {
