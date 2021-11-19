@@ -49,12 +49,32 @@ export default async (req, res) => {
         } else if (req.body.id) {
           user = await User.findByIdAndUpdate(
             id,
-            { $push: { summaries: req.body.id } },
+            {
+              $push: {
+                summaries: req.body.id,
+              },
+            },
             {
               new: true,
               runValidators: true,
             }
           );
+
+          var bulkOps = [];
+
+          for (const tag of req.body.articleTags) {
+            console.log(tag);
+            let doc = {
+              updateOne: {
+                filter: { _id: id, "ranks.tag": { $ne: tag.tag } },
+                update: { $push: { ranks: tag } },
+              },
+            };
+
+            bulkOps.push(doc);
+          }
+          console.log(bulkOps);
+          user = await User.bulkWrite(bulkOps);
         } else {
           let hasDoc = await User.countDocuments({
             _id: id,
@@ -84,6 +104,7 @@ export default async (req, res) => {
             );
           }
         }
+
         console.log(user);
         if (!user) {
           return res.status(400).json({ success: false });

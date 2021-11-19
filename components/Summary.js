@@ -1,15 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Button,
-  Collapse,
-  Avatar,
-  Typography,
-  Grid,
-  Divider,
-} from "@mui/material";
+import { Box, Button, Collapse, Avatar, Typography, Grid } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import EngineeringIcon from "@mui/icons-material/Engineering";
 import ReactHtmlParser, {
   processNodes,
   convertNodeToElement,
@@ -88,6 +79,7 @@ const Summary = (props) => {
           upvotes={props.upvotes}
           downvotes={props.downvotes}
           summaryId={props.summaryId}
+          tags={props.tags}
         />
       </Grid>
       <Grid item xs={10} sm={11}>

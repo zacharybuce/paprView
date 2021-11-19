@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Link, Typography, Grid, Divider } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { styled, alpha } from "@mui/material/styles";
-import TagChip from "./TagChip";
+import { styled } from "@mui/material/styles";
+import ArticleTagChip from "./ArticleTagChip";
 
 const Title = styled("Typography")(({ theme }) => ({
   fontSize: 20,
@@ -123,7 +123,7 @@ const Document = (props) => {
                 {props.doc.tags.map((tag) => {
                   return (
                     <Grid key={tag} item sx={{ mt: "1vh" }}>
-                      <TagChip name={tag} />
+                      <ArticleTagChip tagId={tag} />
                     </Grid>
                   );
                 })}

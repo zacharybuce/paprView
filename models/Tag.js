@@ -8,6 +8,10 @@ const TagSchema = new mongoose.Schema({
     required: [true, "Must have a tag name"],
     unique: true,
   },
+  disciplineName: {
+    type: String,
+    required: [true, "Must have a discipine name"],
+  },
 });
 
 module.exports = mongoose.models.Tag || mongoose.model("Tag", TagSchema);

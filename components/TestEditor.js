@@ -99,7 +99,14 @@ const MyEditor = (props) => {
 
       console.log(putData);
 
+      const articleTags = [];
+
+      for (const tag of putData.data.tags) {
+        articleTags.push({ tag: tag, value: 0 });
+      }
+
       user.body.id = data.data._id;
+      user.body.articleTags = articleTags;
       user.body = JSON.stringify(user.body);
       const userPutRes = await fetch("api/users/" + props.userId, user);
 

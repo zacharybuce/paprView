@@ -123,7 +123,7 @@ const Vote = (props) => {
   };
 
   const configReq = () => {
-    var req = { upvote: 0, downvote: 0 };
+    var req = { upvote: 0, downvote: 0, tags: props.tags };
 
     if (realDownVote.current > realValDV.current) {
       req.downvote++;

@@ -17,31 +17,23 @@ const voteSchema = new mongoose.Schema({
   },
 });
 
-const UserSchema = new mongoose.Schema({
-  points: {
-    type: Number,
-    required: [true, "Must have points"],
+const rankSchema = new mongoose.Schema({
+  tag: {
+    type: ObjectId,
+    required: [true],
   },
+  value: {
+    type: Number,
+    required: [true],
+  },
+});
+
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Must have a name"],
     unique: true,
     maxlength: [15, "name must be less than 15 characters"],
-  },
-  bio: {
-    type: String,
-    required: [false],
-    maxlength: [100, "bio must be less than 100 characters"],
-  },
-  job: {
-    type: String,
-    required: [false],
-    maxlength: [50, "job name must be less than 50 characters"],
-  },
-  degree: {
-    type: String,
-    required: [false],
-    maxlength: [50, "degree name must be less than 50 characters"],
   },
   summaries: {
     type: [ObjectId],
@@ -63,9 +55,17 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     required: [true],
   },
-  authority: {
-    type: String,
-    required: [true, "Must have an authority"],
+  ranks: {
+    type: [rankSchema],
+    required: [false],
+  },
+  achievements: {
+    type: [Object],
+    required: [false],
+  },
+  credibility: {
+    type: Number,
+    required: [true],
   },
 });
 

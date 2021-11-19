@@ -10,7 +10,9 @@ import {
   FormControl,
   Select,
   Chip,
+  Autocomplete,
 } from "@mui/material";
+import { matchSorter } from "match-sorter";
 import { useTheme } from "@mui/material/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -20,6 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from "next/router";
 import fetch from "isomorphic-unfetch";
+import AddTagDialog from "./AddTagDialog";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -45,12 +48,25 @@ const ArticleCreateForm = ({ tags }) => {
   const theme = useTheme();
   const router = useRouter();
   const [dateValue, setDateValue] = useState(null);
-  const [docTags, setTags] = useState([]);
+  const [docTags, setTags] = useState(tags);
+  const [articleTags, setArticleTags] = useState([]);
   const [docTitle, setTitle] = useState("");
   const [docAuthors, setAuthors] = useState([]);
   const [authorText, setAuthorText] = useState("");
   const [publisher, setPublisher] = useState("");
+  const [addTag, setAddTag] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  const filterOptions = (options, { inputValue }) => {
+    const res = matchSorter(options, inputValue, { keys: ["name"] });
+    if (res.length) {
+      setAddTag(false);
+      return res;
+    } else {
+      setAddTag(true);
+      return [];
+    }
+  };
   const article = {
     method: "POST",
     headers: {
@@ -69,7 +85,7 @@ const ArticleCreateForm = ({ tags }) => {
       authors: docAuthors,
       publisher: publisher,
       publishDate: dateValue,
-      tags: docTags,
+      tags: articleTags,
       summaries: [],
       comments: [],
     };
@@ -97,16 +113,6 @@ const ArticleCreateForm = ({ tags }) => {
     }
   };
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setTags(
-      // On autofill we get a the stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
-
   const handleChangeText = (e) => {
     setAuthorText(e.target.value);
   };
@@ -128,109 +134,110 @@ const ArticleCreateForm = ({ tags }) => {
   };
 
   return (
-    <Box
-      onSubmit={handleSubmit}
-      component="form"
-      autoComplete="off"
-      noValidate
-      sx={{
-        mt: "2vh",
-        mr: "10vw",
-        ml: "10vw",
-        borderRadius: "5px",
-        boxShadow: 3,
-      }}
-    >
-      <Box sx={{ p: "2vh" }}>
-        <TextField
-          onChange={(e) => setTitle(e.target.value)}
-          fullWidth
-          required
-          id="outlined-required"
-          label="Article Title"
-        />
-        {/* <TextField
+    <Box>
+      <Box
+        onSubmit={handleSubmit}
+        component="form"
+        autoComplete="off"
+        noValidate
+        sx={{
+          mt: "2vh",
+          mr: "10vw",
+          ml: "10vw",
+          borderRadius: "5px",
+          boxShadow: 3,
+        }}
+      >
+        <Box sx={{ p: "2vh" }}>
+          <TextField
+            onChange={(e) => setTitle(e.target.value)}
+            fullWidth
+            required
+            id="outlined-required"
+            label="Article Title"
+          />
+          {/* <TextField
           onChange={(e) => setAuthors(e.target.value)}
           required
           id="outlined-required"
           label="Authors"
           sx={{ mt: "2vh" }}
         /> */}
-        <div>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                autoFocus
-                value={authorText}
-                onChange={handleChangeText}
-                required
-                fullWidth
-                label="Author"
-                sx={{ mt: "2vh" }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                onChange={(e) => setPublisher(e.target.value)}
-                fullWidth
-                label="Publisher"
-                sx={{ mt: "2vh" }}
-              />
-            </Grid>
-          </Grid>
-          {docAuthors.map((jump, index) => (
-            <Box key={"jump" + index}>
-              <Grid container alignItems="flex-end">
-                <Grid item xs={12}>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    label="Author"
-                    value={jump || ""}
-                    onChange={(e) => handleValueChange(index, e)}
-                    sx={{ width: "50%" }}
-                  />
-
-                  <IconButton
-                    onClick={() => deleteValue(jump)}
-                    aria-label="delete"
-                    sx={{ mt: "2vh" }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Box>
-          ))}
-          <Box>
-            <Button onClick={addValue} color="primary" sx={{ ml: "1vw" }}>
-              Add Author
-            </Button>
-          </Box>
-        </div>
-        <Grid container alignItems="center">
-          <Grid item xs={6}>
-            <Box sx={{ mt: "2vh", width: "100%" }}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  s
-                  label="Publish Date"
-                  value={dateValue}
-                  onChange={(newValue) => {
-                    setDateValue(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
+          <div>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  autoFocus
+                  value={authorText}
+                  onChange={handleChangeText}
+                  required
+                  fullWidth
+                  label="Author"
+                  sx={{ mt: "2vh" }}
                 />
-              </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={(e) => setPublisher(e.target.value)}
+                  fullWidth
+                  label="Publisher"
+                  sx={{ mt: "2vh" }}
+                />
+              </Grid>
+            </Grid>
+            {docAuthors.map((jump, index) => (
+              <Box key={"jump" + index}>
+                <Grid container alignItems="flex-end">
+                  <Grid item xs={12}>
+                    <TextField
+                      autoFocus
+                      margin="dense"
+                      label="Author"
+                      value={jump || ""}
+                      onChange={(e) => handleValueChange(index, e)}
+                      sx={{ width: "50%" }}
+                    />
+
+                    <IconButton
+                      onClick={() => deleteValue(jump)}
+                      aria-label="delete"
+                      sx={{ mt: "2vh" }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </Box>
+            ))}
+            <Box>
+              <Button onClick={addValue} color="primary" sx={{ ml: "1vw" }}>
+                Add Author
+              </Button>
             </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box sx={{ mt: "2vh", width: "100%" }}>
-              <FormControl sx={{ width: "100%" }}>
-                <InputLabel required id="demo-multiple-chip-label">
+          </div>
+          <Grid container alignItems="center">
+            <Grid item xs={6}>
+              <Box sx={{ mt: "2vh", width: "100%" }}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    s
+                    label="Publish Date"
+                    value={dateValue}
+                    onChange={(newValue) => {
+                      setDateValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box sx={{ mt: "2vh", width: "100%" }}>
+                <FormControl sx={{ width: "100%" }}>
+                  {/* <InputLabel required id="demo-multiple-chip-label">
                   Tags
                 </InputLabel>
-                <Select
+                 <Select
                   labelId="demo-multiple-chip-label"
                   id="demo-multiple-chip"
                   multiple
@@ -257,17 +264,60 @@ const ArticleCreateForm = ({ tags }) => {
                       {tag.name}
                     </MenuItem>
                   ))}
-                </Select>
-              </FormControl>
-            </Box>
+                </Select> */}
+                  <Autocomplete
+                    multiple
+                    id="tags-outlined"
+                    options={docTags}
+                    onChange={(event, newValue) => {
+                      let tagArr = newValue.map((tag) => tag._id);
+                      setArticleTags(tagArr);
+                      console.log(tagArr);
+                    }}
+                    getOptionLabel={(option) => option.name}
+                    filterOptions={filterOptions}
+                    noOptionsText="Click Add a Tag"
+                    renderInput={(params) => {
+                      return (
+                        <TextField
+                          {...params}
+                          label="Tags*"
+                          placeholder="Tags"
+                        />
+                      );
+                    }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-        <Box sx={{ mt: "2vh" }}>
-          <Button type="submit" variant="contained" color="secondary">
-            Submit Document
-          </Button>
+          <Grid container>
+            <Grid item xs={6}>
+              <Box sx={{ mt: "2vh" }}>
+                <Button type="submit" variant="contained" color="secondary">
+                  Submit Document
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={6} sx={{ mt: "7vh" }}>
+              <Grid container justifyContent="flex-end">
+                {addTag ? (
+                  <Button
+                    onClick={() => setOpen(true)}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    Add a Tag
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
+      <AddTagDialog setTags={setTags} open={open} setOpen={setOpen} />
     </Box>
   );
 };
