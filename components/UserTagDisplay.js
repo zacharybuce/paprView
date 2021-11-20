@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Grid } from "@mui/material";
 import { useState, useEffect } from "react";
-import DisciplineTagIcon from "./disciplineTagIcon";
+import DisciplineTagIcon from "./DisciplineTagIcon";
 
 const UserTagDisplay = (props) => {
   const [tagName, setTagName] = useState(null);
