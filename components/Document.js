@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import ArticleTagChip from "./ArticleTagChip";
 
-const Title = styled("Typography")(({ theme }) => ({
+const Title = styled("div")(({ theme }) => ({
   fontSize: 20,
   "&:hover": {
     color: theme.palette.primary.light,
@@ -14,7 +14,7 @@ const Title = styled("Typography")(({ theme }) => ({
   },
 }));
 
-const AmountText = styled("Typography")(({ theme }) => ({
+const AmountText = styled("div")(({ theme }) => ({
   [theme.breakpoints.between("xs", "sm")]: {
     fontSize: 10,
   },

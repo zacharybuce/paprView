@@ -77,7 +77,6 @@ const UserTagDisplay = (props) => {
         process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags/" + tagId
       );
       const tagData = await tagRes.json();
-      console.log(tagData);
       setTagName(tagData.data.name);
       setDisName(tagData.data.disciplineName);
     } catch (error) {

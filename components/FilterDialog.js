@@ -16,7 +16,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import fetch from "isomorphic-unfetch";
-import TagChip from "./TagChip";
+import ArticleTagChip from "./ArticleTagChip";
 
 const FilterDialog = (props) => {
   const [tags, setTags] = useState([]);
@@ -95,16 +95,16 @@ const FilterDialog = (props) => {
                               key={tag.name}
                               control={
                                 <Checkbox
-                                  checked={state[tag.name]}
+                                  checked={state[tag._id]}
                                   onChange={handleChange}
-                                  name={tag.name}
+                                  name={tag._id}
                                 />
                               }
                               label={""}
                             />
                           </Grid>
                           <Grid item>
-                            <TagChip name={tag.name} />
+                            <ArticleTagChip tagId={tag._id} />
                           </Grid>
                         </Grid>
                       );

@@ -5,15 +5,16 @@ import fetch from "isomorphic-unfetch";
 import Document from "../components/Document";
 import SearchResultsHeader from "../components/SearchResultsHeader";
 import { styled } from "@mui/material/styles";
+import WhatIsPaprView from "../components/WhatIsPaprView";
 
 const ResultsContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
-  marginRight: "10vw",
-  marginLeft: "10vw",
+  //marginRight: "10vw",
+  //marginLeft: "10vw",
   marginBottom: "7vh",
   [theme.breakpoints.up("xl")]: {
-    marginRight: "25vw",
-    marginLeft: "25vw",
+    marginRight: "15vw",
+    marginLeft: "22vw",
   },
 }));
 
@@ -37,7 +38,7 @@ const documents = (props) => {
     const date = new Date(value.publishDate).getFullYear();
     const toDate = filter.to ? filter.to : 2021;
     const fromDate = filter.from ? filter.from : 0;
-
+    console.log(value.tags);
     if (fromDate <= date && toDate >= date) {
       for (const tag of value.tags) {
         if (tag in filter) return value;
@@ -66,27 +67,36 @@ const documents = (props) => {
 
   return (
     <ResultsContainer>
-      <SearchResultsHeader
-        query={props.query}
-        results={props.documents.length}
-        setPopular={setPopular}
-        setRelevant={setRelevant}
-        setFilter={setFilter}
-      />
-      <Divider />
-      {docs ? (
-        docs.map((doc, index) => {
-          return (
-            <Box key={index}>
-              <Document doc={doc} />
+      <Grid container>
+        <Grid item xs={8}>
+          <SearchResultsHeader
+            query={props.query}
+            results={props.documents.length}
+            setPopular={setPopular}
+            setRelevant={setRelevant}
+            setFilter={setFilter}
+          />
+          <Divider />
+          {docs ? (
+            docs.map((doc, index) => {
+              return (
+                <Box key={index}>
+                  <Document doc={doc} />
+                </Box>
+              );
+            })
+          ) : (
+            <Box
+              sx={{ mt: "2vh", mr: "10vw", ml: "10vw", textAlign: "center" }}
+            >
+              <CircularProgress />
             </Box>
-          );
-        })
-      ) : (
-        <Box sx={{ mt: "2vh", mr: "10vw", ml: "10vw", textAlign: "center" }}>
-          <CircularProgress />
-        </Box>
-      )}
+          )}
+        </Grid>
+        <Grid item xs={4}>
+          <WhatIsPaprView />
+        </Grid>
+      </Grid>
     </ResultsContainer>
   );
 };
