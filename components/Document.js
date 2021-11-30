@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Link, Typography, Grid, Divider } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { styled, alpha } from "@mui/material/styles";
-import TagChip from "./TagChip";
+import { styled } from "@mui/material/styles";
+import ArticleTagChip from "./ArticleTagChip";
 
-const Title = styled("Typography")(({ theme }) => ({
+const Title = styled("div")(({ theme }) => ({
   fontSize: 20,
   "&:hover": {
     color: theme.palette.primary.light,
@@ -14,7 +14,7 @@ const Title = styled("Typography")(({ theme }) => ({
   },
 }));
 
-const AmountText = styled("Typography")(({ theme }) => ({
+const AmountText = styled("div")(({ theme }) => ({
   [theme.breakpoints.between("xs", "sm")]: {
     fontSize: 10,
   },
@@ -98,11 +98,7 @@ const Document = (props) => {
         <Grid item xs={9} sm={10}>
           <Grid container>
             <Grid item xs={12}>
-              <Link
-                href={"/summaries/" + props.doc._id}
-                passHref
-                underline="none"
-              >
+              <Link href={"/summaries/" + props.doc._id} underline="none">
                 <Box sx={{}}>
                   <Title>{props.doc.title}</Title>
                 </Box>
@@ -123,7 +119,7 @@ const Document = (props) => {
                 {props.doc.tags.map((tag) => {
                   return (
                     <Grid key={tag} item sx={{ mt: "1vh" }}>
-                      <TagChip name={tag} />
+                      <ArticleTagChip tagId={tag} />
                     </Grid>
                   );
                 })}

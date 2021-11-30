@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Divider, Grid, Typography } from "@mui/material";
-import TagChip from "../components/TagChip";
+import AritcleTagChip from "./ArticleTagChip";
 
 const printAuthors = (authors) => {
   var returnStr = "";
@@ -24,8 +24,8 @@ const ArticleHeading = (props) => {
         {printAuthors(props.authors)}
       </Grid>
       <Grid item xs={12}>
-        {props.tags.map((tag) => {
-          return <TagChip name={tag} />;
+        {props.tags.map((tag, index) => {
+          return <AritcleTagChip key={index} tagId={tag} />;
         })}
       </Grid>
       <Grid item xs={12}>

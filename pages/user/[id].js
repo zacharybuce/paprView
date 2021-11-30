@@ -6,6 +6,7 @@ import ParaglidingIcon from "@mui/icons-material/Paragliding";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import UserRanks from "../../components/UserRanks";
 
 const UserContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
@@ -67,6 +68,7 @@ const user = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <UserRanks ranks={props.user.ranks} />
       <UserSummaries summaries={props.user.summaries} />
     </UserContainer>
   );
@@ -78,7 +80,7 @@ export async function getServerSideProps(context) {
       process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + context.params.id
     );
     const userData = await userRes.json();
-
+    console.log(userData.data);
     return { props: { user: userData.data } };
   } catch (error) {
     console.log(error);

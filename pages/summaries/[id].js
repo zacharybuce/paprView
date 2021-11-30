@@ -69,6 +69,7 @@ const summaries = ({ summaries, docData }) => {
                 userId={summary.user}
                 upvotes={summary.upvotes}
                 downvotes={summary.downvotes}
+                tags={docData.tags}
               />
               <Divider />
             </Box>

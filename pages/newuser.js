@@ -34,7 +34,8 @@ const newuser = () => {
         <Typography sx={{ fontSize: 20 }}>
           paprView is a platform for users to view and submit summaries of
           academic articles. We reccomend going through our{" "}
-          <Link href="/">help page</Link> to get an idea of how paprView works.
+          <Link href="/help">help page</Link> to get an idea of how paprView
+          works.
         </Typography>
       </Fade>
     </ResultsContainer>

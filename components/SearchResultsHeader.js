@@ -7,14 +7,14 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import LoginDialog from "./LoginDialog";
 
-const ResultsHeader = styled("Typography")(({ theme }) => ({
+const ResultsHeader = styled("div")(({ theme }) => ({
   fontSize: 30,
   [theme.breakpoints.down("lg")]: {
     fontSize: 24,
   },
 }));
 
-const ResultsAmount = styled("Typography")(({ theme }) => ({
+const ResultsAmount = styled("div")(({ theme }) => ({
   fontSize: 25,
   [theme.breakpoints.down("lg")]: {
     fontSize: 20,
