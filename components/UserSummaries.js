@@ -70,12 +70,12 @@ const UserSummaries = (props) => {
           summaries.map((summary, index) => {
             if (index !== summary.length - 1)
               return (
-                <Box>
+                <Box key={index + 10}>
                   <SummaryDisplay summary={summary} />
                   <Divider />
                 </Box>
               );
-            return <SummaryDisplay summary={summary} />;
+            return <SummaryDisplay key={index + 10} summary={summary} />;
           })
         ) : (
           <Box sx={{ p: 2 }}>

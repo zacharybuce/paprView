@@ -20,8 +20,10 @@ const UserRanks = (props) => {
         }}
       >
         {props.ranks ? (
-          props.ranks.map((rank) => {
-            return <UserTagDisplay tagId={rank.tag} score={rank.value} />;
+          props.ranks.map((rank, index) => {
+            return (
+              <UserTagDisplay key={index} tagId={rank.tag} score={rank.value} />
+            );
           })
         ) : (
           <div></div>

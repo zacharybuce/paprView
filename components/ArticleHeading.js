@@ -24,8 +24,8 @@ const ArticleHeading = (props) => {
         {printAuthors(props.authors)}
       </Grid>
       <Grid item xs={12}>
-        {props.tags.map((tag) => {
-          return <AritcleTagChip tagId={tag} />;
+        {props.tags.map((tag, index) => {
+          return <AritcleTagChip key={index} tagId={tag} />;
         })}
       </Grid>
       <Grid item xs={12}>

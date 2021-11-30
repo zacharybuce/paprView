@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Button, Collapse, Avatar, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Collapse,
+  Avatar,
+  Typography,
+  Grid,
+  Link,
+} from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ReactHtmlParser, {
   processNodes,
@@ -10,6 +18,7 @@ import useInView from "react-cool-inview";
 import Vote from "./Vote";
 import fetch from "isomorphic-unfetch";
 import braft from "../utils/summary.module.css";
+import UserCard from "./UserCard";
 
 const Summary = (props) => {
   const { observe, inView } = useInView({
@@ -107,29 +116,7 @@ const Summary = (props) => {
               >
                 <Grid container>
                   <Grid item xs={6}>
-                    <Grid
-                      alignItems="center"
-                      spacing={1}
-                      container
-                      sx={{ pb: 1, pl: 1 }}
-                    >
-                      <Grid item sx={{ mb: "1vh" }}>
-                        <Avatar
-                          src={user.image}
-                          sx={{ width: 48, height: 48 }}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <Grid container>
-                          <Grid item xs={12}>
-                            <Typography fontWeight={500}>
-                              {user.name}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={12}></Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
+                    <UserCard user={user} />
                   </Grid>
 
                   <Grid item xs={6}>

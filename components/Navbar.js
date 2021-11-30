@@ -28,21 +28,23 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar color="info" position="fixed">
         <Toolbar>
-          <NextLink href="/" passHref>
-            <Link style={{ textDecoration: "none" }}>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
-              >
-                paprView
-              </Typography>
-            </Link>
-          </NextLink>
+          <Box sx={{}}>
+            <NextLink href="/" passHref>
+              <Link style={{ textDecoration: "none" }}>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ display: { xs: "none", sm: "block" } }}
+                >
+                  paprView
+                </Typography>
+              </Link>
+            </NextLink>
+          </Box>
 
           <Grid container justifyContent="center">
-            <Grid item xs={11}>
+            <Grid item xs={5}>
               <SearchNav />
             </Grid>
           </Grid>

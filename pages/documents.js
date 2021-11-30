@@ -38,7 +38,7 @@ const documents = (props) => {
     const date = new Date(value.publishDate).getFullYear();
     const toDate = filter.to ? filter.to : 2021;
     const fromDate = filter.from ? filter.from : 0;
-    console.log(value.tags);
+    //console.log(value.tags);
     if (fromDate <= date && toDate >= date) {
       for (const tag of value.tags) {
         if (tag in filter) return value;
@@ -54,7 +54,7 @@ const documents = (props) => {
     setDocs([...props.documents]);
     setRelevant(false);
   } else if (filter) {
-    setDocs(docs.filter(filterSort));
+    setDocs([...props.documents].filter(filterSort));
     setFilter(null);
   }
 

@@ -98,11 +98,7 @@ const Document = (props) => {
         <Grid item xs={9} sm={10}>
           <Grid container>
             <Grid item xs={12}>
-              <Link
-                href={"/summaries/" + props.doc._id}
-                passHref
-                underline="none"
-              >
+              <Link href={"/summaries/" + props.doc._id} underline="none">
                 <Box sx={{}}>
                   <Title>{props.doc.title}</Title>
                 </Box>

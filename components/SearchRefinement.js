@@ -13,6 +13,8 @@ const SearchRefinement = (props) => {
       setAlignment(newAlignment);
     }
 
+    if (newAlignment === null && alignment == "more") newAlignment = "more";
+
     switch (newAlignment) {
       case "relevant":
         props.setPopular(false);
