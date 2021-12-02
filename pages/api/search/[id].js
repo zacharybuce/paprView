@@ -3,6 +3,23 @@ import Article from "../../../models/Article";
 
 dbConnect();
 
+export const getDocs = async (id) => {
+  const articles = await Article.aggregate([
+    {
+      $search: {
+        index: "DocumentSearch",
+        text: {
+          query: id,
+          path: "title",
+          fuzzy: {},
+        },
+      },
+    },
+  ]);
+
+  return articles;
+};
+
 export default async (req, res) => {
   const {
     query: { id },
@@ -12,20 +29,7 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        const articles = await Article.aggregate([
-          {
-            $search: {
-              index: "DocumentSearch",
-              text: {
-                query: id,
-                path: "title",
-                fuzzy: {},
-              },
-            },
-          },
-        ]);
-
-        res.status(200).json({ success: true, data: articles });
+        res.status(200).json(getDocs(id));
       } catch (error) {
         console.log(error);
         res.status(400).json({ success: false });

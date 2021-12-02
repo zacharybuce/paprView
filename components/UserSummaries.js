@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider, CircularProgress } from "@mui/material";
 import SummaryDisplay from "./SummaryDisplay";
 
 const voteSort = (a, b) => {
@@ -10,7 +10,7 @@ const voteSort = (a, b) => {
 };
 
 const UserSummaries = (props) => {
-  const [summaries, setSummaries] = useState([]);
+  const [summaries, setSummaries] = useState(null);
 
   useEffect(() => {
     getSummaries();
@@ -50,6 +50,22 @@ const UserSummaries = (props) => {
     }
   };
 
+  const display = () => {
+    if (summaries !== null && summaries.length === 0)
+      return (
+        <Box sx={{ p: 2 }}>
+          <Typography>There are no summaries to display</Typography>
+        </Box>
+      );
+    else {
+      return (
+        <Box sx={{ textAlign: "center" }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+  };
+
   return (
     <Box sx={{ mt: "5vh" }}>
       <Typography variant="h6" sx={{ mb: "1vh" }}>
@@ -66,22 +82,18 @@ const UserSummaries = (props) => {
           overflow: "hidden",
         }}
       >
-        {summaries.length ? (
-          summaries.map((summary, index) => {
-            if (index !== summary.length - 1)
-              return (
-                <Box key={index + 10}>
-                  <SummaryDisplay summary={summary} />
-                  <Divider />
-                </Box>
-              );
-            return <SummaryDisplay key={index + 10} summary={summary} />;
-          })
-        ) : (
-          <Box sx={{ p: 2 }}>
-            <Typography>There are no summaries to display</Typography>
-          </Box>
-        )}
+        {summaries
+          ? summaries.map((summary, index) => {
+              if (index !== summary.length - 1)
+                return (
+                  <Box key={index + 10}>
+                    <SummaryDisplay summary={summary} />
+                    <Divider />
+                  </Box>
+                );
+              return <SummaryDisplay key={index + 10} summary={summary} />;
+            })
+          : display()}
       </Box>
     </Box>
   );

@@ -1,19 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Button,
-  Collapse,
-  Avatar,
-  Typography,
-  Grid,
-  Link,
-} from "@mui/material";
+import { Box, Button, Collapse, Typography, Grid } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2,
-} from "react-html-parser";
+import ReactHtmlParser from "react-html-parser";
 import useInView from "react-cool-inview";
 import Vote from "./Vote";
 import fetch from "isomorphic-unfetch";

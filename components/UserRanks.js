@@ -1,10 +1,15 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { Box, Typography, CircularProgress } from "@mui/material";
+import { useState } from "react";
 import UserTagDisplay from "./UserTagDisplay";
 
 const UserRanks = (props) => {
-  const [tags, setTags] = useState([]);
+  const display = () => {
+    if (props.ranks.length === 0) return <Typography>No Tags</Typography>;
+    else {
+      return <CircularProgress />;
+    }
+  };
 
   return (
     <Box>
@@ -19,15 +24,17 @@ const UserRanks = (props) => {
           borderWidth: 1,
         }}
       >
-        {props.ranks ? (
-          props.ranks.map((rank, index) => {
-            return (
-              <UserTagDisplay key={index} tagId={rank.tag} score={rank.value} />
-            );
-          })
-        ) : (
-          <div></div>
-        )}
+        {props.ranks
+          ? props.ranks.map((rank, index) => {
+              return (
+                <UserTagDisplay
+                  key={index}
+                  tagId={rank.tag}
+                  score={rank.value}
+                />
+              );
+            })
+          : display()}
       </Box>
     </Box>
   );

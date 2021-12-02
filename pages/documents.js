@@ -6,6 +6,7 @@ import Document from "../components/Document";
 import SearchResultsHeader from "../components/SearchResultsHeader";
 import { styled } from "@mui/material/styles";
 import WhatIsPaprView from "../components/WhatIsPaprView";
+import { getDocs } from "./api/search/[id]";
 
 const ResultsContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
@@ -105,21 +106,30 @@ export default documents;
 
 export async function getServerSideProps(context) {
   try {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_ROOT_URL + "/api/search/" + context.query.s,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await res.json();
-    const documents = data.data;
+    const { res } = context;
 
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=60, stale-while-revalidate=79"
+    );
+
+    // const res = await fetch(
+    //   process.env.NEXT_PUBLIC_ROOT_URL + "/api/search/" + context.query.s,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // );
+    // const data = await res.json()
+    const documents = await getDocs(context.query.s);
     return {
-      props: { documents: documents, query: context.query.s },
+      props: {
+        documents: JSON.parse(JSON.stringify(documents)),
+        query: context.query.s,
+      },
     };
   } catch (error) {
     console.log(error);
