@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Typography, Grid, Button, Link } from "@mui/material";
+import { Box, Grid, Button, Link } from "@mui/material";
 import NextLink from "next/link";
 import { styled } from "@mui/material/styles";
 import SearchRefinement from "./SearchRefinement";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import LoginDialog from "./LoginDialog";
 
@@ -36,7 +36,7 @@ const SearchResultsHeader = (props) => {
         <Grid item xs={12} sm={6}>
           <Grid container justifyContent="flex-end">
             {session ? (
-              <NextLink href="/articlecform" passHref>
+              <NextLink prefetch={false} href="/articlecform" passHref>
                 <Link style={{ textDecoration: "none" }}>
                   <Button color="secondary" variant="contained">
                     Add an Article

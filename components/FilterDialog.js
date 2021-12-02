@@ -9,14 +9,12 @@ import {
   TextField,
   Button,
   FormGroup,
-  FormControlLabel,
-  Checkbox,
+  Autocomplete,
   Grid,
   Box,
   CircularProgress,
 } from "@mui/material";
 import fetch from "isomorphic-unfetch";
-import ArticleTagChip from "./ArticleTagChip";
 
 const FilterDialog = (props) => {
   const [tags, setTags] = useState([]);
@@ -84,31 +82,57 @@ const FilterDialog = (props) => {
           <form id="form" onSubmit={handleSubmit}>
             <FormGroup>
               <Grid container>
-                <Grid item xs={6}>
-                  <DialogContentText>Filter by Tag</DialogContentText>
+                <Grid item xs={12} sx={{ mb: "1vh" }}>
+                  <DialogContentText sx={{ mb: "1vh" }}>
+                    Filter by Tag
+                  </DialogContentText>
                   {tags.length ? (
-                    tags.map((tag) => {
-                      return (
-                        <Grid key={tag.name} container>
-                          <Grid item>
-                            <FormControlLabel
-                              key={tag.name}
-                              control={
-                                <Checkbox
-                                  checked={state[tag._id]}
-                                  onChange={handleChange}
-                                  name={tag._id}
-                                />
-                              }
-                              label={""}
-                            />
-                          </Grid>
-                          <Grid item>
-                            <ArticleTagChip tagId={tag._id} />
-                          </Grid>
-                        </Grid>
-                      );
-                    })
+                    // tags.map((tag) => {
+                    //   return (
+                    //     <Grid key={tag.name} container>
+                    //       <Grid item>
+                    //         <FormControlLabel
+                    //           key={tag.name}
+                    //           control={
+                    //             <Checkbox
+                    //               checked={state[tag._id]}
+                    //               onChange={handleChange}
+                    //               name={tag._id}
+                    //             />
+                    //           }
+                    //           label={""}
+                    //         />
+                    //       </Grid>
+                    //       <Grid item>
+                    //         <ArticleTagChip tagId={tag._id} />
+                    //       </Grid>
+                    //     </Grid>
+                    //   );
+                    // })
+                    <Autocomplete
+                      multiple
+                      id="tags-outlined"
+                      options={tags}
+                      onChange={(event, newValue) => {
+                        let tagArr = newValue.map((tag) => tag._id);
+                        setState({
+                          ...state,
+                          [tagArr]: true,
+                        });
+                      }}
+                      getOptionLabel={(option) => option.name}
+                      //filterOptions={filterOptions}
+                      noOptionsText="Click Add a Tag"
+                      renderInput={(params) => {
+                        return (
+                          <TextField
+                            {...params}
+                            label="Tags*"
+                            placeholder="Tags"
+                          />
+                        );
+                      }}
+                    />
                   ) : (
                     <CircularProgress />
                   )}

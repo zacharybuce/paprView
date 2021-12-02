@@ -4,48 +4,20 @@ import {
   Grid,
   Button,
   IconButton,
-  OutlinedInput,
-  InputLabel,
-  MenuItem,
   FormControl,
-  Select,
-  Chip,
   Autocomplete,
 } from "@mui/material";
-import { matchSorter } from "match-sorter";
-import { useTheme } from "@mui/material/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
 import { useRouter } from "next/router";
 import fetch from "isomorphic-unfetch";
 import AddTagDialog from "./AddTagDialog";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+import { matchSorter } from "match-sorter";
 
 const ArticleCreateForm = ({ tags }) => {
-  const theme = useTheme();
   const router = useRouter();
   const [dateValue, setDateValue] = useState(null);
   const [docTags, setTags] = useState(tags);
@@ -57,7 +29,7 @@ const ArticleCreateForm = ({ tags }) => {
   const [addTag, setAddTag] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const filterOptions = (options, { inputValue }) => {
+  const filterOptions = async (options, { inputValue }) => {
     const res = matchSorter(options, inputValue, { keys: ["name"] });
     if (res.length) {
       setAddTag(false);
