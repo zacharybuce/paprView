@@ -9,7 +9,7 @@ const UserTagDisplay = (props) => {
 
   useEffect(() => {
     getTagName(props.tagId);
-  }, [props]);
+  }, []);
   const getTagName = async (tagId) => {
     try {
       var tagRes = await fetch(

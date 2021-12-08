@@ -85,7 +85,7 @@ const user = (props) => {
         </Grid>
       </Grid>
       <UserRanks ranks={data.data.ranks} />
-      <UserSummaries summaries={data.data.summaries} />
+      <UserSummaries userId={props.id} summaries={data.data.summaries} />
     </UserContainer>
   );
 };
