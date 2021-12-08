@@ -26,7 +26,8 @@
     "react-cool-inview": "^2.0.8",
     "react-dom": "latest",
     "react-emojione": "^5.0.1",
-    "react-html-parser": "^2.0.2"
+    "react-html-parser": "^2.0.2",
+    "swr": "^1.1.0"
   },
   "scripts": {
     "dev": "next",
