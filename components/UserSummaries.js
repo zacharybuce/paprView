@@ -11,10 +11,11 @@ const voteSort = (a, b) => {
 
 const UserSummaries = (props) => {
   const [summaries, setSummaries] = useState(null);
+  const [userId, setUserId] = useState(props.userId);
 
   useEffect(() => {
     getSummaries();
-  }, [props]);
+  }, [userId]);
 
   const getSummaries = async () => {
     const userSummaries = [];

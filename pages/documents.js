@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Box, CircularProgress, Grid, Divider } from "@mui/material";
-import fetch from "isomorphic-unfetch";
 import Document from "../components/Document";
 import SearchResultsHeader from "../components/SearchResultsHeader";
 import { styled } from "@mui/material/styles";
