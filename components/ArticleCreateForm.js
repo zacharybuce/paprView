@@ -6,21 +6,23 @@ import {
   IconButton,
   FormControl,
   Autocomplete,
+  CircularProgress,
 } from "@mui/material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/router";
 import fetch from "isomorphic-unfetch";
 import AddTagDialog from "./AddTagDialog";
 import { matchSorter } from "match-sorter";
+import useSWR from "swr";
 
-const ArticleCreateForm = ({ tags }) => {
+const ArticleCreateForm = () => {
   const router = useRouter();
   const [dateValue, setDateValue] = useState(null);
-  const [docTags, setTags] = useState(tags);
+  const [docTags, setTags] = useState(null);
   const [articleTags, setArticleTags] = useState([]);
   const [docTitle, setTitle] = useState("");
   const [docAuthors, setAuthors] = useState([]);
@@ -28,8 +30,17 @@ const ArticleCreateForm = ({ tags }) => {
   const [publisher, setPublisher] = useState("");
   const [addTag, setAddTag] = useState(false);
   const [open, setOpen] = useState(false);
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data, error } = useSWR(
+    process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags",
+    fetcher
+  );
 
-  const filterOptions = async (options, { inputValue }) => {
+  useEffect(() => {
+    if (data) setTags(data.data);
+  }, [data]);
+
+  const filterOptions = (options, { inputValue }) => {
     const res = matchSorter(options, inputValue, { keys: ["name"] });
     if (res.length) {
       setAddTag(false);
@@ -128,13 +139,6 @@ const ArticleCreateForm = ({ tags }) => {
             id="outlined-required"
             label="Article Title"
           />
-          {/* <TextField
-          onChange={(e) => setAuthors(e.target.value)}
-          required
-          id="outlined-required"
-          label="Authors"
-          sx={{ mt: "2vh" }}
-        /> */}
           <div>
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -206,59 +210,32 @@ const ArticleCreateForm = ({ tags }) => {
             <Grid item xs={6}>
               <Box sx={{ mt: "2vh", width: "100%" }}>
                 <FormControl sx={{ width: "100%" }}>
-                  {/* <InputLabel required id="demo-multiple-chip-label">
-                  Tags
-                </InputLabel>
-                 <Select
-                  labelId="demo-multiple-chip-label"
-                  id="demo-multiple-chip"
-                  multiple
-                  value={docTags}
-                  onChange={handleChange}
-                  input={
-                    <OutlinedInput id="select-multiple-chip" label="Chip" />
-                  }
-                  renderValue={(selected) => (
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                      {selected.map((value) => (
-                        <Chip key={value} label={value} />
-                      ))}
-                    </Box>
+                  {docTags != null ? (
+                    <Autocomplete
+                      multiple
+                      id="tags-outlined"
+                      options={docTags}
+                      onChange={(event, newValue) => {
+                        let tagArr = newValue.map((tag) => tag._id);
+                        setArticleTags(tagArr);
+                        console.log(tagArr);
+                      }}
+                      getOptionLabel={(option) => option.name}
+                      filterOptions={filterOptions}
+                      noOptionsText="Click Add a Tag"
+                      renderInput={(params) => {
+                        return (
+                          <TextField
+                            {...params}
+                            label="Tags*"
+                            placeholder="Tags"
+                          />
+                        );
+                      }}
+                    />
+                  ) : (
+                    <CircularProgress />
                   )}
-                  MenuProps={MenuProps}
-                >
-                  {tags.map((tag) => (
-                    <MenuItem
-                      key={tag.name}
-                      value={tag.name}
-                      style={getStyles(tag.name, docTags, theme)}
-                    >
-                      {tag.name}
-                    </MenuItem>
-                  ))}
-                </Select> */}
-                  <Autocomplete
-                    multiple
-                    id="tags-outlined"
-                    options={docTags}
-                    onChange={(event, newValue) => {
-                      let tagArr = newValue.map((tag) => tag._id);
-                      setArticleTags(tagArr);
-                      console.log(tagArr);
-                    }}
-                    getOptionLabel={(option) => option.name}
-                    filterOptions={filterOptions}
-                    noOptionsText="Click Add a Tag"
-                    renderInput={(params) => {
-                      return (
-                        <TextField
-                          {...params}
-                          label="Tags*"
-                          placeholder="Tags"
-                        />
-                      );
-                    }}
-                  />
                 </FormControl>
               </Box>
             </Grid>

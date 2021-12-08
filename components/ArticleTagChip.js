@@ -1,25 +1,36 @@
 import React from "react";
 import { Chip } from "@mui/material";
 import { useState, useEffect } from "react";
-import PsychologyIcon from "@mui/icons-material/Psychology";
-import GavelIcon from "@mui/icons-material/Gavel";
-import PermDataSettingIcon from "@mui/icons-material/PermDataSetting";
-import PublicIcon from "@mui/icons-material/Public";
-import BiotechIcon from "@mui/icons-material/Biotech";
-import ScienceIcon from "@mui/icons-material/Science";
-import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
-import ComputerIcon from "@mui/icons-material/Computer";
-import CalculateIcon from "@mui/icons-material/Calculate";
-import PeopleIcon from "@mui/icons-material/People";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import BusinessIcon from "@mui/icons-material/Business";
-import ParkIcon from "@mui/icons-material/Park";
-import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
-import BrushIcon from "@mui/icons-material/Brush";
-import LanguageIcon from "@mui/icons-material/Language";
-import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import dynamic from "next/dynamic";
+const PsychologyIcon = dynamic(() => import("@mui/icons-material/Psychology"));
+const GavelIcon = dynamic(() => import("@mui/icons-material/Gavel"));
+const PermDataSettingIcon = dynamic(() =>
+  import("@mui/icons-material/PermDataSetting")
+);
+const PublicIcon = dynamic(() => import("@mui/icons-material/Public"));
+const BiotechIcon = dynamic(() => import("@mui/icons-material/Biotech"));
+const ScienceIcon = dynamic(() => import("@mui/icons-material/Science"));
+const LocalPharmacyIcon = dynamic(() =>
+  import("@mui/icons-material/LocalPharmacy")
+);
+const AttachMoneyIcon = dynamic(() =>
+  import("@mui/icons-material/AttachMoney")
+);
+const HistoryEduIcon = dynamic(() => import("@mui/icons-material/HistoryEdu"));
+const ComputerIcon = dynamic(() => import("@mui/icons-material/Computer"));
+const CalculateIcon = dynamic(() => import("@mui/icons-material/Calculate"));
+const PeopleIcon = dynamic(() => import("@mui/icons-material/People"));
+const AccountBalanceIcon = dynamic(() =>
+  import("@mui/icons-material/AccountBalance")
+);
+const BusinessIcon = dynamic(() => import("@mui/icons-material/Business"));
+const ParkIcon = dynamic(() => import("@mui/icons-material/Park"));
+const SelfImprovementIcon = dynamic(() =>
+  import("@mui/icons-material/SelfImprovement")
+);
+const BrushIcon = dynamic(() => import("@mui/icons-material/Brush"));
+const LanguageIcon = dynamic(() => import("@mui/icons-material/Language"));
+const LiveHelpIcon = dynamic(() => import("@mui/icons-material/LiveHelp"));
 
 const setIcon = (tagName) => {
   switch (tagName) {

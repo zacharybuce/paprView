@@ -48,11 +48,15 @@ const SearchRefinement = (props) => {
           More <FilterListIcon sx={{ ml: "3px" }} />
         </ToggleButton>
       </ToggleButtonGroup>
-      <DynamicFilterDialog
-        setFilter={props.setFilter}
-        open={open}
-        setOpen={setOpen}
-      />
+      {open ? (
+        <DynamicFilterDialog
+          setFilter={props.setFilter}
+          open={open}
+          setOpen={setOpen}
+        />
+      ) : (
+        () => null
+      )}
     </Box>
   );
 };

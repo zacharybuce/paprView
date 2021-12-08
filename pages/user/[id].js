@@ -1,12 +1,17 @@
 import React from "react";
-import { Box, Typography, Avatar, Grid, Tooltip } from "@mui/material";
+import {
+  Typography,
+  Avatar,
+  Grid,
+  Tooltip,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import UserSummaries from "../../components/UserSummaries";
 import ParaglidingIcon from "@mui/icons-material/Paragliding";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import UserRanks from "../../components/UserRanks";
+import useSWR from "swr";
 
 const UserContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
@@ -42,46 +47,59 @@ const formatDate = (date) => {
   return output;
 };
 
-const user = (props) => {
-  const session = useSession();
-  const router = useRouter();
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
+const user = (props) => {
+  const { data, error } = useSWR(
+    process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + props.id,
+    fetcher
+  );
+
+  if (!data)
+    return (
+      <Box sx={{ mt: "30vh", mb: "30vh", textAlign: "center" }}>
+        <CircularProgress />
+      </Box>
+    );
+  console.log(data);
   return (
     <UserContainer>
       <Grid container>
         <Grid item xs={2}>
-          <Avatar src={props.user.image} sx={{ height: 100, width: 100 }} />
+          <Avatar src={data.data.image} sx={{ height: 100, width: 100 }} />
         </Grid>
         <Grid item xs={10}>
           <Grid container>
             <Grid item xs={12}>
-              <Typography variant="h3">{props.user.name}</Typography>
+              <Typography variant="h3">{data.data.name}</Typography>
             </Grid>
             <Grid item xs={12} sx={{ mt: "1vh" }}>
               <Grid container>
                 <Tooltip title="Dropped in on" arrow placement="top">
                   <ParaglidingIcon sx={{ mr: ".5vw" }} />
                 </Tooltip>
-                <Typography>{formatDate(props.user.joinDate)}</Typography>
+                <Typography>{formatDate(data.data.joinDate)}</Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <UserRanks ranks={props.user.ranks} />
-      <UserSummaries summaries={props.user.summaries} />
+      <UserRanks ranks={data.data.ranks} />
+      <UserSummaries summaries={data.data.summaries} />
     </UserContainer>
   );
 };
 
 export async function getServerSideProps(context) {
   try {
-    const userRes = await fetch(
-      process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + context.params.id
-    );
-    const userData = await userRes.json();
-    console.log(userData.data);
-    return { props: { user: userData.data } };
+    // const userRes = await fetch(
+    //   process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + context.params.id
+    // );
+    // const userData = await userRes.json();
+
+    // return { props: { user: data } };
+
+    return { props: { id: context.params.id } };
   } catch (error) {
     console.log(error);
   }

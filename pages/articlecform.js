@@ -1,13 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import ArticleCreateForm from "../components/ArticleCreateForm";
-import fetch from "isomorphic-unfetch";
 import LoginRedirect from "../components/LoginRedirect";
 import { useSession } from "next-auth/react";
 
-const articlecform = ({ tags }) => {
+const articlecform = () => {
   const { data: session } = useSession();
-
   return (
     <Box sx={{ mt: "10vh", mb: "55vh" }}>
       {session ? (
@@ -17,7 +15,7 @@ const articlecform = ({ tags }) => {
           </Typography>
 
           <Box sx={{ display: { xs: "inherit", lg: "none" } }}>
-            <ArticleCreateForm tags={tags} />
+            <ArticleCreateForm />
           </Box>
           <Box
             alignContent="center"
@@ -27,7 +25,7 @@ const articlecform = ({ tags }) => {
               mr: "17vw",
             }}
           >
-            <ArticleCreateForm tags={tags} />
+            <ArticleCreateForm />
           </Box>
         </Box>
       ) : (
@@ -37,10 +35,13 @@ const articlecform = ({ tags }) => {
   );
 };
 
-export const getServerSideProps = async (context) => {
-  const res = await fetch(process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags");
-  const { data } = await res.json();
-  return { props: { tags: data } };
-};
+// export const getServerSideProps = async () => {
+//   const res = await fetch(process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags");
+//   const { data } = await res.json();
+
+//   console.log(data);
+
+//   return { props: { tags: data } };
+// };
 
 export default articlecform;
