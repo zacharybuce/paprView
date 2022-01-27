@@ -1,5 +1,4 @@
 import * as React from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import {
   Link,
   Grid,
