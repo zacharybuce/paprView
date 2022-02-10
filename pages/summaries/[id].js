@@ -116,23 +116,23 @@ const summaries = ({ summaries, docData }) => {
   );
 };
 
-export const getStaticPaths = async () => {
-  // const res = await fetch(process.env.NEXT_PUBLIC_ROOT_URL + "/api/articles/");
-  // const data = await res.json();
+// export const getStaticPaths = async () => {
+//   // const res = await fetch(process.env.NEXT_PUBLIC_ROOT_URL + "/api/articles/");
+//   // const data = await res.json();
 
-  // const paths = data.data.map((article) => {
-  //   return {
-  //     params: { id: article._id },
-  //   };
-  // });
+//   // const paths = data.data.map((article) => {
+//   //   return {
+//   //     params: { id: article._id },
+//   //   };
+//   // });
 
-  return {
-    paths: [],
-    fallback: true,
-  };
-};
+//   return {
+//     paths: [],
+//     fallback: true,
+//   };
+// };
 
-export const getStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({ params }) => {
   const { id } = params;
   var summaries = [];
 
@@ -160,7 +160,6 @@ export const getStaticProps = async ({ params }) => {
 
   return {
     props: { summaries: summaries, docData: data },
-    revalidate: 1,
   };
 };
 
