@@ -43,6 +43,7 @@ const MyEditor = (props) => {
     body: {
       content: "",
       article: "",
+      articleTitle: "",
       upvotes: "0",
       downvotes: "0",
       user: props.userId,
@@ -82,6 +83,7 @@ const MyEditor = (props) => {
 
   const saveContent = async () => {
     summary.body.article = props.articleId;
+    summary.body.articletitle = props.articleTitle;
     summary.body.content = String(editorState.toHTML());
     summary.body = JSON.stringify(summary.body);
 

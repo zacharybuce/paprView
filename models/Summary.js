@@ -11,6 +11,10 @@ const SummarySchema = new mongoose.Schema({
     type: ObjectId,
     required: [true, "Must have an article"],
   },
+  articletitle: {
+    type: String,
+    required: [true, "Must have a article title"],
+  },
   upvotes: {
     type: Number,
     required: [true, "Must have an amount of upvotes"],
