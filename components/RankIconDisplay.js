@@ -1,66 +1,21 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import PsychologyIcon from "@mui/icons-material/Psychology";
-import GavelIcon from "@mui/icons-material/Gavel";
 import PermDataSettingIcon from "@mui/icons-material/PermDataSetting";
-import PublicIcon from "@mui/icons-material/Public";
 import BiotechIcon from "@mui/icons-material/Biotech";
-import ScienceIcon from "@mui/icons-material/Science";
-import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import ComputerIcon from "@mui/icons-material/Computer";
-import CalculateIcon from "@mui/icons-material/Calculate";
-import PeopleIcon from "@mui/icons-material/People";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
-import BusinessIcon from "@mui/icons-material/Business";
-import ParkIcon from "@mui/icons-material/Park";
-import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
-import BrushIcon from "@mui/icons-material/Brush";
-import LanguageIcon from "@mui/icons-material/Language";
-import LiveHelpIcon from "@mui/icons-material/LiveHelp";
+import PsychologyIcon from "@mui/icons-material/Psychology";
 import { Grid, Tooltip } from "@mui/material";
 
 const setIcon = (tagName) => {
   switch (tagName) {
-    case "Law":
-      return <GavelIcon />;
-    case "Psychology":
-      return <PsychologyIcon />;
-    case "Economics":
-      return <AttachMoneyIcon />;
-    case "Sociology":
-      return <PeopleIcon />;
-    case "Political Science":
-      return <AccountBalanceIcon />;
-    case "Physics":
+    case "Physical Sciences and Mathematics":
       return <PermDataSettingIcon />;
-    case "Chemistry":
-      return <ScienceIcon />;
-    case "Biology":
+    case "Biomedical and Life Sciences":
       return <BiotechIcon />;
-    case "Computer Science and Engineering":
+    case "Engineering and Technology":
       return <ComputerIcon />;
-    case "Mathematics":
-      return <CalculateIcon />;
-    case "Environment and Earth Science":
-      return <ParkIcon />;
-    case "Astronomy":
-      return <PublicIcon />;
-    case "History":
-      return <HistoryEduIcon />;
-    case "Religion":
-      return <SelfImprovementIcon />;
-    case "Arts":
-      return <BrushIcon />;
-    case "Philosophy":
-      return <LiveHelpIcon />;
-    case "Linguistics":
-      return <LanguageIcon />;
-    case "Business":
-      return <BusinessIcon />;
-    case "Medicine":
-      return <LocalPharmacyIcon />;
+    case "Social Sciences and Humanities":
+      return <PsychologyIcon />;
   }
 };
 

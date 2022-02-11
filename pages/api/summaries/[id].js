@@ -67,7 +67,7 @@ export default async (req, res) => {
                 _id: summary.user.toString(),
                 "ranks.tag": tag,
               },
-              update: { $inc: { "ranks.$.value": incAmount } },
+              update: { $inc: { "ranks.$.value": incAmount / 10 } },
             },
           };
           console.log(doc);

@@ -34,7 +34,7 @@ const LoginDialog = (props) => {
             <Button
               fullWidth
               variant="contained"
-              color="error"
+              color="google"
               sx={{ mt: "2vh" }}
               onClick={() => props.signIn("google")}
             >

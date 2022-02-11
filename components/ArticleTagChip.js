@@ -34,44 +34,14 @@ const LiveHelpIcon = dynamic(() => import("@mui/icons-material/LiveHelp"));
 
 const setIcon = (tagName) => {
   switch (tagName) {
-    case "Law":
-      return <GavelIcon />;
-    case "Psychology":
-      return <PsychologyIcon />;
-    case "Economics":
-      return <AttachMoneyIcon />;
-    case "Sociology":
-      return <PeopleIcon />;
-    case "Political Science":
-      return <AccountBalanceIcon />;
-    case "Physics":
+    case "Physical Sciences and Mathematics":
       return <PermDataSettingIcon />;
-    case "Chemistry":
-      return <ScienceIcon />;
-    case "Biology":
+    case "Biomedical and Life Sciences":
       return <BiotechIcon />;
-    case "Computer Science and Engineering":
+    case "Engineering and Technology":
       return <ComputerIcon />;
-    case "Mathematics":
-      return <CalculateIcon />;
-    case "Environment and Earth Science":
-      return <ParkIcon />;
-    case "Astronomy":
-      return <PublicIcon />;
-    case "History":
-      return <HistoryEduIcon />;
-    case "Religion":
-      return <SelfImprovementIcon />;
-    case "Arts":
-      return <BrushIcon />;
-    case "Philosophy":
-      return <LiveHelpIcon />;
-    case "Linguistics":
-      return <LanguageIcon />;
-    case "Business":
-      return <BusinessIcon />;
-    case "Medicine":
-      return <LocalPharmacyIcon />;
+    case "Social Sciences and Humanities":
+      return <PsychologyIcon />;
   }
 };
 

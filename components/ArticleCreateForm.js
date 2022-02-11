@@ -22,7 +22,7 @@ import useSWR from "swr";
 const ArticleCreateForm = () => {
   const router = useRouter();
   const [dateValue, setDateValue] = useState(null);
-  const [docTags, setTags] = useState(null);
+  const [docTags, setTags] = useState(null); //all of the tags, not the ones for this specific article
   const [articleTags, setArticleTags] = useState([]);
   const [docTitle, setTitle] = useState("");
   const [docAuthors, setAuthors] = useState([]);
@@ -30,6 +30,11 @@ const ArticleCreateForm = () => {
   const [publisher, setPublisher] = useState("");
   const [addTag, setAddTag] = useState(false);
   const [open, setOpen] = useState(false);
+  const [articleTagsError, setArticleTagsError] = useState(false);
+  const [docAuthorsError, setDocAuthorsError] = useState(false);
+  const [titleError, setTitleError] = useState(false);
+  const [dateError, setDateError] = useState(false);
+
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error } = useSWR(
     process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags",
@@ -61,6 +66,30 @@ const ArticleCreateForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let errors = false;
+
+    if (articleTags.length == 0) {
+      setArticleTagsError(true);
+      errors = true;
+    }
+
+    if (docTitle == "") {
+      setTitleError(true);
+      errors = true;
+    }
+
+    if (authorText == "") {
+      setDocAuthorsError(true);
+      errors = true;
+    }
+
+    if (Date.parse(dateValue) > Date.now()) {
+      console.log("in");
+      setDateError(true);
+      errors = true;
+    }
+
+    if (errors) return;
 
     const docData = {
       title: docTitle,
@@ -136,7 +165,9 @@ const ArticleCreateForm = () => {
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
             required
-            id="outlined-required"
+            error={titleError}
+            helperText={titleError ? "Please enter a title." : ""}
+            id={titleError ? "outlined-error" : "outlined-required"}
             label="Article Title"
           />
           <div>
@@ -147,8 +178,12 @@ const ArticleCreateForm = () => {
                   value={authorText}
                   onChange={handleChangeText}
                   required
+                  error={docAuthorsError}
                   fullWidth
-                  label="Author"
+                  label={"Author"}
+                  helperText={
+                    articleTagsError ? "Please enter at least one author." : ""
+                  }
                   sx={{ mt: "2vh" }}
                 />
               </Grid>
@@ -168,7 +203,7 @@ const ArticleCreateForm = () => {
                     <TextField
                       autoFocus
                       margin="dense"
-                      label="Author"
+                      label={"Author"}
                       value={jump || ""}
                       onChange={(e) => handleValueChange(index, e)}
                       sx={{ width: "50%" }}
@@ -199,6 +234,7 @@ const ArticleCreateForm = () => {
                     s
                     label="Publish Date"
                     value={dateValue}
+                    maxDate={Date.now()}
                     onChange={(newValue) => {
                       setDateValue(newValue);
                     }}
@@ -227,8 +263,15 @@ const ArticleCreateForm = () => {
                         return (
                           <TextField
                             {...params}
-                            label="Tags*"
+                            label={"Tags*"}
                             placeholder="Tags"
+                            helperText={
+                              articleTagsError
+                                ? "Please enter at least one tag."
+                                : ""
+                            }
+                            id={articleTagsError ? "outlined-error" : ""}
+                            error={articleTagsError}
                           />
                         );
                       }}
