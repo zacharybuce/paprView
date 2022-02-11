@@ -64,7 +64,7 @@ const user = (props) => {
   console.log(data);
   return (
     <UserContainer>
-      <Grid container>
+      <Grid container spacing={1}>
         <Grid item xs={2}>
           <Avatar src={data.data.image} sx={{ height: 100, width: 100 }} />
         </Grid>
@@ -83,9 +83,53 @@ const user = (props) => {
             </Grid>
           </Grid>
         </Grid>
+        <Grid item container direction="column" xs={2} sx={{ mt: "4vh" }}>
+          <Box>
+            <Typography variant="h6" sx={{ mb: "1vh" }}>
+              Stats
+            </Typography>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                borderRadius: 2,
+                border: "solid",
+                borderColor: "lightgrey",
+                borderWidth: 1,
+
+                p: 1,
+                mr: "1vw",
+              }}
+            >
+              <Grid container spacing={1}>
+                <Grid item xs={12} sx={{ textAlign: "center" }}>
+                  <Typography>Credibility</Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography variant="h5" sx={{ textAlign: "center" }}>
+                    <b>{data.data.credibility}</b>
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "center" }}>
+                  <Typography>Summaries</Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography variant="h5" sx={{ textAlign: "center" }}>
+                    <b>{data.data.summaries.length}</b>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Grid>
+        <Grid item xs={10} sx={{ mt: "4vh" }}>
+          <UserRanks ranks={data.data.ranks} />
+          <UserSummaries userId={props.id} summaries={data.data.summaries} />
+        </Grid>
       </Grid>
-      <UserRanks ranks={data.data.ranks} />
-      <UserSummaries userId={props.id} summaries={data.data.summaries} />
     </UserContainer>
   );
 };

@@ -14,6 +14,7 @@ import NextLink from "next/link";
 import SearchNav from "../components/SearchNav";
 import AccountDrawer from "../components/AccountDrawer";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { fontWeight } from "@mui/system";
 
 export default function PrimarySearchAppBar() {
   const { data: session } = useSession();
@@ -25,22 +26,37 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar color="info" position="fixed">
+      <AppBar color="barback" position="fixed">
         <Toolbar>
-          <Box sx={{}}>
-            <NextLink href="/" passHref>
-              <Link style={{ textDecoration: "none" }}>
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{ display: { xs: "none", sm: "block" } }}
-                >
-                  paprView
-                </Typography>
-              </Link>
-            </NextLink>
-          </Box>
+          <NextLink href="/" passHref>
+            <Link style={{ textDecoration: "none" }}>
+              <Box
+                sx={{
+                  backgroundImage: "url(/paprViewBlueInvertNoLine.png)",
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  width: "85px",
+                  height: "41px",
+                }}
+              >
+                <Box sx={{ position: "relative", left: "100%" }}>
+                  <Typography
+                    variant="h4"
+                    component="div"
+                    sx={{
+                      display: { xs: "none", sm: "block" },
+                      fontWeight: "500",
+                    }}
+                  >
+                    <Box component="span" sx={{ color: "black" }}>
+                      papr
+                    </Box>
+                    <Box component="span">View</Box>
+                  </Typography>
+                </Box>
+              </Box>
+            </Link>
+          </NextLink>
 
           <Grid container justifyContent="center">
             <Grid item xs={5}>

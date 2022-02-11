@@ -3,6 +3,18 @@ import React from "react";
 import ArticleCreateForm from "../components/ArticleCreateForm";
 import LoginRedirect from "../components/LoginRedirect";
 import { useSession } from "next-auth/react";
+import { styled } from "@mui/material/styles";
+
+const FormContainer = styled("div")(({ theme }) => ({
+  marginTop: "10vh",
+  marginRight: "10vw",
+  marginLeft: "10vw",
+  marginBottom: "7vh",
+  [theme.breakpoints.up("xl")]: {
+    marginRight: "18vw",
+    marginLeft: "18vw",
+  },
+}));
 
 const articlecform = () => {
   const { data: session } = useSession();
@@ -13,20 +25,11 @@ const articlecform = () => {
           <Typography variant="h5" align="center" sx={{ mt: "2vh" }}>
             Enter Information about the Document
           </Typography>
-
-          <Box sx={{ display: { xs: "inherit", lg: "none" } }}>
-            <ArticleCreateForm />
-          </Box>
-          <Box
-            alignContent="center"
-            sx={{
-              display: { xs: "none", lg: "inherit" },
-              ml: "17vw",
-              mr: "17vw",
-            }}
-          >
-            <ArticleCreateForm />
-          </Box>
+          <FormContainer>
+            <Box alignContent="center">
+              <ArticleCreateForm />
+            </Box>
+          </FormContainer>
         </Box>
       ) : (
         <LoginRedirect />
@@ -34,14 +37,5 @@ const articlecform = () => {
     </Box>
   );
 };
-
-// export const getServerSideProps = async () => {
-//   const res = await fetch(process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags");
-//   const { data } = await res.json();
-
-//   console.log(data);
-
-//   return { props: { tags: data } };
-// };
 
 export default articlecform;

@@ -12,14 +12,19 @@ const theme = createTheme({
       dark: "#b98d45",
       contrastText: "#fff",
     },
-    error: {
+    info: {
+      main: "#fff",
+      contrastText: "#212121",
+    },
+    google: {
       main: "#4885ed",
       dark: "#245cbd",
       contrastText: "#fff",
     },
-    info: {
-      main: "#fff",
-      contrastText: "#212121",
+    barback: {
+      main: "#f7f7f7",
+      dark: "#245cbd",
+      contrastText: "#fff",
     },
     background: { default: "#fcfcfc" },
   },
