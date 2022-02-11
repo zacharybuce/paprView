@@ -66,7 +66,11 @@ export default function editor() {
           <Grid container>
             <Grid item xs={12} xl={8}>
               <EditorContainer>
-                <SummaryEditor userId={session.user._id} articleId={id} />
+                <SummaryEditor
+                  userId={session.user._id}
+                  articleId={id}
+                  articleTitle={article ? article.title : ""}
+                />
               </EditorContainer>
             </Grid>
             <Grid item xs={12} xl={4}>

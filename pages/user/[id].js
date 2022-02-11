@@ -109,7 +109,7 @@ const user = (props) => {
 
                 <Grid item xs={12}>
                   <Typography variant="h5" sx={{ textAlign: "center" }}>
-                    <b>{data.data.credibility}</b>
+                    <b>{data.data.credibility ? data.data.credibility : 0}</b>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "center" }}>
