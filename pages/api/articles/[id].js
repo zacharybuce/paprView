@@ -1,7 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import Article from "../../../models/Article";
 
-dbConnect();
+dbConnect("article[id]");
 
 export default async (req, res) => {
   const {

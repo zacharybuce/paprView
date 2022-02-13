@@ -1,7 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import Discipline from "../../../models/Discipline";
 
-dbConnect();
+dbConnect("disciplines[id]");
 
 export default async (req, res) => {
   const {

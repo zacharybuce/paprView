@@ -1,7 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import Tag from "../../../models/Tag";
 
-dbConnect();
+dbConnect("tags-index");
 
 export default async (req, res) => {
   const { method } = req;

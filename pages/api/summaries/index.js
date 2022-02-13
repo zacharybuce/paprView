@@ -1,7 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import Summary from "../../../models/Summary";
 
-dbConnect();
+dbConnect("sumamries-index");
 
 export default async (req, res) => {
   const { method } = req;

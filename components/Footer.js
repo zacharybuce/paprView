@@ -6,9 +6,8 @@ const Footer = () => {
     <Box
       sx={{
         backgroundColor: "#8e9299",
-        height: "20vh",
-
-        bottom: 0,
+        height: "200px",
+        marginTop: "calc(2% + 10px)",
         width: "100%",
       }}
     >

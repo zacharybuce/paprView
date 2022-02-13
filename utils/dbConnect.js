@@ -1,19 +1,34 @@
 import mongoose from "mongoose";
 
-var isConnected = null;
+var clientPromise;
 
-async function dbConnect() {
-  if (isConnected) {
-    console.log("=> using existing database connection");
-    return Promise.resolve();
+async function dbConnect(caller) {
+  // if (global._mongoClientPromise) {
+  //   console.log(caller + " => using existing database connection");
+  //   return Promise.resolve();
+  // }
+  // console.log(caller + " => using new database connection");
+
+  // const db = await mongoose.connect(process.env.MONGO_URI, {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
+  // });
+
+  // isConnected = db.connections[0].readyState;
+
+  if (!global._mongoooseClientPromise) {
+    global._mongoooseClientPromise = await mongoose.connect(
+      process.env.MONGO_URI,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
+
+    console.log(caller + " => using new database connection");
   }
-  console.log("=> using new database connection");
-  const db = await mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
 
-  isConnected = db.connections[0].readyState;
+  clientPromise = global._mongoooseClientPromise;
 }
 
 export default dbConnect;

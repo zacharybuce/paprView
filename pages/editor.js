@@ -48,7 +48,7 @@ export default function editor() {
   };
 
   return (
-    <Box sx={{ mt: "10vh", mb: "15vh" }}>
+    <Box sx={{ mt: "10vh" }}>
       {session ? (
         <Box>
           <Box sx={{ mt: "1vh", ml: "10vw", mr: "10vw" }}>

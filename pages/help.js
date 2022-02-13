@@ -17,7 +17,6 @@ const HelpContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
   marginRight: "10vw",
   marginLeft: "10vw",
-  marginBottom: "7vh",
   [theme.breakpoints.up("xl")]: {
     marginRight: "20vw",
     marginLeft: "20vw",
