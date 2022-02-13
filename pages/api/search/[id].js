@@ -1,7 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import Article from "../../../models/Article";
 
-dbConnect();
+dbConnect("search[id]");
 
 export const getDocs = async (id) => {
   const articles = await Article.aggregate([

@@ -19,7 +19,7 @@ const FormContainer = styled("div")(({ theme }) => ({
 const articlecform = () => {
   const { data: session } = useSession();
   return (
-    <Box sx={{ mt: "10vh", mb: "55vh" }}>
+    <Box sx={{ mt: "10vh" }}>
       {session ? (
         <Box>
           <Typography variant="h5" align="center" sx={{ mt: "2vh" }}>

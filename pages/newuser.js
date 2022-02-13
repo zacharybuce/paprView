@@ -8,7 +8,7 @@ const ResultsContainer = styled("div")(({ theme }) => ({
   marginTop: "30vh",
   marginRight: "10vw",
   marginLeft: "10vw",
-  marginBottom: "49vh",
+
   [theme.breakpoints.up("xl")]: {
     marginRight: "25vw",
     marginLeft: "25vw",
