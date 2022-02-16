@@ -59,22 +59,36 @@ const summaries = ({ summaries, docData }) => {
         />
       </Box>
       <SummariesContainer>
-        {summaries.map((summary, index) => {
-          return (
-            <Box key={index}>
-              <Summary
-                summaryId={summary._id}
-                content={summary.content}
-                lastedit={summary.lastedit}
-                userId={summary.user}
-                upvotes={summary.upvotes}
-                downvotes={summary.downvotes}
-                tags={docData.tags}
-              />
-              <Divider />
+        {summaries.length ? (
+          summaries.map((summary, index) => {
+            return (
+              <Box key={index}>
+                <Summary
+                  summaryId={summary._id}
+                  content={summary.content}
+                  lastedit={summary.lastedit}
+                  userId={summary.user}
+                  upvotes={summary.upvotes}
+                  downvotes={summary.downvotes}
+                  tags={docData.tags}
+                />
+                <Divider />
+              </Box>
+            );
+          })
+        ) : (
+          <Box>
+            <Box sx={{ height: "30vh", alignItems: "center" }}>
+              <Typography
+                variant="h3"
+                sx={{ textAlign: "center", position: "relative", top: "20%" }}
+              >
+                No summaries yet!
+              </Typography>
             </Box>
-          );
-        })}
+            <Divider />
+          </Box>
+        )}
       </SummariesContainer>
       <Grid container alignContent="center" alignItems="center">
         <Grid item xs={12} sx={{ mt: "3vh", ml: "25vw", mr: "25vw" }}>

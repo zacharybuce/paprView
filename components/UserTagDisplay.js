@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useState, useEffect } from "react";
 import DisciplineTagIcon from "./DisciplineTagIcon";
 

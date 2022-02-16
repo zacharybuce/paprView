@@ -17,16 +17,35 @@ import {
 import fetch from "isomorphic-unfetch";
 import useSWR from "swr";
 
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 const FilterDialog = (props) => {
   const [tags, setTags] = useState([]);
   const [state, setState] = useState({});
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
+  const { data, error } = useSWR(
+    process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags",
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
-  // useEffect(() => {
-  //   if (props.open) getTags();
-  // }, [props.open]);
+  useEffect(() => {
+    if (data) {
+      setTags(data.data);
+      const obj = {};
 
+      for (const key of tags) {
+        obj[key] = false;
+      }
+
+      setState(obj);
+    }
+  }, [data]);
   useEffect(() => {
     setState({
       ...state,
@@ -34,32 +53,6 @@ const FilterDialog = (props) => {
       ["from"]: fromDate,
     });
   }, [toDate, fromDate]);
-
-  const fetcher = (...args) =>
-    fetch(...args).then((res) =>
-      res.json().then((data) => {
-        setTags(data.data);
-
-        const obj = {};
-
-        for (const key of tags) {
-          obj[key] = false;
-        }
-
-        setState(obj);
-      })
-    );
-  const { data, error } = useSWR(
-    process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags",
-    fetcher
-  );
-  // const getTags = async () => {
-  //   try {
-  //     useSWR(process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags", fetcher);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const handleSubmit = (e) => {
     console.log("here");

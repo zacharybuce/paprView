@@ -14,7 +14,6 @@ import NextLink from "next/link";
 import SearchNav from "../components/SearchNav";
 import AccountDrawer from "../components/AccountDrawer";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { fontWeight } from "@mui/system";
 
 export default function PrimarySearchAppBar() {
   const { data: session } = useSession();
@@ -37,6 +36,7 @@ export default function PrimarySearchAppBar() {
                   backgroundRepeat: "no-repeat",
                   width: "85px",
                   height: "41px",
+                  display: { xs: "none", sm: "block" },
                 }}
               >
                 <Box sx={{ position: "relative", left: "100%" }}>
@@ -59,7 +59,7 @@ export default function PrimarySearchAppBar() {
           </NextLink>
 
           <Grid container justifyContent="center">
-            <Grid item xs={5}>
+            <Grid item xs={7} md={5}>
               <SearchNav />
             </Grid>
           </Grid>

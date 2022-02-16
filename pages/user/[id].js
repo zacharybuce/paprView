@@ -22,6 +22,10 @@ const UserContainer = styled("div")(({ theme }) => ({
     marginRight: "25vw",
     marginLeft: "25vw",
   },
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "3vw",
+    marginLeft: "3vw",
+  },
 }));
 
 const formatDate = (date) => {
@@ -52,7 +56,12 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 const user = (props) => {
   const { data, error } = useSWR(
     process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + props.id,
-    fetcher
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   if (!data)
@@ -65,15 +74,15 @@ const user = (props) => {
   return (
     <UserContainer>
       <Grid container spacing={1}>
-        <Grid item xs={2}>
+        <Grid item xs={12} md={2}>
           <Avatar src={data.data.image} sx={{ height: 100, width: 100 }} />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={12} md={10}>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item md={12}>
               <Typography variant="h3">{data.data.name}</Typography>
             </Grid>
-            <Grid item xs={12} sx={{ mt: "1vh" }}>
+            <Grid item md={12} sx={{ mt: "1vh" }}>
               <Grid container>
                 <Tooltip title="Dropped in on" arrow placement="top">
                   <ParaglidingIcon sx={{ mr: ".5vw" }} />
@@ -83,7 +92,7 @@ const user = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item container direction="column" xs={2} sx={{ mt: "4vh" }}>
+        <Grid item container direction="column" md={2} sx={{ mt: "4vh" }}>
           <Box>
             <Typography variant="h6" sx={{ mb: "1vh" }}>
               Stats
@@ -125,7 +134,7 @@ const user = (props) => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={10} sx={{ mt: "4vh" }}>
+        <Grid item xs={12} md={10} sx={{ mt: "4vh" }}>
           <UserRanks ranks={data.data.ranks} />
           <UserSummaries userId={props.id} summaries={data.data.summaries} />
         </Grid>

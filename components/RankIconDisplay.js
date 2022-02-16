@@ -1,9 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import PermDataSettingIcon from "@mui/icons-material/PermDataSetting";
-import BiotechIcon from "@mui/icons-material/Biotech";
-import ComputerIcon from "@mui/icons-material/Computer";
-import PsychologyIcon from "@mui/icons-material/Psychology";
+import dynamic from "next/dynamic";
+import useSWR from "swr";
+const PsychologyIcon = dynamic(() => import("@mui/icons-material/Psychology"));
+const PermDataSettingIcon = dynamic(() =>
+  import("@mui/icons-material/PermDataSetting")
+);
+const BiotechIcon = dynamic(() => import("@mui/icons-material/Biotech"));
+const ComputerIcon = dynamic(() => import("@mui/icons-material/Computer"));
 import { Grid, Tooltip } from "@mui/material";
 
 const setIcon = (tagName) => {
@@ -23,9 +27,23 @@ const RankIconDisplay = (props) => {
   const [tagName, setTagName] = useState(null);
   const [disName, setDisName] = useState(null);
 
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data, error } = useSWR(
+    process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags/" + props.tagId,
+    fetcher
+  );
+
   useEffect(() => {
-    getTagName(props.tagId);
-  }, [props]);
+    if (data) {
+      setTagName(data.data.name);
+      setDisName(data.data.disciplineName);
+    }
+  }, [data]);
+
+  // useEffect(() => {
+  //   getTagName(props.tagId);
+  // }, []);
+
   const getTagName = async (tagId) => {
     try {
       var tagRes = await fetch(
