@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Box, Grid, Avatar, Link, Typography } from "@mui/material";
-import RankIconDisplay from "./RankIconDisplay";
+import { Grid, Avatar, Link, Typography } from "@mui/material";
+import ArticleTagChip from "./ArticleTagChip";
 
 const rankSort = (a, b) => {
   if (a.value < b.value) return 1;
@@ -61,7 +61,8 @@ const UserCard = ({ user }) => {
               topRanks.map((rank) => {
                 if (rank != undefined && rank.value > 0) {
                   return (
-                    <RankIconDisplay
+                    <ArticleTagChip
+                      rank
                       color={setColor(rank.value)}
                       tagId={rank.tag}
                     />

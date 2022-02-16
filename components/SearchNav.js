@@ -23,6 +23,10 @@ const SearchContainer = styled("div")(({ theme }) => ({
     marginLeft: theme.spacing(3),
     width: "auto",
   },
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: 0,
+    marginRight: 0,
+  },
 }));
 
 const SearchIconWrapper = styled("button")(({ theme }) => ({
@@ -71,7 +75,7 @@ const Search = () => {
 
   return (
     <Grid container>
-      <Grid item xs={11}>
+      <Grid item xs={12}>
         <SearchContainer>
           <Box
             onSubmit={handleSubmit}

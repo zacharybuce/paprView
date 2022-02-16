@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { styled } from "@mui/material/styles";
 
 const FormContainer = styled("div")(({ theme }) => ({
-  marginTop: "10vh",
+  marginTop: "5vh",
   marginRight: "10vw",
   marginLeft: "10vw",
   marginBottom: "7vh",
@@ -14,15 +14,23 @@ const FormContainer = styled("div")(({ theme }) => ({
     marginRight: "18vw",
     marginLeft: "18vw",
   },
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "0vw",
+    marginLeft: "0vw",
+  },
 }));
 
 const articlecform = () => {
   const { data: session } = useSession();
   return (
-    <Box sx={{ mt: "10vh" }}>
+    <Box sx={{ mt: "20vh" }}>
       {session ? (
         <Box>
-          <Typography variant="h5" align="center" sx={{ mt: "2vh" }}>
+          <Typography
+            variant="h5"
+            align="center"
+            sx={{ mt: "2vh", pr: "1vw", pl: "1vw" }}
+          >
             Enter Information about the Document
           </Typography>
           <FormContainer>

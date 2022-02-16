@@ -3,7 +3,7 @@ import { Box, Link, Typography, Grid, Divider } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import ArticleTagChip from "./ArticleTagChip";
-
+import useInView from "react-cool-inview";
 const Title = styled("div")(({ theme }) => ({
   fontSize: 20,
   "&:hover": {
@@ -62,6 +62,11 @@ const formatDate = (date) => {
 };
 
 const Document = (props) => {
+  const { observe, inView } = useInView({
+    onEnter: ({ unobserve }) => {
+      unobserve();
+    },
+  });
   const theme = useTheme();
   const primary = theme.palette.primary.main;
 
@@ -73,8 +78,11 @@ const Document = (props) => {
             sx={{
               backgroundColor: props.doc.summaries.length ? primary : "none",
               borderRadius: 3,
-              color: "white",
+              color: props.doc.summaries.length ? "white" : primary,
               textAlign: "center",
+              border: props.doc.summaries.length ? "" : "solid",
+              borderColor: props.doc.summaries.length ? "" : primary,
+              borderWidth: "1px",
               mr: "2vw",
               p: 1,
             }}
@@ -115,15 +123,21 @@ const Document = (props) => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <Grid container justifyContent="flex-end" spacing={1}>
-                {props.doc.tags.map((tag) => {
-                  return (
-                    <Grid key={tag} item sx={{ mt: "1vh" }}>
-                      <ArticleTagChip tagId={tag} />
-                    </Grid>
-                  );
-                })}
-              </Grid>
+              <div ref={observe}>
+                {inView ? (
+                  <Grid container justifyContent="flex-end" spacing={1}>
+                    {props.doc.tags.map((tag) => {
+                      return (
+                        <Grid key={tag} item sx={{ mt: "1vh" }}>
+                          <ArticleTagChip tagId={tag} />
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                ) : (
+                  <div></div>
+                )}
+              </div>
             </Grid>
           </Grid>
         </Grid>

@@ -1,11 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Box, CircularProgress, Grid, Divider } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  Divider,
+  Typography,
+} from "@mui/material";
 import Document from "../components/Document";
 import SearchResultsHeader from "../components/SearchResultsHeader";
 import { styled } from "@mui/material/styles";
 import WhatIsPaprView from "../components/WhatIsPaprView";
 import { getDocs } from "./api/search/[id]";
+import TopUsers from "../components/TopUsers";
 
 const ResultsContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
@@ -15,6 +22,18 @@ const ResultsContainer = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("xl")]: {
     marginRight: "15vw",
     marginLeft: "22vw",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "3vw",
+    marginLeft: "3vw",
+  },
+}));
+
+const WhatIsContainer = styled("div")(({ theme }) => ({
+  marginBottom: "2vh",
+  [theme.breakpoints.down("sm")]: {
+    marginTop: "4vh",
+    paddingRight: "3vw",
   },
 }));
 
@@ -68,7 +87,7 @@ const documents = (props) => {
   return (
     <ResultsContainer>
       <Grid container>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={8}>
           <SearchResultsHeader
             query={props.query}
             results={props.documents.length}
@@ -77,24 +96,29 @@ const documents = (props) => {
             setFilter={setFilter}
           />
           <Divider />
-          {docs ? (
+          {docs.length ? (
             docs.map((doc, index) => {
-              return (
-                <Box key={index}>
-                  <Document doc={doc} />
-                </Box>
-              );
+              return <Document key={index} doc={doc} />;
             })
           ) : (
-            <Box
-              sx={{ mt: "2vh", mr: "10vw", ml: "10vw", textAlign: "center" }}
-            >
-              <CircularProgress />
+            <Box sx={{ mt: "2vh", textAlign: "center" }}>
+              <Typography variant="h4" sx={{ mb: "3vh" }}>
+                We can't find what you are looking for...
+              </Typography>
+              <Typography variant="h6">
+                Search for something else or be the first to contribute!
+              </Typography>
             </Box>
           )}
         </Grid>
-        <Grid item xs={4}>
-          <WhatIsPaprView />
+        <Grid item xs={12} md={4}>
+          <WhatIsContainer>
+            <WhatIsPaprView />
+          </WhatIsContainer>
+
+          <WhatIsContainer>
+            <TopUsers />
+          </WhatIsContainer>
         </Grid>
       </Grid>
     </ResultsContainer>

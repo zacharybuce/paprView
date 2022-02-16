@@ -18,6 +18,18 @@ import fetch from "isomorphic-unfetch";
 import AddTagDialog from "./AddTagDialog";
 import { matchSorter } from "match-sorter";
 import useSWR from "swr";
+import { styled } from "@mui/material/styles";
+
+const FormContainer = styled("div")(({ theme }) => ({
+  [theme.breakpoints.up("md")]: {
+    marginRight: "10vw",
+    marginLeft: "10vw",
+  },
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "0vw",
+    marginLeft: "0vw",
+  },
+}));
 
 const ArticleCreateForm = () => {
   const router = useRouter();
@@ -38,7 +50,12 @@ const ArticleCreateForm = () => {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error } = useSWR(
     process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags",
-    fetcher
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   useEffect(() => {
@@ -116,8 +133,7 @@ const ArticleCreateForm = () => {
         .then((response) => response.json())
         .then((data) => {
           router.push({
-            pathname: "/editor",
-            query: { articleId: data.data._id },
+            pathname: "/summaries/" + data.data._id,
           });
         });
     } catch (error) {
@@ -146,16 +162,13 @@ const ArticleCreateForm = () => {
   };
 
   return (
-    <Box>
+    <FormContainer>
       <Box
         onSubmit={handleSubmit}
         component="form"
         autoComplete="off"
         noValidate
         sx={{
-          mt: "2vh",
-          mr: "10vw",
-          ml: "10vw",
           borderRadius: "5px",
           boxShadow: 3,
         }}
@@ -226,8 +239,8 @@ const ArticleCreateForm = () => {
               </Button>
             </Box>
           </div>
-          <Grid container alignItems="center">
-            <Grid item xs={6}>
+          <Grid container alignItems="center" spacing={2}>
+            <Grid item xs={12} md={6}>
               <Box sx={{ mt: "2vh", width: "100%" }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
@@ -238,12 +251,14 @@ const ArticleCreateForm = () => {
                     onChange={(newValue) => {
                       setDateValue(newValue);
                     }}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => (
+                      <TextField fullWidth {...params} />
+                    )}
                   />
                 </LocalizationProvider>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Box sx={{ mt: "2vh", width: "100%" }}>
                 <FormControl sx={{ width: "100%" }}>
                   {docTags != null ? (
@@ -310,7 +325,7 @@ const ArticleCreateForm = () => {
         </Box>
       </Box>
       <AddTagDialog setTags={setTags} open={open} setOpen={setOpen} />
-    </Box>
+    </FormContainer>
   );
 };
 

@@ -84,7 +84,7 @@ const AddTagDialog = (props) => {
           <form id="form" onSubmit={handleSubmit}>
             <FormGroup>
               <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6} sx={{ mb: "2vh" }}>
                   <DialogContentText sx={{ mb: "1vh" }}>
                     Tag Name
                   </DialogContentText>
@@ -96,7 +96,7 @@ const AddTagDialog = (props) => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <DialogContentText sx={{ mb: "1vh" }}>
                     Discipline{" "}
                     <Tooltip title="A Discipline is the overarching topic that your tag falls under. Learn more about Disciplines on our Help page">

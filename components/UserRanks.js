@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
-import { useState } from "react";
 import UserTagDisplay from "./UserTagDisplay";
 
 const UserRanks = (props) => {
