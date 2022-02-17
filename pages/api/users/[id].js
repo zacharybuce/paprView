@@ -46,6 +46,15 @@ export default async (req, res) => {
               runValidators: true,
             }
           );
+        } else if (req.body.credibility) {
+          user = await User.updateOne(
+            { _id: id },
+            { $inc: { credibility: req.body.credibility } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
         } else if (req.body.id) {
           user = await User.findByIdAndUpdate(
             id,

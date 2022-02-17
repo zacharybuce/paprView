@@ -117,6 +117,7 @@ const ArticleCreateForm = () => {
       tags: articleTags,
       summaries: [],
       comments: [],
+      bounty: {},
     };
 
     docData.authors.unshift(authorText);

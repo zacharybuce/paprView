@@ -2,6 +2,17 @@ const mongoose = require("mongoose");
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+const bountySchema = new mongoose.Schema({
+  user: {
+    type: ObjectId,
+    required: [false],
+  },
+  value: {
+    type: Number,
+    required: [false],
+  },
+});
+
 const ArticleSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -35,6 +46,10 @@ const ArticleSchema = new mongoose.Schema({
   },
   comments: {
     type: [ObjectId],
+    required: [false],
+  },
+  bounty: {
+    type: bountySchema,
     required: [false],
   },
 });

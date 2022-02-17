@@ -10,14 +10,14 @@ const rankSort = (a, b) => {
 };
 
 const setColor = (value) => {
-  if (value >= 200) {
+  if (value >= 100) {
     return "#b9f2ff"; //diamond
-  } else if (value >= 100) {
-    return "#ffd700"; //gold
   } else if (value >= 50) {
-    return "#94908e"; //silver
+    return "#ffd700"; //gold
   } else if (value >= 25) {
-    return "#6e3213"; //bronze
+    return "#94908e"; //silver
+  } else if (value >= 1) {
+    return "#d1a684"; //bronze
   } else {
     return "black";
   }
@@ -51,10 +51,12 @@ const UserCard = ({ user }) => {
               <Typography fontWeight={500}>{user.name}</Typography>
             </Link>
           </Grid>
-          <Grid item container xs={12}>
-            <Grid item xs={2}>
+          <Grid item container xs={12} spacing={1}>
+            <Grid item xs={3}>
               <Typography fontWeight={500} sx={{ fontSize: 15 }}>
-                {user.credibility}
+                {user.credibility >= 1000
+                  ? user.credibility / 1000 + "k"
+                  : user.credibility}
               </Typography>
             </Grid>
             {topRanks ? (
@@ -65,6 +67,7 @@ const UserCard = ({ user }) => {
                       rank
                       color={setColor(rank.value)}
                       tagId={rank.tag}
+                      rankValue={rank.value}
                     />
                   );
                 }
