@@ -1,8 +1,9 @@
 import React from "react";
-import { Box, Link, Typography, Grid, Divider } from "@mui/material";
+import { Box, Link, Typography, Grid, Divider, Chip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import ArticleTagChip from "./ArticleTagChip";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import useInView from "react-cool-inview";
 const Title = styled("div")(({ theme }) => ({
   fontSize: 20,
@@ -105,12 +106,24 @@ const Document = (props) => {
         </Grid>
         <Grid item xs={9} sm={10}>
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={10}>
               <Link href={"/summaries/" + props.doc._id} underline="none">
                 <Box sx={{}}>
                   <Title>{props.doc.title}</Title>
                 </Box>
               </Link>
+            </Grid>
+            <Grid item container justifyContent="flex-end" xs={2}>
+              {props.doc.bounty.value ? (
+                <Chip
+                  icon={<EmojiEventsIcon />}
+                  color="primary"
+                  label={"+" + props.doc.bounty.value}
+                  sx={{ fontSize: "15px" }}
+                />
+              ) : (
+                ""
+              )}
             </Grid>
             <Grid item xs={12}>
               <Typography sx={{ mt: "1vh", color: "gray" }}>

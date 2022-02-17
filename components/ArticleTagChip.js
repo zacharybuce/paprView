@@ -45,26 +45,9 @@ const UserTagDisplay = (props) => {
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   getTagName(props.tagId);
-  // }, []);
-
-  const getTagName = async (tagId) => {
-    try {
-      var tagRes = await fetch(
-        process.env.NEXT_PUBLIC_ROOT_URL + "/api/tags/" + tagId
-      );
-      const tagData = await tagRes.json();
-      setTagName(tagData.data.name);
-      setDisName(tagData.data.disciplineName);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   if (props.rank)
     return (
-      <Tooltip title={tagName} arrow>
+      <Tooltip title={tagName + " " + props.rankValue} arrow>
         <Grid item xs={2} sx={{ color: props.color }}>
           {setIcon(disName)}
         </Grid>

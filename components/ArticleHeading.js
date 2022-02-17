@@ -28,9 +28,6 @@ const ArticleHeading = (props) => {
           return <AritcleTagChip key={index} tagId={tag} />;
         })}
       </Grid>
-      <Grid item xs={12}>
-        <Divider sx={{ backgroundColor: "#808080" }} />
-      </Grid>
     </Grid>
   );
 };

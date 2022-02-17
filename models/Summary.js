@@ -2,6 +2,17 @@ const mongoose = require("mongoose");
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+const bountySchema = new mongoose.Schema({
+  user: {
+    type: ObjectId,
+    required: [false],
+  },
+  value: {
+    type: Number,
+    required: [false],
+  },
+});
+
 const SummarySchema = new mongoose.Schema({
   content: {
     type: String,
@@ -30,6 +41,10 @@ const SummarySchema = new mongoose.Schema({
   user: {
     type: ObjectId,
     required: [true, "Must have a User"],
+  },
+  bounty: {
+    type: bountySchema,
+    required: [false],
   },
 });
 

@@ -32,6 +32,7 @@ const UserSummaries = (props) => {
           upvotes: summaryData.data.upvotes,
           downvotes: summaryData.data.downvotes,
           date: summaryData.data.lastedit,
+          bounty: summaryData.data.bounty,
         };
         userSummaries.push(display);
       }

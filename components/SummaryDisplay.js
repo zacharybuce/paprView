@@ -2,6 +2,7 @@ import { Box, Grid, Link, Typography, Tooltip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import React from "react";
 import NextLink from "next/link";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 const formatDate = (date) => {
   const monthNames = [
@@ -58,7 +59,22 @@ const SummaryDisplay = (props) => {
           </Box>
         </Tooltip>
       </Grid>
-      <Grid item xs={9} sx={{ pt: 1 }}>
+      <Grid
+        item
+        container
+        alignItems="center"
+        xs={1}
+        sx={{ textAlign: "center" }}
+      >
+        {props.summary.bounty.value ? (
+          <Typography color="primary" sx={{ fontSize: "12px" }}>
+            <EmojiEventsIcon />
+          </Typography>
+        ) : (
+          ""
+        )}
+      </Grid>
+      <Grid item xs={8} sx={{ pt: 1 }}>
         <NextLink href={"/summaries/" + props.summary.articleId} passHref>
           <Link underline="none">
             <Typography noWrap>{props.summary.title}</Typography>

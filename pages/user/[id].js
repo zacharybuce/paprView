@@ -13,6 +13,12 @@ import ParaglidingIcon from "@mui/icons-material/Paragliding";
 import UserRanks from "../../components/UserRanks";
 import useSWR from "swr";
 
+const rankSort = (a, b) => {
+  if (a.value < b.value) return 1;
+  if (a.value > b.value) return -1;
+  return 0;
+};
+
 const UserContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
   marginRight: "10vw",
@@ -130,12 +136,21 @@ const user = (props) => {
                     <b>{data.data.summaries.length}</b>
                   </Typography>
                 </Grid>
+                <Grid item xs={12} sx={{ textAlign: "center" }}>
+                  <Typography>Tags</Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Typography variant="h5" sx={{ textAlign: "center" }}>
+                    <b>{data.data.ranks.length}</b>
+                  </Typography>
+                </Grid>
               </Grid>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={12} md={10} sx={{ mt: "4vh" }}>
-          <UserRanks ranks={data.data.ranks} />
+          <UserRanks ranks={data.data.ranks.sort(rankSort)} />
           <UserSummaries userId={props.id} summaries={data.data.summaries} />
         </Grid>
       </Grid>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import UserTagDisplay from "./UserTagDisplay";
-
 const UserRanks = (props) => {
   const display = () => {
     if (props.ranks.length === 0) return <Typography>No Tags</Typography>;
@@ -13,7 +12,7 @@ const UserRanks = (props) => {
   return (
     <Box>
       <Typography variant="h6" sx={{ mb: "1vh" }}>
-        Top Tags
+        Top 5 Tags
       </Typography>
       <Box
         sx={{
@@ -25,13 +24,14 @@ const UserRanks = (props) => {
       >
         {props.ranks
           ? props.ranks.map((rank, index) => {
-              return (
-                <UserTagDisplay
-                  key={index}
-                  tagId={rank.tag}
-                  score={rank.value}
-                />
-              );
+              if (index < 5)
+                return (
+                  <UserTagDisplay
+                    key={index}
+                    tagId={rank.tag}
+                    score={rank.value}
+                  />
+                );
             })
           : display()}
       </Box>

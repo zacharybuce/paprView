@@ -26,15 +26,26 @@ export default async (req, res) => {
 
     case "PUT":
       try {
-        const article = await Article.findByIdAndUpdate(
-          id,
-          { $push: { summaries: req.body.id } },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-
+        var article;
+        if (req.body.bounty) {
+          article = await Article.findByIdAndUpdate(
+            id,
+            { $set: { bounty: req.body.bounty } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else if (req.body.id) {
+          article = await Article.findByIdAndUpdate(
+            id,
+            { $push: { summaries: req.body.id } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        }
         if (!article) {
           return res.status(400).json({ success: false });
         }

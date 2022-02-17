@@ -44,65 +44,108 @@ export default async (req, res) => {
       break;
 
     case "PUT":
-      try {
-        const summary = await Summary.findByIdAndUpdate(
-          id,
-          {
-            $inc: { upvotes: req.body.upvote, downvotes: req.body.downvote },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-        const incAmount = rankCred(req.body.upvote, req.body.downvote);
+      if (req.body.bounty) {
+        try {
+          const summary = await Summary.findByIdAndUpdate(
+            id,
+            {
+              $set: { bounty: { value: req.body.credibility } },
+            },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
 
-        var bulkOps = [];
-        console.log(summary.user.toString());
-        for (const tag of req.body.tags) {
-          console.log(tag);
-          let doc = {
+          const incAmount = req.body.credibility;
+
+          var bulkOps = [];
+          for (const tag of req.body.tags) {
+            console.log(tag);
+            let doc = {
+              updateOne: {
+                filter: {
+                  _id: req.body.userId,
+                  "ranks.tag": tag,
+                },
+                update: { $inc: { "ranks.$.value": incAmount / 10 } },
+              },
+            };
+            console.log(doc);
+            bulkOps.push(doc);
+          }
+
+          bulkOps.push({
+            updateOne: {
+              filter: {
+                _id: req.body.userId,
+              },
+              update: { $inc: { credibility: incAmount } },
+            },
+          });
+
+          const user = await User.bulkWrite(bulkOps);
+          console.log(user);
+          if (!user) {
+            return res.status(400).json({ success: false });
+          }
+
+          res.status(200).json({ success: true, data: user });
+        } catch (error) {
+          console.log(error);
+          res.status(400).json({ success: false, error: error });
+        }
+      } else {
+        try {
+          const summary = await Summary.findByIdAndUpdate(
+            id,
+            {
+              $inc: { upvotes: req.body.upvote, downvotes: req.body.downvote },
+            },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+          const incAmount = rankCred(req.body.upvote, req.body.downvote);
+
+          var bulkOps = [];
+          console.log(summary.user.toString());
+          for (const tag of req.body.tags) {
+            console.log(tag);
+            let doc = {
+              updateOne: {
+                filter: {
+                  _id: summary.user.toString(),
+                  "ranks.tag": tag,
+                },
+                update: { $inc: { "ranks.$.value": incAmount / 10 } },
+              },
+            };
+            console.log(doc);
+            bulkOps.push(doc);
+          }
+
+          bulkOps.push({
             updateOne: {
               filter: {
                 _id: summary.user.toString(),
-                "ranks.tag": tag,
               },
-              update: { $inc: { "ranks.$.value": incAmount / 10 } },
+              update: { $inc: { credibility: incAmount } },
             },
-          };
-          console.log(doc);
-          bulkOps.push(doc);
+          });
+
+          const user = await User.bulkWrite(bulkOps);
+          console.log(user);
+          if (!summary) {
+            return res.status(400).json({ success: false });
+          }
+
+          res.status(200).json({ success: true, data: summary });
+        } catch (error) {
+          console.log(error);
+          res.status(400).json({ success: false, error: error });
         }
-        // var user = await User.findByIdAndUpdate(
-        //   summary.user.toString(),
-        //   {
-        //     $inc: { credibility: incAmount },
-        //   },
-        //   {
-        //     new: true,
-        //     runValidators: true,
-        //   }
-        // );
-
-        bulkOps.push({
-          updateOne: {
-            filter: {
-              _id: summary.user.toString(),
-            },
-            update: { $inc: { credibility: incAmount } },
-          },
-        });
-
-        const user = await User.bulkWrite(bulkOps);
-        console.log(user);
-        if (!summary) {
-          return res.status(400).json({ success: false });
-        }
-
-        res.status(200).json({ success: true, data: summary });
-      } catch (error) {
-        console.log(error);
-        res.status(400).json({ success: false, error: error });
       }
       break;
 

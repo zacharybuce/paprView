@@ -48,6 +48,7 @@ const MyEditor = (props) => {
       downvotes: "0",
       user: props.userId,
       lastedit: String(new Date()),
+      bounty: {},
     },
   };
 
