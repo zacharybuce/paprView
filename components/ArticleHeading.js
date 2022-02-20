@@ -1,6 +1,14 @@
 import React from "react";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import AritcleTagChip from "./ArticleTagChip";
+import { styled } from "@mui/material/styles";
+
+const ResultsHeader = styled("div")(({ theme }) => ({
+  fontSize: 24,
+  [theme.breakpoints.up("sm")]: {
+    fontSize: 35,
+  },
+}));
 
 const printAuthors = (authors) => {
   var returnStr = "";
@@ -18,7 +26,7 @@ const ArticleHeading = (props) => {
   return (
     <Grid container sx={{ mt: "2vh", textAlign: "center" }} spacing={1}>
       <Grid item xs={12} sx={{ mr: "2vw", ml: "2vw" }}>
-        <Typography variant="h4">{props.title}</Typography>
+        <ResultsHeader>{props.title}</ResultsHeader>
       </Grid>
       <Grid item xs={12}>
         {printAuthors(props.authors)}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Chip, Grid, Tooltip } from "@mui/material";
 import { useState, useEffect } from "react";
+import { styled } from "@mui/material/styles";
 import dynamic from "next/dynamic";
 import useSWR from "swr";
 const PsychologyIcon = dynamic(() => import("@mui/icons-material/Psychology"));
@@ -22,6 +23,12 @@ const setIcon = (tagName) => {
       return <PsychologyIcon />;
   }
 };
+
+const Tag = styled("div")(({ theme }) => ({
+  [theme.breakpoints.down("md")]: {
+    fontSize: "11",
+  },
+}));
 
 const UserTagDisplay = (props) => {
   const [tagName, setTagName] = useState(null);
@@ -54,7 +61,14 @@ const UserTagDisplay = (props) => {
       </Tooltip>
     );
 
-  return <Chip key={tagName} icon={setIcon(disName)} label={tagName}></Chip>;
+  return (
+    <Chip
+      size="small"
+      key={tagName}
+      icon={setIcon(disName)}
+      label={tagName}
+    ></Chip>
+  );
 };
 
 export default UserTagDisplay;

@@ -13,12 +13,15 @@ const SearchContainer = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.75),
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
+  margin: "auto",
+  width: "90%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
+    margin: "auto",
+    width: "50%",
+  },
+  [theme.breakpoints.up("xl")]: {
+    margin: "auto",
+    width: "40%",
   },
 }));
 
@@ -45,6 +48,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       marginLeft: theme.spacing(3),
       width: "100%",
     },
+  },
+}));
+
+const ButtonContainer = styled("div")(({ theme }) => ({
+  width: "30%",
+  margin: "auto",
+  [theme.breakpoints.up("sm")]: {
+    width: "20%",
+  },
+  [theme.breakpoints.up("xl")]: {
+    width: "15%",
   },
 }));
 
@@ -78,16 +92,12 @@ const Search = () => {
         />
       </SearchContainer>
 
-      <Box sx={{ mt: "3vh", textAlign: "center" }}>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="secondary"
-          sx={{ width: "30%" }}
-        >
-          Search
-        </Button>
+      <Box sx={{ mt: "3vh" }}>
+        <ButtonContainer>
+          <Button type="submit" fullWidth variant="contained" color="secondary">
+            Search
+          </Button>
+        </ButtonContainer>
       </Box>
     </Box>
   );

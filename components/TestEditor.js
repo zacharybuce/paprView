@@ -126,7 +126,14 @@ const MyEditor = (props) => {
       <Head>
         <title>My Editor</title>
       </Head>
-      <Box sx={{ backgroundColor: "white", boxShadow: 3, borderRadius: "5px" }}>
+      <Box
+        sx={{
+          backgroundColor: "white",
+          boxShadow: props.mobile ? "" : 3,
+          borderRadius: "5px",
+          mt: "1vh",
+        }}
+      >
         <BraftEditor
           language="en"
           value={editorState}

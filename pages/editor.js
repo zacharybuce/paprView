@@ -1,7 +1,7 @@
 import React from "react";
 import SummaryEditor from "../components/TestEditor";
 import Box from "@mui/material/Box";
-import { Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import Recommendations from "../components/Recommendations";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -62,8 +62,8 @@ export default function editor() {
               <div></div>
             )}
           </Box>
-
-          <Grid container>
+          <Divider sx={{ mt: "1vh", mb: "1vh" }} />
+          <Grid container sx={{ display: { xs: "none", sm: "flex" } }}>
             <Grid item xs={12} xl={8}>
               <EditorContainer>
                 <SummaryEditor
@@ -77,6 +77,14 @@ export default function editor() {
               <Recommendations />
             </Grid>
           </Grid>
+          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+            <SummaryEditor
+              userId={session.user._id}
+              articleId={id}
+              articleTitle={article ? article.title : ""}
+              mobile={true}
+            />
+          </Box>
         </Box>
       ) : (
         <LoginRedirect signIn={signIn} />

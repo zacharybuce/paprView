@@ -56,10 +56,10 @@ const SearchResultsHeader = (props) => {
         </Grid>
       </Grid>
       <Grid container>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} sx={{ display: { xs: "none", sm: "block" } }}>
           <ResultsAmount>{props.results} results</ResultsAmount>
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ mb: "1vh" }}>
+        <Grid item xs={12} sm={6} sx={{ mb: "1vh", mt: "1vh" }}>
           <Grid container justifyContent="flex-end">
             <SearchRefinement
               setPopular={props.setPopular}
