@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   Avatar,
@@ -6,12 +6,16 @@ import {
   Tooltip,
   Box,
   CircularProgress,
+  IconButton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import UserSummaries from "../../components/UserSummaries";
 import ParaglidingIcon from "@mui/icons-material/Paragliding";
 import UserRanks from "../../components/UserRanks";
+import CreateIcon from "@mui/icons-material/Create";
 import useSWR from "swr";
+import { useSession } from "next-auth/react";
+import EditNameDialog from "../../components/EditNameDialog";
 
 const rankSort = (a, b) => {
   if (a.value < b.value) return 1;
@@ -60,6 +64,9 @@ const formatDate = (date) => {
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const user = (props) => {
+  const { data: session } = useSession();
+  const [newName, setNewName] = useState();
+  const [editing, setEditing] = useState(false);
   const { data, error } = useSWR(
     process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + props.id,
     fetcher,
@@ -76,26 +83,54 @@ const user = (props) => {
         <CircularProgress />
       </Box>
     );
-  console.log(data);
+
+  const changeName = async () => {
+    if (!newName) return;
+
+    setEditing(false);
+
+    var user = {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: {
+        name: newName,
+      },
+    };
+    user.body = JSON.stringify(user.body);
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + props.id,
+      user
+    );
+  };
+
   return (
     <UserContainer>
       <Grid container spacing={1}>
         <Grid item xs={12} md={2}>
           <Avatar src={data.data.image} sx={{ height: 100, width: 100 }} />
         </Grid>
-        <Grid item xs={12} md={10}>
-          <Grid container>
-            <Grid item md={12}>
-              <Typography variant="h3">{data.data.name}</Typography>
-            </Grid>
-            <Grid item md={12} sx={{ mt: "1vh" }}>
-              <Grid container>
-                <Tooltip title="Dropped in on" arrow placement="top">
-                  <ParaglidingIcon sx={{ mr: ".5vw" }} />
-                </Tooltip>
-                <Typography>{formatDate(data.data.joinDate)}</Typography>
-              </Grid>
-            </Grid>
+        <Grid item container xs={12} md={10}>
+          <Grid item md={12}>
+            <Typography variant="h3">
+              {data.data.name}
+
+              {session && session.user._id == props.id ? (
+                <IconButton onClick={() => setEditing(true)}>
+                  <CreateIcon />
+                </IconButton>
+              ) : (
+                ""
+              )}
+            </Typography>
+          </Grid>
+          <Grid item container md={12} sx={{ mt: "1vh" }}>
+            <Tooltip title="Dropped in on" arrow placement="top">
+              <ParaglidingIcon sx={{ mr: ".5vw" }} />
+            </Tooltip>
+            <Typography>{formatDate(data.data.joinDate)}</Typography>
           </Grid>
         </Grid>
         <Grid item container direction="column" md={2} sx={{ mt: "4vh" }}>
@@ -151,9 +186,15 @@ const user = (props) => {
         </Grid>
         <Grid item xs={12} md={10} sx={{ mt: "4vh" }}>
           <UserRanks ranks={data.data.ranks.sort(rankSort)} />
-          <UserSummaries userId={props.id} summaries={data.data.summaries} />
+          <UserSummaries userId={props.id} />
         </Grid>
       </Grid>
+      <EditNameDialog
+        editing={editing}
+        setEditing={setEditing}
+        setNewName={setNewName}
+        changeName={changeName}
+      />
     </UserContainer>
   );
 };

@@ -37,6 +37,13 @@ const Footer = () => {
               </Link>
             </NextLink>
           </Grid>
+          <Grid item xs={6}>
+            <NextLink href="/help" passHref>
+              <Link style={{ textDecoration: "none" }}>
+                <Typography color="white">Help</Typography>
+              </Link>
+            </NextLink>
+          </Grid>
         </Grid>
       </Box>
     </Box>

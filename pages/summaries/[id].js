@@ -21,6 +21,7 @@ import "braft-editor/dist/index.css";
 import { CreateBountyButton } from "../../components/CreateBountyButton";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import TestEditor from "../../components/TestEditor";
 
 const DynamicBountyDialog = dynamic(() =>
   import("../../components/BountyDialog")

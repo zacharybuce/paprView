@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Typography, Link, Button } from "@mui/material";
 
 const WhatIsPaprView = () => {
   return (
@@ -29,6 +29,13 @@ const WhatIsPaprView = () => {
       <Typography sx={{ mt: "1vh" }}>
         <Link href="/help">Learn more here {" > "}</Link>
       </Typography>
+      <Box sx={{ mt: "1vh" }}>
+        <Link style={{ textDecoration: "none" }}>
+          <Button variant="contained" color="primary">
+            Submit Feedback
+          </Button>
+        </Link>
+      </Box>
     </Box>
   );
 };

@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
 import { useState, useEffect } from "react";
-import DisciplineTagIcon from "./DisciplineTagIcon";
+//import DisciplineTagIcon from "./DisciplineTagIcon";
 import ArticleTagChip from "./ArticleTagChip";
 const UserTagDisplay = (props) => {
-  const [tagName, setTagName] = useState(null);
-  const [disName, setDisName] = useState(null);
+  //const [tagName, setTagName] = useState(null);
+  //const [disName, setDisName] = useState(null);
 
   // useEffect(() => {
   //   getTagName(props.tagId);

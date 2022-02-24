@@ -23,7 +23,7 @@ const setColor = (value) => {
   }
 };
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, isTopUser }) => {
   const [topRanks, setTopRanks] = useState(undefined);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const UserCard = ({ user }) => {
 
   return (
     <Grid alignItems="center" spacing={1} container sx={{ pb: 1, pl: 1 }}>
-      <Grid item sx={{ mb: "1vh" }}>
+      <Grid item sx={{ mb: "1vh", display: isTopUser ? "none" : "flex" }}>
         <Avatar src={user.image} sx={{ width: 48, height: 48 }} />
       </Grid>
       <Grid item>
@@ -51,11 +51,11 @@ const UserCard = ({ user }) => {
               <Typography fontWeight={500}>{user.name}</Typography>
             </Link>
           </Grid>
-          <Grid item container xs={12} spacing={1}>
-            <Grid item xs={3}>
+          <Grid item container xs={12}>
+            <Grid item xs={2}>
               <Typography fontWeight={500} sx={{ fontSize: 15 }}>
                 {user.credibility >= 1000
-                  ? user.credibility / 1000 + "k"
+                  ? Math.round(user.credibility / 1000) + "k"
                   : user.credibility}
               </Typography>
             </Grid>

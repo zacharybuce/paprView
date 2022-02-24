@@ -56,20 +56,6 @@ export default async (req, res) => {
       }
       break;
 
-    case "DELETE":
-      try {
-        const deletedArticle = await Article.deletedOne({ _id: id });
-
-        if (!deletedArticle) {
-          res.status(400).json({ success: false });
-        }
-
-        res.status(200).json({ success: true, data: {} });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
-
     default:
       res.status(400).json({ success: false });
       break;

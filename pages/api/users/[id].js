@@ -28,10 +28,20 @@ export default async (req, res) => {
       try {
         var user;
         console.log(req.body);
+
         if (req.body.date) {
           user = await User.findByIdAndUpdate(
             id,
             { $set: { joinDate: req.body.date } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else if (req.body.name) {
+          user = await User.findByIdAndUpdate(
+            id,
+            { $set: { name: req.body.name } },
             {
               new: true,
               runValidators: true,
@@ -122,20 +132,6 @@ export default async (req, res) => {
         res.status(200).json({ success: true, data: user });
       } catch (error) {
         res.status(400).json({ success: false, error: error });
-      }
-      break;
-
-    case "DELETE":
-      try {
-        const deletedUser = await User.deletedOne({ _id: id });
-
-        if (!deletedUser) {
-          res.status(400).json({ success: false });
-        }
-
-        res.status(200).json({ success: true, data: {} });
-      } catch (error) {
-        res.status(400).json({ success: false });
       }
       break;
 

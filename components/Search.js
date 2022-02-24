@@ -3,8 +3,9 @@ import { styled, alpha } from "@mui/material/styles";
 import { useState } from "react";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography, Grid } from "@mui/material";
 import { useRouter } from "next/router";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 const SearchContainer = styled("div")(({ theme }) => ({
   position: "relative",
@@ -13,12 +14,15 @@ const SearchContainer = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.75),
   },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
+  margin: "auto",
+  width: "90%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
+    margin: "auto",
+    width: "50%",
+  },
+  [theme.breakpoints.up("xl")]: {
+    margin: "auto",
+    width: "40%",
   },
 }));
 
@@ -45,6 +49,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       marginLeft: theme.spacing(3),
       width: "100%",
     },
+  },
+}));
+
+const ButtonContainer = styled("div")(({ theme }) => ({
+  margin: "auto",
+  paddingTop: "2vh",
+  width: "85%",
+  [theme.breakpoints.up("sm")]: {
+    margin: "auto",
+    width: "45%",
+  },
+  [theme.breakpoints.up("xl")]: {
+    margin: "auto",
+    width: "35%",
   },
 }));
 
@@ -77,18 +95,35 @@ const Search = () => {
           sx={{ width: "100%" }}
         />
       </SearchContainer>
-
-      <Box sx={{ mt: "3vh", textAlign: "center" }}>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="secondary"
-          sx={{ width: "30%" }}
-        >
-          Search
-        </Button>
-      </Box>
+      <ButtonContainer>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+            >
+              Search
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              onClick={() =>
+                router.push({
+                  pathname: "/tags",
+                })
+              }
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Browse by Tag
+              <LocalOfferIcon sx={{ ml: "5px" }} />
+            </Button>
+          </Grid>
+        </Grid>
+      </ButtonContainer>
     </Box>
   );
 };

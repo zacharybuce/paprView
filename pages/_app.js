@@ -26,7 +26,10 @@ export default function MyApp(props) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>My page</title>
+        <link rel="icon" href="/favicon.png"></link>
+        <title>
+          paprView - Summaries that are concise and easy to understand
+        </title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <SessionProvider session={session}>
@@ -36,7 +39,9 @@ export default function MyApp(props) {
           <Box sx={{ position: "relative", pb: "20vh", minHeight: "100vh" }}>
             <Navbar></Navbar>
             <NextNprogress color="#EEB559" height={5} />
-            <Component {...pageProps} />
+            <Box sx={{ mt: "64px" }}>
+              <Component {...pageProps} />
+            </Box>
           </Box>
           <Footer />
         </ThemeProvider>

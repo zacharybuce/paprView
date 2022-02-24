@@ -60,7 +60,7 @@ const TopUsers = () => {
             🥇
           </Grid>
           <Grid item xs={10}>
-            <UserCard user={topUser1} />
+            <UserCard user={topUser1} isTopUser />
           </Grid>
         </Grid>
         <Grid
@@ -75,7 +75,7 @@ const TopUsers = () => {
             🥈
           </Grid>
           <Grid item xs={10}>
-            <UserCard user={topUser2} />
+            <UserCard user={topUser2} isTopUser />
           </Grid>
         </Grid>
       </Grid>

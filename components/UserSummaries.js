@@ -9,45 +9,29 @@ const voteSort = (a, b) => {
   return 0;
 };
 
-const UserSummaries = (props) => {
-  const [summaries, setSummaries] = useState(null);
-  const [userId, setUserId] = useState(props.userId);
+const UserSummaries = ({ userId }) => {
+  const [summaries, setSummaries] = useState([]);
 
   useEffect(() => {
     getSummaries();
   }, [userId]);
 
   const getSummaries = async () => {
-    const userSummaries = [];
-    try {
-      for (const summary of props.summaries) {
-        var summaryRes = await fetch(
-          process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + summary
-        );
-        const summaryData = await summaryRes.json();
+    const req = {
+      method: "POST",
+    };
 
-        const display = {
-          title: summaryData.data.articletitle,
-          articleId: summaryData.data.article,
-          upvotes: summaryData.data.upvotes,
-          downvotes: summaryData.data.downvotes,
-          date: summaryData.data.lastedit,
-          bounty: summaryData.data.bounty,
-        };
-        userSummaries.push(display);
-      }
-
-      userSummaries.sort(voteSort);
-
-      setSummaries(userSummaries);
-      console.log(userSummaries);
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + userId,
+      req
+    );
+    const summaries = await res.json();
+    console.log(summaries);
+    setSummaries(summaries.data);
   };
 
   const display = () => {
-    if (summaries !== null && summaries.length === 0)
+    if (summaries && summaries.length == 0)
       return (
         <Box sx={{ p: 2 }}>
           <Typography>There are no summaries to display</Typography>

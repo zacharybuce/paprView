@@ -76,12 +76,16 @@ const Summary = ({ summary, tags, awardBounty, articleBounty, sessionId }) => {
   return (
     <Grid container>
       <Grid item xs={2} sm={1} sx={{ textAlign: "center" }}>
-        <Vote
-          upvotes={summary.upvotes}
-          downvotes={summary.downvotes}
-          summaryId={summary._id}
-          tags={tags}
-        />
+        {sessionId != summary.user ? (
+          <Vote
+            upvotes={summary.upvotes}
+            downvotes={summary.downvotes}
+            summaryId={summary._id}
+            tags={tags}
+          />
+        ) : (
+          <Box sx={{ mt: "4vh" }}></Box>
+        )}
         {!summary.bounty.value && !articleBounty.value ? (
           ""
         ) : (

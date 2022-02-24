@@ -13,19 +13,46 @@ const SearchContainer = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.75),
   },
-  marginRight: theme.spacing(2),
   marginLeft: 0,
   border: "solid",
   borderWidth: "1px",
   borderColor: "darkgrey",
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
+  [theme.breakpoints.up("xs")]: {
+    width: "50%",
+    marginRight: "20vw",
   },
-  [theme.breakpoints.down("sm")]: {
-    marginLeft: 0,
-    marginRight: 0,
+  [theme.breakpoints.up("sm")]: {
+    width: "40%",
+    marginRight: "10vw",
+  },
+  [theme.breakpoints.up("md")]: {
+    width: "50%",
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: "50%",
+  },
+  [theme.breakpoints.up("xl")]: {
+    width: "50%",
+  },
+}));
+const BlankContainer = styled("div")(({ theme }) => ({
+  position: "relative",
+  [theme.breakpoints.up("xs")]: {
+    width: "50%",
+    marginRight: "20vw",
+  },
+  [theme.breakpoints.up("sm")]: {
+    width: "40%",
+    marginRight: "10vw",
+  },
+  [theme.breakpoints.up("md")]: {
+    width: "50%",
+  },
+  [theme.breakpoints.up("lg")]: {
+    width: "50%",
+  },
+  [theme.breakpoints.up("xl")]: {
+    width: "50%",
   },
 }));
 
@@ -52,6 +79,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       //marginLeft: theme.spacing(4),
       width: "100%",
     },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "12px",
+    },
   },
 }));
 
@@ -71,31 +101,27 @@ const Search = () => {
     }
   };
 
-  if (router.route == "/") return <div></div>;
+  if (router.route == "/") return <BlankContainer></BlankContainer>;
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <SearchContainer>
-          <Box
-            onSubmit={handleSubmit}
-            component="form"
-            autoComplete="off"
-            noValidate
-          >
-            <StyledInputBase
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              sx={{ width: "100%" }}
-            />
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-          </Box>
-        </SearchContainer>
-      </Grid>
-    </Grid>
+    <SearchContainer>
+      <Box
+        onSubmit={handleSubmit}
+        component="form"
+        autoComplete="off"
+        noValidate
+      >
+        <StyledInputBase
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search for a paper"
+          inputProps={{ "aria-label": "search" }}
+          sx={{ width: "100%" }}
+        />
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+      </Box>
+    </SearchContainer>
   );
 };
 
