@@ -1,6 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import Summary from "../../../models/Summary";
 import User from "../../../models/User";
+const mongoose = require("mongoose");
 
 const rankCred = (upvote, downvote) => {
   const incAmount = 10;
@@ -149,20 +150,28 @@ export default async (req, res) => {
       }
       break;
 
-    case "DELETE":
+    case "POST":
       try {
-        const deletedSummary = await Summary.deletedOne({ _id: id });
-
-        if (!deletedSummary) {
-          res.status(400).json({ success: false });
-        }
-
-        res.status(200).json({ success: true, data: {} });
+        const userId = mongoose.Types.ObjectId(id);
+        const users = await Summary.aggregate([
+          { $match: { user: userId } },
+          {
+            $project: {
+              total: { $subtract: ["$upvotes", "$downvotes"] },
+              articletitle: "$articletitle",
+              bounty: "$bounty",
+              date: "$lastedit",
+              articleId: "$article",
+            },
+          },
+          { $sort: { total: -1 } },
+          { $limit: 5 },
+        ]);
+        res.status(200).json({ success: true, data: users });
       } catch (error) {
-        res.status(400).json({ success: false });
+        console.log(error);
       }
       break;
-
     default:
       res.status(400).json({ success: false });
       break;

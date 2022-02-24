@@ -3,8 +3,9 @@ import { styled, alpha } from "@mui/material/styles";
 import { useState } from "react";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography, Grid } from "@mui/material";
 import { useRouter } from "next/router";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 const SearchContainer = styled("div")(({ theme }) => ({
   position: "relative",
@@ -52,13 +53,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const ButtonContainer = styled("div")(({ theme }) => ({
-  width: "30%",
   margin: "auto",
+  paddingTop: "2vh",
+  width: "85%",
   [theme.breakpoints.up("sm")]: {
-    width: "20%",
+    margin: "auto",
+    width: "45%",
   },
   [theme.breakpoints.up("xl")]: {
-    width: "15%",
+    margin: "auto",
+    width: "35%",
   },
 }));
 
@@ -91,14 +95,35 @@ const Search = () => {
           sx={{ width: "100%" }}
         />
       </SearchContainer>
-
-      <Box sx={{ mt: "3vh" }}>
-        <ButtonContainer>
-          <Button type="submit" fullWidth variant="contained" color="secondary">
-            Search
-          </Button>
-        </ButtonContainer>
-      </Box>
+      <ButtonContainer>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+            >
+              Search
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              onClick={() =>
+                router.push({
+                  pathname: "/tags",
+                })
+              }
+              fullWidth
+              variant="contained"
+              color="primary"
+            >
+              Browse by Tag
+              <LocalOfferIcon sx={{ ml: "5px" }} />
+            </Button>
+          </Grid>
+        </Grid>
+      </ButtonContainer>
     </Box>
   );
 };

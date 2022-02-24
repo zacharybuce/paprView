@@ -186,7 +186,7 @@ const user = (props) => {
         </Grid>
         <Grid item xs={12} md={10} sx={{ mt: "4vh" }}>
           <UserRanks ranks={data.data.ranks.sort(rankSort)} />
-          <UserSummaries userId={props.id} summaries={data.data.summaries} />
+          <UserSummaries userId={props.id} />
         </Grid>
       </Grid>
       <EditNameDialog

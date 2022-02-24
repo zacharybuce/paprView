@@ -150,6 +150,7 @@ const FilterDialog = (props) => {
               onClick={() => {
                 console.log("here");
               }}
+              sx={{ mt: "1vh" }}
             >
               Apply
             </Button>

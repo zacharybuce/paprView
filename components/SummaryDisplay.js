@@ -53,9 +53,7 @@ const SummaryDisplay = (props) => {
               p: 1,
             }}
           >
-            <Typography>
-              {props.summary.upvotes - props.summary.downvotes}
-            </Typography>
+            <Typography>{props.summary.total}</Typography>
           </Box>
         </Tooltip>
       </Grid>
@@ -77,7 +75,7 @@ const SummaryDisplay = (props) => {
       <Grid item xs={8} sx={{ pt: 1 }}>
         <NextLink href={"/summaries/" + props.summary.articleId} passHref>
           <Link underline="none">
-            <Typography noWrap>{props.summary.title}</Typography>
+            <Typography noWrap>{props.summary.articletitle}</Typography>
           </Link>
         </NextLink>
       </Grid>

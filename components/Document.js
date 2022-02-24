@@ -20,7 +20,7 @@ const AmountText = styled("div")(({ theme }) => ({
     fontSize: 10,
   },
   [theme.breakpoints.between("sm", "lg")]: {
-    fontSize: 12,
+    fontSize: 11,
   },
   [theme.breakpoints.up("lg")]: {
     fontSize: 15,
