@@ -30,7 +30,10 @@ const WhatIsPaprView = () => {
         <Link href="/help">Learn more here {" > "}</Link>
       </Typography>
       <Box sx={{ mt: "1vh" }}>
-        <Link style={{ textDecoration: "none" }}>
+        <Link
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfWM_llRZj0k0_BDKhCM_GrcNOaRcfszVWsyYSM8MXWl2DdzQ/viewform"
+          style={{ textDecoration: "none" }}
+        >
           <Button variant="contained" color="primary">
             Submit Feedback
           </Button>
