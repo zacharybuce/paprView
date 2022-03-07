@@ -49,8 +49,8 @@ const BountyDialog = (props) => {
   const handleBlur = () => {
     if (value < minReward) {
       setValue(minReward);
-    } else if (value > props.credibility) {
-      setValue(props.credibility);
+    } else if (value > props.points) {
+      setValue(props.points);
     } else if (value % 10 != 0) {
       setValue(value - (value % 10));
     }
@@ -79,7 +79,7 @@ const BountyDialog = (props) => {
           "Content-Type": "application/json",
         },
         body: {
-          credibility: value * -1,
+          points: value * -1,
         },
       };
 
@@ -90,7 +90,7 @@ const BountyDialog = (props) => {
       const putData = await putRes.json();
       console.log(putData);
 
-      user.body.credibility = value * -1;
+      user.body.points = value * -1;
       user.body = JSON.stringify(user.body);
       const userPutRes = await fetch(
         process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + props.userId,
@@ -116,15 +116,14 @@ const BountyDialog = (props) => {
       <DialogTitle> Set A Reward </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
-          How much of your credibility will you offer for a summary of this
-          paper?
+          How much of your points will you offer for a summary of this paper?
         </DialogContentText>
         <Box sx={{ mt: "3vh", ml: "20%", mr: "20%", mb: "3vh" }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs>
               <Slider
                 min={minReward}
-                max={props.credibility}
+                max={props.points}
                 step={10}
                 value={typeof value === "number" ? value : minReward}
                 onChange={handleSliderChange}
@@ -140,7 +139,7 @@ const BountyDialog = (props) => {
                 inputProps={{
                   step: 10,
                   min: 0,
-                  max: props.credibility,
+                  max: props.points,
                   type: "number",
                   "aria-labelledby": "input-slider",
                 }}
@@ -148,7 +147,7 @@ const BountyDialog = (props) => {
             </Grid>
           </Grid>
           <Typography sx={{ fontSize: ".8rem" }}>
-            A minimum of 40 Credibility is required
+            A minimum of 40 points is required
           </Typography>
         </Box>
         <DialogActions>
@@ -157,7 +156,7 @@ const BountyDialog = (props) => {
               variant="contained"
               color="success"
               onClick={() => saveBounty()}
-              disabled={props.credibility < 40}
+              disabled={props.points < 40}
             >
               Submit Reward
             </Button>

@@ -50,7 +50,7 @@ export default async (req, res) => {
           const summary = await Summary.findByIdAndUpdate(
             id,
             {
-              $set: { bounty: { value: req.body.credibility } },
+              $set: { bounty: { value: req.body.points } },
             },
             {
               new: true,
@@ -58,7 +58,7 @@ export default async (req, res) => {
             }
           );
 
-          const incAmount = req.body.credibility;
+          const incAmount = req.body.points;
 
           var bulkOps = [];
           for (const tag of req.body.tags) {
@@ -81,7 +81,7 @@ export default async (req, res) => {
               filter: {
                 _id: req.body.userId,
               },
-              update: { $inc: { credibility: incAmount } },
+              update: { $inc: { points: incAmount } },
             },
           });
 
@@ -132,7 +132,7 @@ export default async (req, res) => {
               filter: {
                 _id: summary.user.toString(),
               },
-              update: { $inc: { credibility: incAmount } },
+              update: { $inc: { points: incAmount } },
             },
           });
 

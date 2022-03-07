@@ -34,7 +34,7 @@ const SearchResultsHeader = (props) => {
               <NextLink prefetch={false} href="/articlecform" passHref>
                 <Link style={{ textDecoration: "none" }}>
                   <Button color="secondary" variant="contained">
-                    Add an Article
+                    Add a Paper
                   </Button>
                 </Link>
               </NextLink>
@@ -44,7 +44,7 @@ const SearchResultsHeader = (props) => {
                 color="secondary"
                 variant="contained"
               >
-                Add an Article
+                Add a Paper
               </Button>
             )}
           </Grid>

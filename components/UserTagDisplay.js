@@ -37,7 +37,7 @@ const UserTagDisplay = (props) => {
       </Grid>
       <Grid item container alignItems="center" xs={4}>
         <b>{props.score}</b>
-        <Typography sx={{ ml: ".5vw" }}>Points</Typography>
+        <Typography sx={{ ml: ".5vw" }}>points</Typography>
       </Grid>
     </Grid>
   );

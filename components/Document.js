@@ -159,7 +159,7 @@ const Document = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Divider />
+      {props.communityPage ? "" : <Divider />}
     </Box>
   );
 };

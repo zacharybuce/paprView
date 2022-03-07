@@ -11,7 +11,7 @@ const topUser1 = {
   votes: [],
   summaries: [],
   ranks: [],
-  credibility: "",
+  points: "",
 };
 const topUser2 = {
   _id: "62066ae1235634b666df5abf",
@@ -19,7 +19,7 @@ const topUser2 = {
   image:
     "https://lh3.googleusercontent.com/a-/AOh14GgInUnDXLZEUk5qHRI28br_zIc-bPluf9S3TMeP6Q=s96-c",
   ranks: [],
-  credibility: "",
+  points: "",
 };
 const topUser3 = {
   _id: "620b9884ed54a6b369a8a5ef",
@@ -30,7 +30,7 @@ const topUser3 = {
   votes: [],
   summaries: [],
   ranks: [],
-  credibility: "",
+  points: "",
 };
 
 const TopUsers = () => {
@@ -47,7 +47,7 @@ const TopUsers = () => {
       }}
     >
       <Typography sx={{ fontSize: 30, mb: "1vh" }}>Top Users</Typography>
-      <Grid containter>
+      {/* <Grid containter>
         <Grid
           item
           container
@@ -78,7 +78,7 @@ const TopUsers = () => {
             <UserCard user={topUser2} isTopUser />
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Box>
   );
 };

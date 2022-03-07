@@ -56,7 +56,7 @@ const summaries = ({ summaries, docData }) => {
   const [open, setOpen] = useState(false);
   const [openBountyDialog, setOpenBountyDialog] = useState(false);
   const router = useRouter();
-
+  if (session) console.log(session);
   const awardBounty = async (awardeeId, summaryId) => {
     try {
       var article = {
@@ -80,7 +80,7 @@ const summaries = ({ summaries, docData }) => {
           bounty: true,
           tags: docData.tags,
           userId: awardeeId,
-          credibility: docData.bounty.value,
+          points: docData.bounty.value,
         },
       };
 
@@ -94,7 +94,7 @@ const summaries = ({ summaries, docData }) => {
 
       console.log(putData);
 
-      //add Credibility to user and add bounty to summary
+      //add points to user and add bounty to summary
       summary.body = JSON.stringify(summary.body);
       console.log(summary);
       const userPutRes = await fetch(
@@ -198,7 +198,7 @@ const summaries = ({ summaries, docData }) => {
       <LoginDialog open={open} setOpen={setOpen} signIn={signIn} />
       {openBountyDialog && session ? (
         <DynamicBountyDialog
-          credibility={session.user.credibility}
+          points={session.user.points}
           userId={session.user._id}
           articleId={docData._id}
           openBountyDialog={openBountyDialog}

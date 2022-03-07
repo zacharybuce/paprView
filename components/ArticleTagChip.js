@@ -13,7 +13,7 @@ const ComputerIcon = dynamic(() => import("@mui/icons-material/Computer"));
 
 const setIcon = (tagName) => {
   switch (tagName) {
-    case "Physical Sciences and Mathematics":
+    case "Physical and Formal Sciences":
       return <PermDataSettingIcon />;
     case "Biomedical and Life Sciences":
       return <BiotechIcon />;

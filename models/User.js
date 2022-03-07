@@ -63,7 +63,7 @@ const UserSchema = new mongoose.Schema({
     type: [Object],
     required: [false],
   },
-  credibility: {
+  points: {
     type: Number,
     required: [true],
   },

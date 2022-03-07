@@ -13,36 +13,45 @@ const Footer = () => {
     >
       <Box sx={{ pt: "2vh", ml: "10vw", mr: "10vw" }}>
         <Grid container>
-          <Grid item xs={6}>
-            <Typography variant="h6" color="secondary">
-              paprView inc.
-            </Typography>
+          <Grid item container xs={12} sm={6}>
+            <Grid item xs={12}>
+              <Typography variant="h6" color="secondary">
+                paprView inc.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <NextLink href="/" passHref>
+                <Link style={{ textDecoration: "none" }}>
+                  <Typography color="white">Home</Typography>
+                </Link>
+              </NextLink>
+            </Grid>
+            <Grid item xs={12}>
+              <NextLink href="/help" passHref>
+                <Link style={{ textDecoration: "none" }}>
+                  <Typography color="white">Help</Typography>
+                </Link>
+              </NextLink>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography sx={{ color: "white" }}>
+                support@paprview.com
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Typography variant="h6" color="secondary">
-              Company
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <NextLink href="/" passHref>
-              <Link style={{ textDecoration: "none" }}>
-                <Typography color="white">Home</Typography>
-              </Link>
-            </NextLink>
-          </Grid>
-          <Grid item xs={6}>
-            <NextLink href="/privacy" passHref>
-              <Link style={{ textDecoration: "none" }}>
-                <Typography color="white">Privacy Policy</Typography>
-              </Link>
-            </NextLink>
-          </Grid>
-          <Grid item xs={6}>
-            <NextLink href="/help" passHref>
-              <Link style={{ textDecoration: "none" }}>
-                <Typography color="white">Help</Typography>
-              </Link>
-            </NextLink>
+          <Grid item container xs={12} sm={6}>
+            <Grid item xs={12}>
+              <Typography variant="h6" color="secondary">
+                Company
+              </Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <NextLink href="/privacy" passHref>
+                <Link style={{ textDecoration: "none" }}>
+                  <Typography color="white">Privacy Policy</Typography>
+                </Link>
+              </NextLink>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
