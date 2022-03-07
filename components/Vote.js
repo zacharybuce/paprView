@@ -53,7 +53,7 @@ const Vote = (props) => {
       setTimeOut(
         setTimeout(() => {
           sendVotes();
-        }, 500)
+        }, 200)
       );
     } else {
       setOpen(true);
