@@ -6,6 +6,7 @@ import {
   Grid,
   Divider,
   Typography,
+  Link,
 } from "@mui/material";
 import Document from "../components/Document";
 import SearchResultsHeader from "../components/SearchResultsHeader";
@@ -14,19 +15,15 @@ import WhatIsPaprView from "../components/WhatIsPaprView";
 import { getDocs } from "./api/search/[id]";
 import TopUsers from "../components/TopUsers";
 
-const communityPage = {
-  _id: "6226465de38271a36b534b9b",
-  title: "paprView Beta Community Page",
-  views: { $numberInt: "0" },
-  publishDate: 1646675461000,
-  authors: ["paprView"],
-  publisher: "",
-  tags: ["62264654e38271a36b534b99"],
-  summaries: [],
-  comments: [],
-  bounty: { _id: "6226465de38271a36b534b9c" },
-  __v: { $numberInt: "0" },
-};
+const Title = styled("div")(({ theme }) => ({
+  fontSize: 20,
+  "&:hover": {
+    color: theme.palette.primary.light,
+  },
+  [theme.breakpoints.down("lg")]: {
+    fontSize: 16,
+  },
+}));
 
 const ResultsContainer = styled("div")(({ theme }) => ({
   //marginRight: "10vw",
@@ -132,7 +129,9 @@ const documents = (props) => {
               borderWidth: "1px",
             }}
           >
-            <Document doc={communityPage} communityPage={true} />
+            <Link href="/summaries/6226465de38271a36b534b9b">
+              <Title>paprView Beta Community Page</Title>
+            </Link>
           </Box>
           {docs.length ? (
             docs.map((doc, index) => {
