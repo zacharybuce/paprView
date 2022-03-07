@@ -28,8 +28,16 @@ export default async (req, res) => {
       try {
         var user;
         console.log(req.body);
-
-        if (req.body.date) {
+        if (req.body.newUser) {
+          user = await User.updateOne(
+            { _id: id },
+            { $inc: { points: req.body.points } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else if (req.body.date) {
           user = await User.findByIdAndUpdate(
             id,
             { $set: { joinDate: req.body.date } },
@@ -56,10 +64,10 @@ export default async (req, res) => {
               runValidators: true,
             }
           );
-        } else if (req.body.credibility) {
+        } else if (req.body.points) {
           user = await User.updateOne(
             { _id: id },
-            { $inc: { credibility: req.body.credibility } },
+            { $inc: { points: req.body.points } },
             {
               new: true,
               runValidators: true,

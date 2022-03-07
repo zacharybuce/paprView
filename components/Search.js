@@ -55,10 +55,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const ButtonContainer = styled("div")(({ theme }) => ({
   margin: "auto",
   paddingTop: "2vh",
-  width: "85%",
+  [theme.breakpoints.up("xs")]: {
+    margin: "auto",
+    width: "60%",
+  },
   [theme.breakpoints.up("sm")]: {
     margin: "auto",
+    width: "30%",
+  },
+  [theme.breakpoints.up("md")]: {
+    margin: "auto",
     width: "45%",
+  },
+  [theme.breakpoints.up("lg")]: {
+    margin: "auto",
+    width: "35%",
   },
   [theme.breakpoints.up("xl")]: {
     margin: "auto",
@@ -97,7 +108,7 @@ const Search = () => {
       </SearchContainer>
       <ButtonContainer>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Button
               type="submit"
               fullWidth
@@ -107,7 +118,12 @@ const Search = () => {
               Search
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{ display: { xs: "none", md: "flex" } }}
+          >
             <Button
               onClick={() =>
                 router.push({

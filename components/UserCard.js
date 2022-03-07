@@ -52,11 +52,11 @@ const UserCard = ({ user, isTopUser }) => {
             </Link>
           </Grid>
           <Grid item container xs={12}>
-            <Grid item xs={2}>
+            <Grid item xs={2} sx={{ mr: "7px" }}>
               <Typography fontWeight={500} sx={{ fontSize: 15 }}>
-                {user.credibility >= 1000
-                  ? Math.round(user.credibility / 1000) + "k"
-                  : user.credibility}
+                {user.points >= 1000
+                  ? Math.round(user.points / 1000) + "k"
+                  : user.points}
               </Typography>
             </Grid>
             {topRanks ? (

@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
 import ArticleCreateForm from "../components/ArticleCreateForm";
 import LoginRedirect from "../components/LoginRedirect";
 import { useSession } from "next-auth/react";
@@ -22,6 +22,7 @@ const FormContainer = styled("div")(({ theme }) => ({
 
 const articlecform = () => {
   const { data: session } = useSession();
+
   return (
     <Box sx={{ mt: "20vh" }}>
       {session ? (
@@ -31,7 +32,7 @@ const articlecform = () => {
             align="center"
             sx={{ mt: "2vh", pr: "1vw", pl: "1vw" }}
           >
-            Enter Information about the Document
+            Enter Paper Information
           </Typography>
           <FormContainer>
             <Box alignContent="center">

@@ -27,13 +27,13 @@ const newuser = () => {
       </Fade>
       <Fade in={true} timeout={1000}>
         <Typography variant="h5" sx={{ mb: "5vh", textAlign: "center" }}>
-          Thank you for joining the paprView beta
+          Thank you for joining the paprView beta, here's <b>1000 points</b>
         </Typography>
       </Fade>
       <Fade in={true} timeout={1000}>
         <Typography sx={{ fontSize: 20 }}>
           paprView is a platform for users to view and submit summaries of
-          academic articles. We reccomend going through our{" "}
+          academic papers. We reccomend going through our{" "}
           <Link href="/help">help page</Link> to get an idea of how paprView
           works.
         </Typography>
@@ -84,6 +84,28 @@ export async function getServerSideProps(context) {
           },
           body: JSON.stringify({
             date: str,
+          }),
+        }
+      );
+      const userPutData = await userPutRes.json();
+      console.log(userPutData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  if (!session.user.points) {
+    try {
+      const userPutRes = await fetch(
+        process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + session.user._id,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            newUser: true,
+            points: 1000,
           }),
         }
       );

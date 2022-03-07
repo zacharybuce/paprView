@@ -22,7 +22,7 @@ export default async function auth(req, res) {
         session.user._id = user.id;
         session.user.votes = user.votes;
         session.user.joinDate = user.joinDate;
-        session.user.credibility = user.credibility;
+        session.user.points = user.points;
         return session;
       },
     },

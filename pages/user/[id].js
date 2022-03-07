@@ -154,12 +154,12 @@ const user = (props) => {
             >
               <Grid container spacing={1}>
                 <Grid item xs={12} sx={{ textAlign: "center" }}>
-                  <Typography>Credibility</Typography>
+                  <Typography>Points</Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                   <Typography variant="h5" sx={{ textAlign: "center" }}>
-                    <b>{data.data.credibility ? data.data.credibility : 0}</b>
+                    <b>{data.data.points ? data.data.points : 0}</b>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "center" }}>

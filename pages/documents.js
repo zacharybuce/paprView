@@ -14,6 +14,20 @@ import WhatIsPaprView from "../components/WhatIsPaprView";
 import { getDocs } from "./api/search/[id]";
 import TopUsers from "../components/TopUsers";
 
+const communityPage = {
+  _id: "6226465de38271a36b534b9b",
+  title: "paprView Beta Community Page",
+  views: { $numberInt: "0" },
+  publishDate: 1646675461000,
+  authors: ["paprView"],
+  publisher: "",
+  tags: ["62264654e38271a36b534b99"],
+  summaries: [],
+  comments: [],
+  bounty: { _id: "6226465de38271a36b534b9c" },
+  __v: { $numberInt: "0" },
+};
+
 const ResultsContainer = styled("div")(({ theme }) => ({
   //marginRight: "10vw",
   //marginLeft: "10vw",
@@ -107,6 +121,19 @@ const documents = (props) => {
             setFilter={setFilter}
           />
           <Divider />
+          <Box
+            sx={{
+              mt: "1vh",
+              mb: "1vh",
+              border: "solid",
+              borderRadius: 2,
+              p: 1,
+              borderColor: "#EEB559",
+              borderWidth: "1px",
+            }}
+          >
+            <Document doc={communityPage} communityPage={true} />
+          </Box>
           {docs.length ? (
             docs.map((doc, index) => {
               return <Document key={index} doc={doc} />;

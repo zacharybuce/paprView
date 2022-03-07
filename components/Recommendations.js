@@ -54,8 +54,8 @@ const Recommendations = () => {
               Give key points and discuss the major takeaway of the article.
             </li>
             <li>
-              Pretend you’re trying to explain the document to a friend who
-              isn’t familiar with the subject.
+              Pretend you're trying to explain the document to a friend who
+              isn't familiar with the subject.
             </li>
             <li>
               Avoid using technical terms when possible and provide a quick

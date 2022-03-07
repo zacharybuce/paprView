@@ -18,12 +18,12 @@ const SearchContainer = styled("div")(({ theme }) => ({
   borderWidth: "1px",
   borderColor: "darkgrey",
   [theme.breakpoints.up("xs")]: {
-    width: "50%",
-    marginRight: "20vw",
+    width: "70%",
+    //marginRight: "20vw",
   },
   [theme.breakpoints.up("sm")]: {
     width: "40%",
-    marginRight: "10vw",
+    marginRight: "7vw",
   },
   [theme.breakpoints.up("md")]: {
     width: "50%",
@@ -65,6 +65,9 @@ const SearchIconWrapper = styled("button")(({ theme }) => ({
   //display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({

@@ -19,6 +19,7 @@ import AddTagDialog from "./AddTagDialog";
 import { matchSorter } from "match-sorter";
 import useSWR from "swr";
 import { styled } from "@mui/material/styles";
+import HowToUseTagsDialog from "./HowToUseTagsDialog";
 
 const FormContainer = styled("div")(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
@@ -45,7 +46,8 @@ const ArticleCreateForm = () => {
   const [articleTagsError, setArticleTagsError] = useState(false);
   const [docAuthorsError, setDocAuthorsError] = useState(false);
   const [titleError, setTitleError] = useState(false);
-  const [dateError, setDateError] = useState(false);
+  const [tagErrorText, setTagErrorText] = useState("");
+  const [howToOpen, setHowToOpen] = useState(true);
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error } = useSWR(
@@ -87,6 +89,13 @@ const ArticleCreateForm = () => {
 
     if (articleTags.length == 0) {
       setArticleTagsError(true);
+      setTagErrorText("Please enter at least one tag.");
+      errors = true;
+    }
+
+    if (articleTags.length >= 5) {
+      setArticleTagsError(true);
+      setTagErrorText("Only 5 tags are allowed.");
       errors = true;
     }
 
@@ -182,7 +191,7 @@ const ArticleCreateForm = () => {
             error={titleError}
             helperText={titleError ? "Please enter a title." : ""}
             id={titleError ? "outlined-error" : "outlined-required"}
-            label="Article Title"
+            label="Paper Title"
           />
           <div>
             <Grid container spacing={2}>
@@ -196,7 +205,7 @@ const ArticleCreateForm = () => {
                   fullWidth
                   label={"Author"}
                   helperText={
-                    articleTagsError ? "Please enter at least one author." : ""
+                    docAuthorsError ? "Please enter at least one author." : ""
                   }
                   sx={{ mt: "2vh" }}
                 />
@@ -240,7 +249,7 @@ const ArticleCreateForm = () => {
               </Button>
             </Box>
           </div>
-          <Grid container alignItems="center" spacing={2}>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <Box sx={{ mt: "2vh", width: "100%" }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -281,11 +290,7 @@ const ArticleCreateForm = () => {
                             {...params}
                             label={"Tags*"}
                             placeholder="Tags"
-                            helperText={
-                              articleTagsError
-                                ? "Please enter at least one tag."
-                                : ""
-                            }
+                            helperText={articleTagsError ? tagErrorText : ""}
                             id={articleTagsError ? "outlined-error" : ""}
                             error={articleTagsError}
                           />
@@ -297,13 +302,16 @@ const ArticleCreateForm = () => {
                   )}
                 </FormControl>
               </Box>
+              <Button onClick={() => setHowToOpen(true)}>
+                How to use Tags
+              </Button>
             </Grid>
           </Grid>
           <Grid container>
             <Grid item xs={6}>
               <Box sx={{ mt: "2vh" }}>
                 <Button type="submit" variant="contained" color="secondary">
-                  Submit Document
+                  Submit Paper
                 </Button>
               </Box>
             </Grid>
@@ -326,6 +334,7 @@ const ArticleCreateForm = () => {
         </Box>
       </Box>
       <AddTagDialog setTags={setTags} open={open} setOpen={setOpen} />
+      <HowToUseTagsDialog open={howToOpen} setOpen={setHowToOpen} />
     </FormContainer>
   );
 };

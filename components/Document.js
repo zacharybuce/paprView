@@ -16,13 +16,19 @@ const Title = styled("div")(({ theme }) => ({
 }));
 
 const AmountText = styled("div")(({ theme }) => ({
-  [theme.breakpoints.between("xs", "sm")]: {
+  [theme.breakpoints.up("xs")]: {
     fontSize: 10,
   },
-  [theme.breakpoints.between("sm", "lg")]: {
+  [theme.breakpoints.up("sm")]: {
+    fontSize: 12,
+  },
+  [theme.breakpoints.up("md")]: {
     fontSize: 11,
   },
   [theme.breakpoints.up("lg")]: {
+    fontSize: 11,
+  },
+  [theme.breakpoints.up("xl")]: {
     fontSize: 15,
   },
 }));
@@ -153,7 +159,7 @@ const Document = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Divider />
+      {props.communityPage ? "" : <Divider />}
     </Box>
   );
 };

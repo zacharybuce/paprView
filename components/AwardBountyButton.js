@@ -25,7 +25,7 @@ const AwardBountyButton = ({
     return (
       <Box>
         <EmojiEventsIcon color="primary" sx={{ fontSize: "30px" }} />
-        <Typography color="primary">+100</Typography>
+        <Typography color="primary">+{bounty.value}</Typography>
       </Box>
     );
 

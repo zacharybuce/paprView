@@ -76,7 +76,7 @@ export default function Index() {
                 <Typography>
                   Search for any non-fiction, historical, or scientific
                   articles, papers, journals, and essays to find easy to
-                  understand summaries from users just like you.
+                  understand summaries from other members of the community.
                 </Typography>
               </CardContent>
             </Card>
@@ -89,7 +89,7 @@ export default function Index() {
                 <Typography>
                   Talk to other users about the document you searched for. You
                   can ask a question or discuss the content, either way, we
-                  encourage learning above all else
+                  encourage learning above all else (not in beta).
                 </Typography>
               </CardContent>
             </Card>
