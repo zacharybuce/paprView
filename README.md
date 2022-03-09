@@ -37,7 +37,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#features">Usage</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -65,7 +65,11 @@ This software provide an easy to use platform that facilitates the sharing of kn
 ### Built With
 
 * [Next.js](https://nextjs.org/)
+* [MongoDB](https://www.mongodb.com/)
 * [MaterialUI](https://github.com/mui/material-ui)
+* [Braft-Editor](https://github.com/margox/braft-editor)
+
+Hosted on: [Vercel](https://vercel.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -104,11 +108,22 @@ You must have node intstalled along with npm or a package manager of your choice
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Features
+* Creation of summaries that are associated with an academic paper.
+* Summary writing tool through Braft-Editor.
+* Tag system for the academic papers.
+* Paper search functionality using mongoDB Atlas.
+* Filter options for search results including tag and publish date. 
+* Search for paper by tag.
+* Profile creation through Google OAuth.
+* Profile dashboard to view user info(tags,credibility, summaries, etc.)
+* Upvote and Downvote system.
+* Credibility system that shows a user's expertise in a certain tag.
+* Point system that allows users to spend on bounties.
+* Bounty system that allows for users to insentivize other users to summarize a paper.
+* Allows users to change their name.
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+[More about paprView](https://paprview.com/help)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
