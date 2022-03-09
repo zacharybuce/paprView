@@ -98,7 +98,11 @@ const tags = ({ tags }) => {
             })
           ) : (
             <Box sx={{ mt: "2vh", textAlign: "center" }}>
-              {searching ? <CircularProgress /> : "No tag selected"}
+              {searching ? (
+                <CircularProgress />
+              ) : (
+                "No papers for the selected tag"
+              )}
             </Box>
           )}
         </Grid>
