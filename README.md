@@ -12,7 +12,7 @@
   <p align="center">
     A website that helps you find summaries from other users that are concise and easy to understand
     <br />
-    <a href="https://paprview.com/Best-README-Template">Website</a>
+    <a href="https://paprview.com">Website</a>
     ·
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWM_llRZj0k0_BDKhCM_GrcNOaRcfszVWsyYSM8MXWl2DdzQ/viewform">Give Feedback</a>
   </p>
@@ -48,15 +48,15 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 The paprView website allows people to exchange their knowledge of subjects
 through summarizing and discussing academic papers. The goal is to bring clarity to
 all papers and foster a discussion around topics that were once only reserved for leading
 researchers. This is accomplished with a community-driven system that allows users to gain
 more Credibility and Points by posting summaries about academic papers.
 
-This software provide an easy to use platform that facilitates the sharing of knowldege by allowing users to convinently create summaries and search for those summaries by paper. The platform allows user feedback on summaries through an upvote and downvote system. The more upvotes your summaries gain, the more points and credibilty you will recieve as well. This gives the platform a unique ability to destinguish misinformation by allowing users to see the credibility of the summary writer. Our Bounty system also allows users to put those points to use by assigning bounties to a paper. This will entice other users to write summaries on the paper, creating a user driven economy based on the sharing of information.   
+This software provide an easy to use platform that facilitates the sharing of knowldege by allowing users to convinently create summaries and search for those summaries by paper. The platform allows user feedback on summaries through an upvote and downvote system. The more upvotes your summaries gain, the more points and credibilty you will recieve as well. This gives the platform a unique ability to destinguish misinformation by allowing users to see the credibility of the summary writer. Our Bounty system also allows users to put those points to use by assigning bounties to a paper. This will entice other users to write summaries on the paper, creating a user driven economy based on the sharing of information.
+
+<div align="center"><img src="readmescreenshot.png"  width="728" height="446"></div>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
