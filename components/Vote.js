@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import { Box, IconButton, Typography, Grid } from "@mui/material";
+import { IconButton, Typography, Grid } from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect, useRef } from "react";
@@ -32,8 +32,15 @@ const Vote = (props) => {
 
   useEffect(() => {
     console.log("total vote:" + props.upvotes + "-" + props.downvotes);
-    if (session) getUserVote();
   }, []);
+
+  useEffect(() => {
+    console.log("in use Effect");
+    console.log("session: " + session);
+    if (session) {
+      getUserVote();
+    }
+  }, [session]);
 
   useEffect(() => {
     setTotalVote(upVote - downVote);
@@ -46,7 +53,7 @@ const Vote = (props) => {
       setTimeOut(
         setTimeout(() => {
           sendVotes();
-        }, 2000)
+        }, 200)
       );
     } else {
       setOpen(true);
@@ -116,7 +123,7 @@ const Vote = (props) => {
   };
 
   const configReq = () => {
-    var req = { upvote: 0, downvote: 0 };
+    var req = { upvote: 0, downvote: 0, tags: props.tags };
 
     if (realDownVote.current > realValDV.current) {
       req.downvote++;
@@ -153,6 +160,7 @@ const Vote = (props) => {
         <IconButton
           onClick={() => handleClick("upvote")}
           color={handleColor("upvote")}
+          disabled={props.disabled}
         >
           <KeyboardArrowUpIcon sx={{ fontSize: "3rem" }} />
         </IconButton>
@@ -162,6 +170,7 @@ const Vote = (props) => {
       </Grid>
       <Grid item xs={12}>
         <IconButton
+          disabled={props.disabled}
           onClick={() => handleClick("downvote")}
           color={handleColor("downvote")}
         >

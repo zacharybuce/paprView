@@ -32,7 +32,7 @@ export default function TemporaryDrawer(props) {
     >
       <List>
         <NextLink href={"/user/" + props.userId}>
-          <ListItem button key={"Profile"}>
+          <ListItem data-testid={props.userId} button key={"Profile"}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>

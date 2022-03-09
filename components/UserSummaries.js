@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider, CircularProgress } from "@mui/material";
 import SummaryDisplay from "./SummaryDisplay";
 
 const voteSort = (a, b) => {
@@ -9,42 +9,40 @@ const voteSort = (a, b) => {
   return 0;
 };
 
-const UserSummaries = (props) => {
+const UserSummaries = ({ userId }) => {
   const [summaries, setSummaries] = useState([]);
 
   useEffect(() => {
     getSummaries();
-  }, [props]);
+  }, [userId]);
 
   const getSummaries = async () => {
-    const userSummaries = [];
-    try {
-      for (const summary of props.summaries) {
-        var summaryRes = await fetch(
-          process.env.ROOT_URL + "/api/summaries/" + summary
-        );
-        const summaryData = await summaryRes.json();
-        var articleRes = await fetch(
-          process.env.ROOT_URL + "/api/articles/" + summaryData.data.article
-        );
-        const articleData = await articleRes.json();
+    const req = {
+      method: "POST",
+    };
 
-        const display = {
-          title: articleData.data.title,
-          articleId: articleData.data._id,
-          upvotes: summaryData.data.upvotes,
-          downvotes: summaryData.data.downvotes,
-          date: summaryData.data.lastedit,
-        };
-        userSummaries.push(display);
-      }
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + userId,
+      req
+    );
+    const summaries = await res.json();
+    console.log(summaries);
+    setSummaries(summaries.data);
+  };
 
-      userSummaries.sort(voteSort);
-
-      setSummaries(userSummaries);
-      console.log(userSummaries);
-    } catch (error) {
-      console.log(error);
+  const display = () => {
+    if (summaries && summaries.length == 0)
+      return (
+        <Box sx={{ p: 2 }}>
+          <Typography>There are no summaries to display</Typography>
+        </Box>
+      );
+    else {
+      return (
+        <Box sx={{ textAlign: "center" }}>
+          <CircularProgress />
+        </Box>
+      );
     }
   };
 
@@ -64,22 +62,18 @@ const UserSummaries = (props) => {
           overflow: "hidden",
         }}
       >
-        {summaries.length ? (
-          summaries.map((summary, index) => {
-            if (index !== summary.length - 1)
-              return (
-                <Box>
-                  <SummaryDisplay summary={summary} />
-                  <Divider />
-                </Box>
-              );
-            return <SummaryDisplay summary={summary} />;
-          })
-        ) : (
-          <Box sx={{ p: 2 }}>
-            <Typography>There are no summaries to display</Typography>
-          </Box>
-        )}
+        {summaries
+          ? summaries.map((summary, index) => {
+              if (index !== summary.length - 1)
+                return (
+                  <Box key={index + 10}>
+                    <SummaryDisplay summary={summary} />
+                    <Divider />
+                  </Box>
+                );
+              return <SummaryDisplay key={index + 10} summary={summary} />;
+            })
+          : display()}
       </Box>
     </Box>
   );

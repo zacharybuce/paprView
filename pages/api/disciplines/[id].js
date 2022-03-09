@@ -1,7 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
-import Note from "../../../models/Note";
+import Discipline from "../../../models/Discipline";
 
-dbConnect();
+dbConnect("disciplines[id]");
 
 export default async (req, res) => {
   const {
@@ -12,13 +12,13 @@ export default async (req, res) => {
   switch (method) {
     case "GET":
       try {
-        const note = await Note.findById(id);
+        const discipline = await Discipline.findById(id);
 
-        if (!note) {
+        if (!discipline) {
           return res.status(400).json({ success: false });
         }
 
-        res.status(200).json({ success: true, data: note });
+        res.status(200).json({ success: true, data: discipline });
       } catch (error) {
         res.status(400).json({ success: false });
       }
@@ -26,30 +26,16 @@ export default async (req, res) => {
 
     case "PUT":
       try {
-        const note = await Note.findByIdAndUpdate(id, req.body, {
+        const discipline = await Discipline.findByIdAndUpdate(id, req.body, {
           new: true,
           runValidators: true,
         });
 
-        if (!note) {
+        if (!discipline) {
           return res.status(400).json({ success: false });
         }
 
-        res.status(200).json({ success: true, data: note });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
-
-    case "DELETE":
-      try {
-        const deletedNote = await Note.deletedOne({ _id: id });
-
-        if (!deletedNote) {
-          res.status(400).json({ success: false });
-        }
-
-        res.status(200).json({ success: true, data: {} });
+        res.status(200).json({ success: true, data: discipline });
       } catch (error) {
         res.status(400).json({ success: false });
       }

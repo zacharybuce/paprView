@@ -1,26 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  Box,
-  Button,
-  Collapse,
-  Avatar,
-  Typography,
-  Grid,
-  Divider,
-} from "@mui/material";
+import { Box, Button, Collapse, Typography, Grid } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import EngineeringIcon from "@mui/icons-material/Engineering";
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2,
-} from "react-html-parser";
+import ReactHtmlParser from "react-html-parser";
 import useInView from "react-cool-inview";
 import Vote from "./Vote";
 import fetch from "isomorphic-unfetch";
 import braft from "../utils/summary.module.css";
+import UserCard from "./UserCard";
+import dynamic from "next/dynamic";
 
-const Summary = (props) => {
+const DynamicAwardBountyButton = dynamic(() => import("./AwardBountyButton"));
+
+const Summary = ({ summary, tags, awardBounty, articleBounty, sessionId }) => {
   const { observe, inView } = useInView({
     onEnter: ({ unobserve }) => {
       getUserInfo();
@@ -47,7 +38,7 @@ const Summary = (props) => {
     try {
       console.log();
       const res = await fetch(
-        process.env.ROOT_URL + "/api/users/" + props.userId
+        process.env.NEXT_PUBLIC_ROOT_URL + "/api/users/" + summary.user
       )
         .then((response) => response.json())
         .then((data) => {
@@ -83,12 +74,27 @@ const Summary = (props) => {
 
   return (
     <Grid container>
-      <Grid item xs={2} sm={1}>
+      <Grid item xs={2} sm={1} sx={{ textAlign: "center" }}>
         <Vote
-          upvotes={props.upvotes}
-          downvotes={props.downvotes}
-          summaryId={props.summaryId}
+          disabled={sessionId != summary.user ? false : true}
+          upvotes={summary.upvotes}
+          downvotes={summary.downvotes}
+          summaryId={summary._id}
+          tags={tags}
         />
+
+        {!summary.bounty.value && !articleBounty.value ? (
+          ""
+        ) : (
+          <DynamicAwardBountyButton
+            bounty={summary.bounty}
+            awardBounty={awardBounty}
+            awardee={summary.user}
+            articleBounty={articleBounty}
+            sessionId={sessionId}
+            summaryId={summary._id}
+          />
+        )}
       </Grid>
       <Grid item xs={10} sm={11}>
         <Box
@@ -115,36 +121,14 @@ const Summary = (props) => {
               >
                 <Grid container>
                   <Grid item xs={6}>
-                    <Grid
-                      alignItems="center"
-                      spacing={1}
-                      container
-                      sx={{ pb: 1, pl: 1 }}
-                    >
-                      <Grid item sx={{ mb: "1vh" }}>
-                        <Avatar
-                          src={user.image}
-                          sx={{ width: 48, height: 48 }}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <Grid container>
-                          <Grid item xs={12}>
-                            <Typography fontWeight={500}>
-                              {user.name}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={12}></Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
+                    <UserCard user={user} />
                   </Grid>
 
                   <Grid item xs={6}>
                     <Grid container justifyContent="flex-end">
                       <Grid item sx={{ mt: "1vh", mr: "1vw" }}>
                         <Typography variant="caption" color="gray">
-                          {formatDate(props.lastedit)}
+                          {formatDate(summary.lastedit)}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -162,7 +146,7 @@ const Summary = (props) => {
               ref={ref}
               sx={{ pt: 1, pb: 1, pl: 3, pr: 3 }}
             >
-              {ReactHtmlParser(props.content)}
+              {ReactHtmlParser(summary.content)}
             </Box>
           </Collapse>
           {overflow ? (

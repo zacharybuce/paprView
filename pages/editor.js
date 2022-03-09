@@ -1,7 +1,7 @@
 import React from "react";
 import SummaryEditor from "../components/TestEditor";
 import Box from "@mui/material/Box";
-import { Grid, Typography } from "@mui/material";
+import { Divider, Grid, Typography } from "@mui/material";
 import Recommendations from "../components/Recommendations";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -34,7 +34,9 @@ export default function editor() {
   const getArticleInfo = async () => {
     try {
       const res = await fetch(
-        process.env.ROOT_URL + "/api/articles/" + router.query.articleId
+        process.env.NEXT_PUBLIC_ROOT_URL +
+          "/api/articles/" +
+          router.query.articleId
       )
         .then((response) => response.json())
         .then((data) => {
@@ -46,7 +48,7 @@ export default function editor() {
   };
 
   return (
-    <Box sx={{ mt: "10vh", mb: "15vh" }}>
+    <Box sx={{ mt: "10vh" }}>
       {session ? (
         <Box>
           <Box sx={{ mt: "1vh", ml: "10vw", mr: "10vw" }}>
@@ -60,17 +62,29 @@ export default function editor() {
               <div></div>
             )}
           </Box>
-
-          <Grid container>
+          <Divider sx={{ mt: "1vh", mb: "1vh" }} />
+          <Grid container sx={{ display: { xs: "none", sm: "flex" } }}>
             <Grid item xs={12} xl={8}>
               <EditorContainer>
-                <SummaryEditor userId={session.user._id} articleId={id} />
+                <SummaryEditor
+                  userId={session.user._id}
+                  articleId={id}
+                  articleTitle={article ? article.title : ""}
+                />
               </EditorContainer>
             </Grid>
             <Grid item xs={12} xl={4}>
               <Recommendations />
             </Grid>
           </Grid>
+          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+            <SummaryEditor
+              userId={session.user._id}
+              articleId={id}
+              articleTitle={article ? article.title : ""}
+              mobile={true}
+            />
+          </Box>
         </Box>
       ) : (
         <LoginRedirect signIn={signIn} />

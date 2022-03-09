@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Link, Typography, Grid, Divider } from "@mui/material";
+import { Box, Link, Typography, Grid, Divider, Chip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { styled, alpha } from "@mui/material/styles";
-import TagChip from "./TagChip";
-
-const Title = styled("Typography")(({ theme }) => ({
+import { styled } from "@mui/material/styles";
+import ArticleTagChip from "./ArticleTagChip";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import useInView from "react-cool-inview";
+const Title = styled("div")(({ theme }) => ({
   fontSize: 20,
   "&:hover": {
     color: theme.palette.primary.light,
@@ -14,14 +15,20 @@ const Title = styled("Typography")(({ theme }) => ({
   },
 }));
 
-const AmountText = styled("Typography")(({ theme }) => ({
-  [theme.breakpoints.between("xs", "sm")]: {
+const AmountText = styled("div")(({ theme }) => ({
+  [theme.breakpoints.up("xs")]: {
     fontSize: 10,
   },
-  [theme.breakpoints.between("sm", "lg")]: {
+  [theme.breakpoints.up("sm")]: {
     fontSize: 12,
   },
+  [theme.breakpoints.up("md")]: {
+    fontSize: 11,
+  },
   [theme.breakpoints.up("lg")]: {
+    fontSize: 11,
+  },
+  [theme.breakpoints.up("xl")]: {
     fontSize: 15,
   },
 }));
@@ -62,8 +69,14 @@ const formatDate = (date) => {
 };
 
 const Document = (props) => {
+  const { observe, inView } = useInView({
+    onEnter: ({ unobserve }) => {
+      unobserve();
+    },
+  });
   const theme = useTheme();
   const primary = theme.palette.primary.main;
+  const secondary = theme.palette.secondary.main;
 
   return (
     <Box sx={{ mt: "2vh" }}>
@@ -73,8 +86,11 @@ const Document = (props) => {
             sx={{
               backgroundColor: props.doc.summaries.length ? primary : "none",
               borderRadius: 3,
-              color: "white",
+              color: props.doc.summaries.length ? "white" : primary,
               textAlign: "center",
+              border: props.doc.summaries.length ? "" : "solid",
+              borderColor: props.doc.summaries.length ? "" : primary,
+              borderWidth: "1px",
               mr: "2vw",
               p: 1,
             }}
@@ -82,10 +98,10 @@ const Document = (props) => {
             <Typography>{props.doc.summaries.length}</Typography>
             <AmountText>Summaries</AmountText>
           </Box>
-          <Box
+          {/* <Box
             sx={{
               textAlign: "center",
-              mr: "2vw",
+              mr: "2vw",48a868
               p: 1,
               mt: "1vh",
               color: "gray",
@@ -93,46 +109,57 @@ const Document = (props) => {
           >
             <Typography>{props.doc.comments.length}</Typography>
             <AmountText>Comments</AmountText>
-          </Box>
+          </Box> */}
+          {props.doc.bounty.value ? (
+            <Box
+              sx={{
+                color: primary,
+                textAlign: "center",
+                mr: "2vw",
+                mt: "1vh",
+              }}
+            >
+              <EmojiEventsIcon sx={{ position: "relative", top: "4px" }} /> +
+              {props.doc.bounty.value}
+            </Box>
+          ) : (
+            ""
+          )}
         </Grid>
-        <Grid item xs={9} sm={10}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Link
-                href={"/summaries/" + props.doc._id}
-                passHref
-                underline="none"
-              >
-                <Box sx={{}}>
-                  <Title>{props.doc.title}</Title>
-                </Box>
-              </Link>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography sx={{ mt: "1vh", color: "gray" }}>
-                by {printAuthors(props.doc.authors)}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography sx={{ mt: "1vh" }}>
-                Published on: {formatDate(props.doc.publishDate)}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Grid container justifyContent="flex-end" spacing={1}>
-                {props.doc.tags.map((tag) => {
-                  return (
-                    <Grid key={tag} item sx={{ mt: "1vh" }}>
-                      <TagChip name={tag} />
-                    </Grid>
-                  );
-                })}
-              </Grid>
-            </Grid>
+        <Grid item container xs={9} sm={10}>
+          <Grid item xs={12}>
+            <Link href={"/summaries/" + props.doc._id} underline="none">
+              <Box sx={{}}>
+                <Title>{props.doc.title}</Title>
+              </Box>
+            </Link>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography sx={{ mt: "1vh", color: "gray" }}>
+              by {printAuthors(props.doc.authors)}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography sx={{ mt: "1vh" }}>
+              Published on: {formatDate(props.doc.publishDate)}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sx={{ mt: ".5vh", mb: ".5vh" }}>
+            <div ref={observe}>
+              {inView ? (
+                <span>
+                  {props.doc.tags.map((tag) => {
+                    return <ArticleTagChip tagId={tag} />;
+                  })}
+                </span>
+              ) : (
+                <div></div>
+              )}
+            </div>
           </Grid>
         </Grid>
       </Grid>
-      <Divider />
+      {props.communityPage ? "" : <Divider />}
     </Box>
   );
 };

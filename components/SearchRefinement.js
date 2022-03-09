@@ -2,7 +2,9 @@ import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
 import React from "react";
-import FilterDialog from "./FilterDialog";
+import dynamic from "next/dynamic";
+
+const DynamicFilterDialog = dynamic(() => import("./FilterDialog"));
 
 const SearchRefinement = (props) => {
   const [alignment, setAlignment] = useState("relevant");
@@ -12,6 +14,8 @@ const SearchRefinement = (props) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
     }
+
+    if (newAlignment === null && alignment == "more") newAlignment = "more";
 
     switch (newAlignment) {
       case "relevant":
@@ -44,7 +48,15 @@ const SearchRefinement = (props) => {
           More <FilterListIcon sx={{ ml: "3px" }} />
         </ToggleButton>
       </ToggleButtonGroup>
-      <FilterDialog setFilter={props.setFilter} open={open} setOpen={setOpen} />
+      {open ? (
+        <DynamicFilterDialog
+          setFilter={props.setFilter}
+          open={open}
+          setOpen={setOpen}
+        />
+      ) : (
+        () => null
+      )}
     </Box>
   );
 };

@@ -100,11 +100,11 @@ const privacy = () => {
           <p>
             <strong>Website</strong> refers to paprView, accessible from{" "}
             <a
-              href="https://www.paprView.com"
+              href="https://www.paprview.com"
               rel="external nofollow noopener"
               target="_blank"
             >
-              https://www.paprView.com
+              https://www.paprview.com
             </a>
           </p>
         </li>

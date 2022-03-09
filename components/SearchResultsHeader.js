@@ -1,20 +1,13 @@
 import React from "react";
-import { Box, Typography, Grid, Button, Link } from "@mui/material";
+import { Box, Grid, Button, Link, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { styled } from "@mui/material/styles";
 import SearchRefinement from "./SearchRefinement";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useState } from "react";
 import LoginDialog from "./LoginDialog";
 
-const ResultsHeader = styled("Typography")(({ theme }) => ({
-  fontSize: 30,
-  [theme.breakpoints.down("lg")]: {
-    fontSize: 24,
-  },
-}));
-
-const ResultsAmount = styled("Typography")(({ theme }) => ({
+const ResultsAmount = styled("div")(({ theme }) => ({
   fontSize: 25,
   [theme.breakpoints.down("lg")]: {
     fontSize: 20,
@@ -28,18 +21,20 @@ const SearchResultsHeader = (props) => {
   return (
     <Box>
       <Grid container>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={8}>
           <Box sx={{ mb: "2vh" }}>
-            <ResultsHeader>Showing results for "{props.query}"</ResultsHeader>
+            <Typography sx={{ fontSize: [15, 20, 20, 20, 20] }}>
+              Showing results for "{props.query}"
+            </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <Grid container justifyContent="flex-end">
             {session ? (
-              <NextLink href="/articlecform" passHref>
+              <NextLink prefetch={false} href="/articlecform" passHref>
                 <Link style={{ textDecoration: "none" }}>
                   <Button color="secondary" variant="contained">
-                    Add an Article
+                    Add a Paper
                   </Button>
                 </Link>
               </NextLink>
@@ -49,17 +44,17 @@ const SearchResultsHeader = (props) => {
                 color="secondary"
                 variant="contained"
               >
-                Add an Article
+                Add a Paper
               </Button>
             )}
           </Grid>
         </Grid>
       </Grid>
       <Grid container>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={6} sx={{ display: { xs: "none", sm: "block" } }}>
           <ResultsAmount>{props.results} results</ResultsAmount>
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ mb: "1vh" }}>
+        <Grid item xs={12} sm={6} sx={{ mb: "1vh", mt: "1vh" }}>
           <Grid container justifyContent="flex-end">
             <SearchRefinement
               setPopular={props.setPopular}

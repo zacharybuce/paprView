@@ -8,6 +8,7 @@ import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { Box } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
 import NextNprogress from "nextjs-progressbar";
 
@@ -25,16 +26,23 @@ export default function MyApp(props) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>My page</title>
+        <link rel="icon" href="/favicon.png"></link>
+        <title>
+          paprView - Summaries that are concise and easy to understand
+        </title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <SessionProvider session={session}>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Navbar></Navbar>
-          <NextNprogress color="#EEB559" height={5} />
-          <Component {...pageProps} />
+          <Box sx={{ position: "relative", pb: "20vh", minHeight: "100vh" }}>
+            <Navbar></Navbar>
+            <NextNprogress color="#EEB559" height={5} />
+            <Box sx={{ mt: "64px" }}>
+              <Component {...pageProps} />
+            </Box>
+          </Box>
           <Footer />
         </ThemeProvider>
       </SessionProvider>

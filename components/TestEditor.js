@@ -43,10 +43,12 @@ const MyEditor = (props) => {
     body: {
       content: "",
       article: "",
+      articleTitle: "",
       upvotes: "0",
       downvotes: "0",
       user: props.userId,
       lastedit: String(new Date()),
+      bounty: {},
     },
   };
 
@@ -82,6 +84,7 @@ const MyEditor = (props) => {
 
   const saveContent = async () => {
     summary.body.article = props.articleId;
+    summary.body.articletitle = props.articleTitle;
     summary.body.content = String(editorState.toHTML());
     summary.body = JSON.stringify(summary.body);
 
@@ -99,7 +102,14 @@ const MyEditor = (props) => {
 
       console.log(putData);
 
+      const articleTags = [];
+
+      for (const tag of putData.data.tags) {
+        articleTags.push({ tag: tag, value: 0 });
+      }
+
       user.body.id = data.data._id;
+      user.body.articleTags = articleTags;
       user.body = JSON.stringify(user.body);
       const userPutRes = await fetch("api/users/" + props.userId, user);
 
@@ -116,7 +126,14 @@ const MyEditor = (props) => {
       <Head>
         <title>My Editor</title>
       </Head>
-      <Box sx={{ backgroundColor: "white", boxShadow: 3, borderRadius: "5px" }}>
+      <Box
+        sx={{
+          backgroundColor: "white",
+          boxShadow: props.mobile ? "" : 3,
+          borderRadius: "5px",
+          mt: "1vh",
+        }}
+      >
         <BraftEditor
           language="en"
           value={editorState}

@@ -1,7 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import User from "../../../models/User";
 
-dbConnect();
+dbConnect("users[id]");
 
 export default async (req, res) => {
   const {
@@ -28,10 +28,28 @@ export default async (req, res) => {
       try {
         var user;
         console.log(req.body);
-        if (req.body.date) {
+        if (req.body.newUser) {
+          user = await User.updateOne(
+            { _id: id },
+            { $inc: { points: req.body.points } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else if (req.body.date) {
           user = await User.findByIdAndUpdate(
             id,
             { $set: { joinDate: req.body.date } },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+        } else if (req.body.name) {
+          user = await User.findByIdAndUpdate(
+            id,
+            { $set: { name: req.body.name } },
             {
               new: true,
               runValidators: true,
@@ -46,15 +64,44 @@ export default async (req, res) => {
               runValidators: true,
             }
           );
-        } else if (req.body.id) {
-          user = await User.findByIdAndUpdate(
-            id,
-            { $push: { summaries: req.body.id } },
+        } else if (req.body.points) {
+          user = await User.updateOne(
+            { _id: id },
+            { $inc: { points: req.body.points } },
             {
               new: true,
               runValidators: true,
             }
           );
+        } else if (req.body.id) {
+          user = await User.findByIdAndUpdate(
+            id,
+            {
+              $push: {
+                summaries: req.body.id,
+              },
+            },
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+
+          var bulkOps = [];
+
+          for (const tag of req.body.articleTags) {
+            console.log(tag);
+            let doc = {
+              updateOne: {
+                filter: { _id: id, "ranks.tag": { $ne: tag.tag } },
+                update: { $push: { ranks: tag } },
+              },
+            };
+
+            bulkOps.push(doc);
+          }
+          console.log(bulkOps);
+          user = await User.bulkWrite(bulkOps);
         } else {
           let hasDoc = await User.countDocuments({
             _id: id,
@@ -84,6 +131,7 @@ export default async (req, res) => {
             );
           }
         }
+
         console.log(user);
         if (!user) {
           return res.status(400).json({ success: false });
@@ -92,20 +140,6 @@ export default async (req, res) => {
         res.status(200).json({ success: true, data: user });
       } catch (error) {
         res.status(400).json({ success: false, error: error });
-      }
-      break;
-
-    case "DELETE":
-      try {
-        const deletedUser = await User.deletedOne({ _id: id });
-
-        if (!deletedUser) {
-          res.status(400).json({ success: false });
-        }
-
-        res.status(200).json({ success: true, data: {} });
-      } catch (error) {
-        res.status(400).json({ success: false });
       }
       break;
 
