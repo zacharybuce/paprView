@@ -113,7 +113,7 @@ const BountyDialog = (props) => {
       open={props.openBountyDialog}
       onClose={handleClose}
     >
-      <DialogTitle> Set A Reward </DialogTitle>
+      <DialogTitle> Set A Bounty </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
           How much of your points will you offer for a summary of this paper?
