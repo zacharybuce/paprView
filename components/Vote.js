@@ -160,6 +160,7 @@ const Vote = (props) => {
         <IconButton
           onClick={() => handleClick("upvote")}
           color={handleColor("upvote")}
+          disabled={props.disabled}
         >
           <KeyboardArrowUpIcon sx={{ fontSize: "3rem" }} />
         </IconButton>
@@ -169,6 +170,7 @@ const Vote = (props) => {
       </Grid>
       <Grid item xs={12}>
         <IconButton
+          disabled={props.disabled}
           onClick={() => handleClick("downvote")}
           color={handleColor("downvote")}
         >

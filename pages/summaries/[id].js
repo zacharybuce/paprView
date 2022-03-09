@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import fetch from "isomorphic-unfetch";
 import {
   Box,
@@ -10,6 +10,7 @@ import {
   Divider,
   Alert,
   AlertTitle,
+  CircularProgress,
 } from "@mui/material";
 import Summary from "../../components/Summary";
 import ArticleHeading from "../../components/ArticleHeading";
@@ -21,7 +22,6 @@ import "braft-editor/dist/index.css";
 import { CreateBountyButton } from "../../components/CreateBountyButton";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import TestEditor from "../../components/TestEditor";
 
 const DynamicBountyDialog = dynamic(() =>
   import("../../components/BountyDialog")
@@ -51,12 +51,35 @@ const SummariesContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-const summaries = ({ summaries, docData }) => {
+const summaries = ({ docData }) => {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const [openBountyDialog, setOpenBountyDialog] = useState(false);
+  const [summaries, setSummaries] = useState([]);
+  const [fetching, setFetching] = useState(true);
   const router = useRouter();
-  if (session) console.log(session);
+
+  useEffect(async () => {
+    let summaries = [];
+
+    for (const summary of docData.summaries) {
+      var summaryRes = await fetch(
+        process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + summary
+      );
+      const summaryData = await summaryRes.json();
+      summaries.push(summaryData.data);
+    }
+
+    summaries.sort((a, b) => {
+      if (a.upvotes - a.downvotes < b.upvotes - b.downvotes) return 1;
+      if (a.upvotes - a.downvotes > b.upvotes - b.downvotes) return -1;
+      return 0;
+    });
+
+    setSummaries(summaries);
+    setFetching(false);
+  }, []);
+
   const awardBounty = async (awardeeId, summaryId) => {
     try {
       var article = {
@@ -110,7 +133,6 @@ const summaries = ({ summaries, docData }) => {
     }
   };
 
-  if (!summaries) return <Box sx={{ mt: "100vh" }}></Box>;
   return (
     <Box sx={{ mt: "8vh" }}>
       <Box sx={{ ml: "10vw", mr: "10vw" }}>
@@ -128,38 +150,44 @@ const summaries = ({ summaries, docData }) => {
         </AddBountyContainer>
         <Divider sx={{ backgroundColor: "#808080" }} sx={{ mt: "2vh" }} />
       </Box>
-      <SummariesContainer>
-        {summaries.length ? (
-          summaries.map((summary, index) => {
-            return (
-              <Box key={index}>
-                <Summary
-                  summary={summary}
-                  tags={docData.tags}
-                  awardBounty={awardBounty}
-                  articleBounty={docData.bounty}
-                  sessionId={session ? session.user._id : ""}
-                />
-                <Divider />
+      {fetching ? (
+        <Box sx={{ textAlign: "center" }}>
+          <CircularProgress sx={{ mt: "5vh" }} />
+        </Box>
+      ) : (
+        <SummariesContainer>
+          {summaries.length ? (
+            summaries.map((summary, index) => {
+              return (
+                <Box key={index}>
+                  <Summary
+                    summary={summary}
+                    tags={docData.tags}
+                    awardBounty={awardBounty}
+                    articleBounty={docData.bounty}
+                    sessionId={session ? session.user._id : ""}
+                  />
+                  <Divider />
+                </Box>
+              );
+            })
+          ) : (
+            <Box>
+              <Box sx={{ height: "30vh", alignItems: "center" }}>
+                <Alert
+                  severity="warning"
+                  icon={<DynamicCreateIcon />}
+                  sx={{ mt: "1vh" }}
+                >
+                  <AlertTitle>There are no Summaries...</AlertTitle>
+                  Click the button below to submit your own!
+                </Alert>
               </Box>
-            );
-          })
-        ) : (
-          <Box>
-            <Box sx={{ height: "30vh", alignItems: "center" }}>
-              <Alert
-                severity="warning"
-                icon={<DynamicCreateIcon />}
-                sx={{ mt: "1vh" }}
-              >
-                <AlertTitle>There are no Summaries...</AlertTitle>
-                Click the button below to submit your own!
-              </Alert>
+              <Divider />
             </Box>
-            <Divider />
-          </Box>
-        )}
-      </SummariesContainer>
+          )}
+        </SummariesContainer>
+      )}
       <Grid container alignContent="center" alignItems="center">
         <Grid item xs={12} sx={{ mt: "3vh", ml: "25vw", mr: "25vw" }}>
           <Typography variant="h6">
@@ -245,22 +273,22 @@ export const getServerSideProps = async ({ params }) => {
     };
   }
 
-  for (const summary of data.summaries) {
-    var summaryRes = await fetch(
-      process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + summary
-    );
-    const summaryData = await summaryRes.json();
-    summaries.push(summaryData.data);
-  }
+  // for (const summary of data.summaries) {
+  //   var summaryRes = await fetch(
+  //     process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + summary
+  //   );
+  //   const summaryData = await summaryRes.json();
+  //   summaries.push(summaryData.data);
+  // }
 
-  summaries.sort((a, b) => {
-    if (a.upvotes - a.downvotes < b.upvotes - b.downvotes) return 1;
-    if (a.upvotes - a.downvotes > b.upvotes - b.downvotes) return -1;
-    return 0;
-  });
+  // summaries.sort((a, b) => {
+  //   if (a.upvotes - a.downvotes < b.upvotes - b.downvotes) return 1;
+  //   if (a.upvotes - a.downvotes > b.upvotes - b.downvotes) return -1;
+  //   return 0;
+  // });
 
   return {
-    props: { summaries: summaries, docData: data },
+    props: { docData: data },
   };
 };
 

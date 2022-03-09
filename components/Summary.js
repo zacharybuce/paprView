@@ -7,7 +7,6 @@ import Vote from "./Vote";
 import fetch from "isomorphic-unfetch";
 import braft from "../utils/summary.module.css";
 import UserCard from "./UserCard";
-import AwardBountyButton from "./AwardBountyButton";
 import dynamic from "next/dynamic";
 
 const DynamicAwardBountyButton = dynamic(() => import("./AwardBountyButton"));
@@ -76,16 +75,14 @@ const Summary = ({ summary, tags, awardBounty, articleBounty, sessionId }) => {
   return (
     <Grid container>
       <Grid item xs={2} sm={1} sx={{ textAlign: "center" }}>
-        {sessionId != summary.user ? (
-          <Vote
-            upvotes={summary.upvotes}
-            downvotes={summary.downvotes}
-            summaryId={summary._id}
-            tags={tags}
-          />
-        ) : (
-          <Box sx={{ mt: "4vh" }}></Box>
-        )}
+        <Vote
+          disabled={sessionId != summary.user ? false : true}
+          upvotes={summary.upvotes}
+          downvotes={summary.downvotes}
+          summaryId={summary._id}
+          tags={tags}
+        />
+
         {!summary.bounty.value && !articleBounty.value ? (
           ""
         ) : (
