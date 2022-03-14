@@ -75,12 +75,12 @@ const HelpContainer = styled("div")(({ theme }) => ({
     marginLeft: "2vw",
   },
   [theme.breakpoints.up("md")]: {
-    marginRight: "20vw",
-    marginLeft: "20vw",
+    marginRight: "10vw",
+    marginLeft: "10vw",
   },
   [theme.breakpoints.up("lg")]: {
-    marginRight: "20vw",
-    marginLeft: "20vw",
+    marginRight: "10vw",
+    marginLeft: "10vw",
   },
   [theme.breakpoints.up("xl")]: {
     marginRight: "20vw",
@@ -220,7 +220,7 @@ const HelpPageContent = () => {
         justifyContent="center"
         sx={{ mt: "7vh" }}
       >
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={6} sx={{ mr: [null, null, null, "1vw", null] }}>
           <Typography variant="h5">
             Credibility tells other users how much you know about a subject. It
             is earned in <b>each tag</b> associated with the paper you summarize
@@ -229,11 +229,12 @@ const HelpPageContent = () => {
         <Grid
           item
           container
-          md={6}
+          lg={6}
           sx={{
             boxShadow: 1,
             borderRadius: 1,
             p: 2,
+            mt: [null, null, null, "2vh", null],
             display: { xs: "none", lg: "flex" },
           }}
           spacing={1}
@@ -494,7 +495,7 @@ const HelpPageContent = () => {
       </Grid>
 
       <Grid container alignItems="center" sx={{ mt: "8vh" }}>
-        <Grid item xs={12} lg={7} sx={{ pr: "5vw" }}>
+        <Grid item xs={12} xl={7} sx={{ pr: "5vw" }}>
           <Typography variant="h5">
             If you don't see the tag you're looking for, click the{" "}
             <Button variant="contained" color="secondary">
@@ -511,10 +512,11 @@ const HelpPageContent = () => {
         <Grid
           item
           container
+          justifyContent="center"
           xs={12}
-          lg={5}
+          xl={5}
           sx={{
-            mt: ["2vh", null, null, "0vh"],
+            mt: ["2vh", null, null, "2vh"],
             display: { xs: "none", sm: "flex" },
           }}
         >
