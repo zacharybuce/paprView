@@ -24,6 +24,7 @@ const AmountText = styled("div")(({ theme }) => ({
   },
   [theme.breakpoints.up("md")]: {
     fontSize: 11,
+    display: "none",
   },
   [theme.breakpoints.up("lg")]: {
     fontSize: 11,
@@ -140,9 +141,13 @@ const Document = (props) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography sx={{ mt: "1vh" }}>
-              Published on: {formatDate(props.doc.publishDate)}
-            </Typography>
+            {props.doc.publishDate ? (
+              <Typography sx={{ mt: "1vh" }}>
+                Published on: {formatDate(props.doc.publishDate)}
+              </Typography>
+            ) : (
+              ""
+            )}
           </Grid>
           <Grid item xs={12} sx={{ mt: ".5vh", mb: ".5vh" }}>
             <div ref={observe}>
