@@ -28,9 +28,11 @@ const AmountText = styled("div")(({ theme }) => ({
   },
   [theme.breakpoints.up("lg")]: {
     fontSize: 11,
+    display: "flex",
   },
   [theme.breakpoints.up("xl")]: {
     fontSize: 15,
+    display: "flex",
   },
 }));
 
