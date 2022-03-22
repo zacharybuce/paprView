@@ -185,6 +185,7 @@ const ArticleCreateForm = () => {
       >
         <Box sx={{ p: "2vh" }}>
           <TextField
+            data-testid="Title"
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
             required
@@ -197,6 +198,7 @@ const ArticleCreateForm = () => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
+                  data-testid="Author"
                   autoFocus
                   value={authorText}
                   onChange={handleChangeText}
@@ -251,7 +253,7 @@ const ArticleCreateForm = () => {
           </div>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
-              <Box sx={{ mt: "2vh", width: "100%" }}>
+              <Box data-testid="Date" sx={{ mt: "2vh", width: "100%" }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DatePicker
                     s

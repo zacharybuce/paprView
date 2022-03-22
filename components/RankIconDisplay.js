@@ -59,7 +59,7 @@ const RankIconDisplay = (props) => {
 
   return (
     <Tooltip title={tagName} arrow>
-      <Grid item xs={2} sx={{ color: props.color }}>
+      <Grid data-testid="icon-color" item xs={2} sx={{ color: props.color }}>
         {setIcon(disName)}
       </Grid>
     </Tooltip>

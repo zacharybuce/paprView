@@ -3,12 +3,6 @@ import { useState, useEffect } from "react";
 import { Box, Typography, Divider, CircularProgress } from "@mui/material";
 import SummaryDisplay from "./SummaryDisplay";
 
-const voteSort = (a, b) => {
-  if (a.upvotes - a.downvotes < b.upvotes - b.downvotes) return 1;
-  if (a.upvotes - a.downvotes > b.upvotes - b.downvotes) return -1;
-  return 0;
-};
-
 const UserSummaries = ({ userId }) => {
   const [summaries, setSummaries] = useState([]);
 
@@ -33,7 +27,7 @@ const UserSummaries = ({ userId }) => {
   const display = () => {
     if (summaries && summaries.length == 0)
       return (
-        <Box sx={{ p: 2 }}>
+        <Box data-testid="user-summaries" sx={{ p: 2 }}>
           <Typography>There are no summaries to display</Typography>
         </Box>
       );
@@ -62,7 +56,7 @@ const UserSummaries = ({ userId }) => {
           overflow: "hidden",
         }}
       >
-        {summaries
+        {summaries.length
           ? summaries.map((summary, index) => {
               if (index !== summary.length - 1)
                 return (

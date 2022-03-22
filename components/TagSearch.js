@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 
 const SearchContainer = styled("div")(({ theme }) => ({
   marginBottom: "1vh",
