@@ -1,12 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Grid, Divider } from "@mui/material";
 import Document from "../components/Document";
 import TagHeader from "../components/TagHeader";
 import { styled } from "@mui/material/styles";
@@ -110,7 +104,6 @@ const tags = ({ tags }) => {
           <WhatIsContainer>
             <WhatIsPaprView />
           </WhatIsContainer>
-
           <WhatIsContainer>
             <TopUsers />
           </WhatIsContainer>

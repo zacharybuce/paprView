@@ -55,7 +55,12 @@ const UserTagDisplay = (props) => {
   if (props.rank)
     return (
       <Tooltip title={tagName + " " + props.rankValue} arrow>
-        <Grid item xs={2} sx={{ color: props.color }}>
+        <Grid
+          data-testid="render-user-chip"
+          item
+          xs={2}
+          sx={{ color: props.color }}
+        >
           {setIcon(disName)}
         </Grid>
       </Tooltip>
@@ -63,6 +68,7 @@ const UserTagDisplay = (props) => {
 
   return (
     <Chip
+      data-testid="render-paper-chip"
       size="small"
       key={tagName}
       icon={setIcon(disName)}

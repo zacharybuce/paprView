@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   Link,
-  Grid,
   Button,
   AppBar,
   Box,
@@ -70,12 +69,17 @@ export default function PrimarySearchAppBar() {
           </Tooltip>
           <SearchNav />
           {!session ? (
-            <Button onClick={() => signIn("google")} variant="contained">
+            <Button
+              data-testid="nav-login"
+              onClick={() => signIn("google")}
+              variant="contained"
+            >
               Login
             </Button>
           ) : (
             <Box sx={{ display: "flex" }}>
               <IconButton
+                data-testid="nav-profile"
                 size="large"
                 edge="end"
                 aria-label="account of current user"

@@ -1,6 +1,7 @@
 import dbConnect from "../../../utils/dbConnect";
 import Summary from "../../../models/Summary";
 import User from "../../../models/User";
+import Article from "../../../models/Article";
 const mongoose = require("mongoose");
 
 const rankCred = (upvote, downvote) => {
@@ -170,6 +171,23 @@ export default async (req, res) => {
         res.status(200).json({ success: true, data: users });
       } catch (error) {
         console.log(error);
+      }
+      break;
+
+    case "DELETE":
+      try {
+        const doc = await Summary.findOneAndDelete({ _id: id });
+        const userRes = await User.updateOne(
+          { _id: doc.user },
+          { $pull: { summaries: id } }
+        );
+        const artRes = await Article.updateOne(
+          { _id: doc.article },
+          { $pull: { summaries: id } }
+        );
+        res.status(200).json({ success: true });
+      } catch (error) {
+        res.status(400).json({ success: false });
       }
       break;
     default:

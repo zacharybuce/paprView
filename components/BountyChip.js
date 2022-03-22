@@ -9,13 +9,14 @@ const BountyChip = ({ bountyAmount }) => {
         <Alert severity="primary" icon={<EmojiEventsIcon />}>
           <AlertTitle>
             There is a bounty on this article for{" "}
-            <strong>{bountyAmount}</strong> points!
+            <strong data-testid="bounty-banner-amount">{bountyAmount}</strong>{" "}
+            points!
           </AlertTitle>
           The user who created this bounty can award your summary if they think
           you did a good job.
         </Alert>
       ) : (
-        <div></div>
+        <div data-testid="no-bounty-banner"></div>
       )}
     </Box>
   );

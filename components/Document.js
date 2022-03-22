@@ -98,21 +98,11 @@ const Document = (props) => {
               p: 1,
             }}
           >
-            <Typography>{props.doc.summaries.length}</Typography>
-            <AmountText>Summaries</AmountText>
+            <Typography data-testid="summaries-amount">
+              {props.doc.summaries.length}
+            </Typography>
+            <AmountText data-testid="summaries-text">Summaries</AmountText>
           </Box>
-          {/* <Box
-            sx={{
-              textAlign: "center",
-              mr: "2vw",48a868
-              p: 1,
-              mt: "1vh",
-              color: "gray",
-            }}
-          >
-            <Typography>{props.doc.comments.length}</Typography>
-            <AmountText>Comments</AmountText>
-          </Box> */}
           {props.doc.bounty.value ? (
             <Box
               sx={{
@@ -144,7 +134,7 @@ const Document = (props) => {
           </Grid>
           <Grid item xs={12}>
             {props.doc.publishDate ? (
-              <Typography sx={{ mt: "1vh" }}>
+              <Typography data-testid="publish-date" sx={{ mt: "1vh" }}>
                 Published on: {formatDate(props.doc.publishDate)}
               </Typography>
             ) : (

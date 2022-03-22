@@ -13,6 +13,8 @@ describe("help page", () => {
     render(<Help />);
     // // Act
     // // Assert
-    expect(screen.getByText(/About paprView/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Look for papers and get concise summaries/)
+    ).toBeInTheDocument();
   });
 });
