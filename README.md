@@ -102,10 +102,13 @@ You must have node intstalled along with npm or a package manager of your choice
    GOOGLE_CLIENT_ID=<Google client id>
    GOOGLE_CLIENT_SECRET=<Google client secret> 
    ```
+### Running the Project
+```sh
+  npm run dev
+   ```
+This will boot up the site on http://localhost:3000
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Features
