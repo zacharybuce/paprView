@@ -10,17 +10,26 @@ import TagSearch from "../components/TagSearch";
 import TagSearchRefinement from "../components/TagSearchRefinement";
 
 const ResultsContainer = styled("div")(({ theme }) => ({
-  marginTop: "10vh",
-  //marginRight: "10vw",
-  //marginLeft: "10vw",
   marginBottom: "7vh",
-  [theme.breakpoints.up("xl")]: {
+  [theme.breakpoints.up("xs")]: {
+    marginTop: "10vh",
+    marginRight: "3vw",
+    marginLeft: "3vw",
+  },
+  [theme.breakpoints.up("sm")]: {
+    marginRight: "10vw",
+    marginLeft: "10vw",
+  },
+  [theme.breakpoints.up("md")]: { marginTop: "12vh" },
+  [theme.breakpoints.up("lg")]: {
+    marginTop: "15vh",
     marginRight: "15vw",
     marginLeft: "22vw",
   },
-  [theme.breakpoints.down("sm")]: {
-    marginRight: "3vw",
-    marginLeft: "3vw",
+  [theme.breakpoints.up("xl")]: {
+    marginTop: "10vh",
+    marginRight: "15vw",
+    marginLeft: "22vw",
   },
 }));
 
