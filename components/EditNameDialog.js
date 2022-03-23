@@ -11,6 +11,7 @@ import {
 const EditNameDialog = ({ editing, setEditing, changeName, setNewName }) => {
   return (
     <Dialog
+      data-testid="dialog"
       open={editing}
       onClose={() => setEditing(false)}
       fullWidth

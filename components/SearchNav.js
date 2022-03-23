@@ -3,7 +3,7 @@ import { styled, alpha } from "@mui/material/styles";
 import { useState } from "react";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, Button, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 
 const SearchContainer = styled("div")(({ theme }) => ({
@@ -104,7 +104,7 @@ const Search = () => {
     }
   };
 
-  if (router.route == "/") return <BlankContainer></BlankContainer>;
+  if (router && router.route == "/") return <BlankContainer></BlankContainer>;
 
   return (
     <SearchContainer>

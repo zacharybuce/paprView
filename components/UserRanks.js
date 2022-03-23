@@ -3,7 +3,8 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 import UserTagDisplay from "./UserTagDisplay";
 const UserRanks = (props) => {
   const display = () => {
-    if (props.ranks.length === 0) return <Typography>No Tags</Typography>;
+    if (props.ranks.length === 0)
+      return <Typography data-testid="no-tags">No Tags</Typography>;
     else {
       return <CircularProgress />;
     }
@@ -22,7 +23,7 @@ const UserRanks = (props) => {
           borderWidth: 1,
         }}
       >
-        {props.ranks
+        {props.ranks.length
           ? props.ranks.map((rank, index) => {
               if (index < 5)
                 return (

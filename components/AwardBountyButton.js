@@ -10,12 +10,13 @@ const AwardBountyButton = ({
   sessionId,
   summaryId,
 }) => {
-  console.log(sessionId);
-  console.log(bounty.user);
   if (sessionId == articleBounty.user && sessionId != awardee)
     return (
       <Tooltip title="Award your Bounty">
-        <IconButton onClick={() => awardBounty(awardee, summaryId)}>
+        <IconButton
+          data-testid="can-award-bounty"
+          onClick={() => awardBounty(awardee, summaryId)}
+        >
           <EmojiEventsIcon sx={{ fontSize: "30px" }} />
         </IconButton>
       </Tooltip>
@@ -23,7 +24,7 @@ const AwardBountyButton = ({
 
   if (bounty.value)
     return (
-      <Box>
+      <Box data-testid="bounty-exists">
         <EmojiEventsIcon color="primary" sx={{ fontSize: "30px" }} />
         <Typography color="primary">+{bounty.value}</Typography>
       </Box>

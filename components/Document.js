@@ -24,12 +24,15 @@ const AmountText = styled("div")(({ theme }) => ({
   },
   [theme.breakpoints.up("md")]: {
     fontSize: 11,
+    display: "none",
   },
   [theme.breakpoints.up("lg")]: {
     fontSize: 11,
+    display: "flex",
   },
   [theme.breakpoints.up("xl")]: {
     fontSize: 15,
+    display: "flex",
   },
 }));
 
@@ -95,21 +98,11 @@ const Document = (props) => {
               p: 1,
             }}
           >
-            <Typography>{props.doc.summaries.length}</Typography>
-            <AmountText>Summaries</AmountText>
+            <Typography data-testid="summaries-amount">
+              {props.doc.summaries.length}
+            </Typography>
+            <AmountText data-testid="summaries-text">Summaries</AmountText>
           </Box>
-          {/* <Box
-            sx={{
-              textAlign: "center",
-              mr: "2vw",48a868
-              p: 1,
-              mt: "1vh",
-              color: "gray",
-            }}
-          >
-            <Typography>{props.doc.comments.length}</Typography>
-            <AmountText>Comments</AmountText>
-          </Box> */}
           {props.doc.bounty.value ? (
             <Box
               sx={{
@@ -140,9 +133,13 @@ const Document = (props) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography sx={{ mt: "1vh" }}>
-              Published on: {formatDate(props.doc.publishDate)}
-            </Typography>
+            {props.doc.publishDate ? (
+              <Typography data-testid="publish-date" sx={{ mt: "1vh" }}>
+                Published on: {formatDate(props.doc.publishDate)}
+              </Typography>
+            ) : (
+              ""
+            )}
           </Grid>
           <Grid item xs={12} sx={{ mt: ".5vh", mb: ".5vh" }}>
             <div ref={observe}>

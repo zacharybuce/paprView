@@ -53,7 +53,9 @@ const SummaryDisplay = (props) => {
               p: 1,
             }}
           >
-            <Typography>{props.summary.total}</Typography>
+            <Typography data-testid="summary-display-score">
+              {props.summary.total}
+            </Typography>
           </Box>
         </Tooltip>
       </Grid>
@@ -65,7 +67,11 @@ const SummaryDisplay = (props) => {
         sx={{ textAlign: "center" }}
       >
         {props.summary.bounty.value ? (
-          <Typography color="primary" sx={{ fontSize: "12px" }}>
+          <Typography
+            data-testid="summary-display-bounty"
+            color="primary"
+            sx={{ fontSize: "12px" }}
+          >
             <EmojiEventsIcon />
           </Typography>
         ) : (
@@ -75,12 +81,17 @@ const SummaryDisplay = (props) => {
       <Grid item xs={8} sx={{ pt: 1 }}>
         <NextLink href={"/summaries/" + props.summary.articleId} passHref>
           <Link underline="none">
-            <Typography noWrap>{props.summary.articletitle}</Typography>
+            <Typography data-testid="summary-display-title" noWrap>
+              {props.summary.articletitle}
+            </Typography>
           </Link>
         </NextLink>
       </Grid>
       <Grid item xs={2}>
-        <Typography sx={{ fontSize: 11, color: "gray", ml: "2vw", pt: 1 }}>
+        <Typography
+          data-testid="summary-display-date"
+          sx={{ fontSize: 11, color: "gray", ml: "2vw", pt: 1 }}
+        >
           {formatDate(props.summary.date)}
         </Typography>
       </Grid>

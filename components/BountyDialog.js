@@ -115,7 +115,7 @@ const BountyDialog = (props) => {
     >
       <DialogTitle> Set A Bounty </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-slide-description">
+        <DialogContentText>
           How much of your points will you offer for a summary of this paper?
         </DialogContentText>
         <Box sx={{ mt: "3vh", ml: "20%", mr: "20%", mb: "3vh" }}>

@@ -158,6 +158,7 @@ const Vote = (props) => {
     <Grid container textAlign="center">
       <Grid item xs={12}>
         <IconButton
+          data-testid="u-button-render"
           onClick={() => handleClick("upvote")}
           color={handleColor("upvote")}
           disabled={props.disabled}
@@ -166,9 +167,11 @@ const Vote = (props) => {
         </IconButton>
       </Grid>
       <Grid item xs={12}>
-        <Typography sx={{ fontSize: "1.5rem" }}>{totalVote}</Typography>
+        <Typography data-testid="total-amount" sx={{ fontSize: "1.5rem" }}>
+          {totalVote}
+        </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid data-testid="d-button-render" item xs={12}>
         <IconButton
           disabled={props.disabled}
           onClick={() => handleClick("downvote")}

@@ -10,6 +10,7 @@ import UserCard from "./UserCard";
 import dynamic from "next/dynamic";
 
 const DynamicAwardBountyButton = dynamic(() => import("./AwardBountyButton"));
+const DynamicDialog = dynamic(() => import("@mui/material/Dialog"));
 
 const Summary = ({ summary, tags, awardBounty, articleBounty, sessionId }) => {
   const { observe, inView } = useInView({
@@ -23,10 +24,12 @@ const Summary = ({ summary, tags, awardBounty, articleBounty, sessionId }) => {
   const [overflow, setOverflow] = useState(false);
   const [height, setHeight] = useState(0);
   const [user, setUser] = useState(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    setHeight(ref.current.clientHeight);
+    if (!deleted) setHeight(ref.current.clientHeight);
     if (height > 400) setOverflow(true);
   });
 
@@ -72,104 +75,145 @@ const Summary = ({ summary, tags, awardBounty, articleBounty, sessionId }) => {
     return output;
   };
 
-  return (
-    <Grid container>
-      <Grid item xs={2} sm={1} sx={{ textAlign: "center" }}>
-        <Vote
-          disabled={sessionId != summary.user ? false : true}
-          upvotes={summary.upvotes}
-          downvotes={summary.downvotes}
-          summaryId={summary._id}
-          tags={tags}
-        />
+  const deleteSummary = async () => {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_ROOT_URL + "/api/summaries/" + summary._id,
+      { method: "DELETE" }
+    );
+    const json = await res.json();
+    setDeleteOpen(false);
+    setDeleted(true);
+  };
 
-        {!summary.bounty.value && !articleBounty.value ? (
-          ""
-        ) : (
-          <DynamicAwardBountyButton
-            bounty={summary.bounty}
-            awardBounty={awardBounty}
-            awardee={summary.user}
-            articleBounty={articleBounty}
-            sessionId={sessionId}
+  if (!deleted)
+    return (
+      <Grid container>
+        <Grid item xs={2} sm={1} sx={{ textAlign: "center" }}>
+          <Vote
+            disabled={sessionId != summary.user ? false : true}
+            upvotes={summary.upvotes}
+            downvotes={summary.downvotes}
             summaryId={summary._id}
+            tags={tags}
           />
-        )}
-      </Grid>
-      <Grid item xs={10} sm={11}>
-        <Box
-          sx={{
-            mt: "4vh",
-            mb: "4vh",
-            borderRadius: "5px",
-            // boxShadow: 3,
-            // border: "solid",
-            // borderWidth: "1px",
-            // borderColor: "#8e9299",
-          }}
-        >
-          <div ref={observe}>
-            {user ? (
-              <Box
-                sx={{
-                  borderTopLeftRadius: 5,
-                  borderTopRightRadius: 5,
-                  width: "100%",
-                  //backgroundColor: "lightgrey",
-                  mt: "1vh",
-                }}
-              >
-                <Grid container>
-                  <Grid item xs={6}>
-                    <UserCard user={user} />
-                  </Grid>
 
-                  <Grid item xs={6}>
-                    <Grid container justifyContent="flex-end">
-                      <Grid item sx={{ mt: "1vh", mr: "1vw" }}>
-                        <Typography variant="caption" color="gray">
-                          {formatDate(summary.lastedit)}
-                        </Typography>
+          {!summary.bounty.value && !articleBounty.value ? (
+            ""
+          ) : (
+            <DynamicAwardBountyButton
+              bounty={summary.bounty}
+              awardBounty={awardBounty}
+              awardee={summary.user}
+              articleBounty={articleBounty}
+              sessionId={sessionId}
+              summaryId={summary._id}
+            />
+          )}
+        </Grid>
+        <Grid item xs={10} sm={11}>
+          <Box
+            sx={{
+              mt: "4vh",
+              mb: "4vh",
+              borderRadius: "5px",
+              // boxShadow: 3,
+              // border: "solid",
+              // borderWidth: "1px",
+              // borderColor: "#8e9299",
+            }}
+          >
+            <div ref={observe}>
+              {user ? (
+                <Box
+                  sx={{
+                    borderTopLeftRadius: 5,
+                    borderTopRightRadius: 5,
+                    width: "100%",
+                    //backgroundColor: "lightgrey",
+                    mt: "1vh",
+                  }}
+                >
+                  <Grid container>
+                    <Grid item xs={6}>
+                      <UserCard user={user} />
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <Grid container justifyContent="flex-end">
+                        <Grid item sx={{ mt: "1vh", mr: "1vw" }}>
+                          <Typography
+                            data-testid="summary-lastEdit"
+                            variant="caption"
+                            color="gray"
+                          >
+                            {formatDate(summary.lastedit)}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
+                </Box>
+              ) : (
+                <div></div>
+              )}
+            </div>
+
+            <Collapse in={checked} collapsedSize={401}>
+              <Box
+                className={braft["braft-output-content"]}
+                ref={ref}
+                sx={{ pt: 1, pb: 1, pl: 3, pr: 3 }}
+              >
+                {ReactHtmlParser(summary.content)}
+              </Box>
+            </Collapse>
+            {overflow ? (
+              <Box
+                sx={{
+                  pb: "1vh",
+                  ml: "1vw",
+                  mr: "1vw",
+                  textAlign: "center",
+                  boxShadow: !checked ? "0 -5px 5px -5px #333" : "",
+                }}
+              >
+                <Button color="secondary" onClick={handleChange}>
+                  <MoreHorizIcon sx={{ fontSize: "2rem" }} />
+                </Button>
               </Box>
             ) : (
               <div></div>
             )}
-          </div>
-
-          <Collapse in={checked} collapsedSize={401}>
-            <Box
-              className={braft["braft-output-content"]}
-              ref={ref}
-              sx={{ pt: 1, pb: 1, pl: 3, pr: 3 }}
-            >
-              {ReactHtmlParser(summary.content)}
+          </Box>
+        </Grid>
+        {sessionId == summary.user ? (
+          <Button onClick={() => setDeleteOpen(true)} color="error">
+            delete
+          </Button>
+        ) : (
+          ""
+        )}
+        {sessionId == summary.user ? (
+          <DynamicDialog
+            open={deleteOpen}
+            maxWidth={"md"}
+            onClose={() => setDeleteOpen(false)}
+          >
+            <Box sx={{ p: 5, textAlign: "center" }}>
+              <Typography sx={{ mb: "2vh" }}>
+                Are you sure you want to delete your summary?
+              </Typography>
+              <Button onClick={() => deleteSummary()}>Confirm</Button>
+              <Button onClick={() => setDeleteOpen(false)}>Deny</Button>
             </Box>
-          </Collapse>
-          {overflow ? (
-            <Box
-              sx={{
-                pb: "1vh",
-                ml: "1vw",
-                mr: "1vw",
-                textAlign: "center",
-                boxShadow: !checked ? "0 -5px 5px -5px #333" : "",
-              }}
-            >
-              <Button color="secondary" onClick={handleChange}>
-                <MoreHorizIcon sx={{ fontSize: "2rem" }} />
-              </Button>
-            </Box>
-          ) : (
-            <div></div>
-          )}
-        </Box>
+          </DynamicDialog>
+        ) : (
+          ""
+        )}
       </Grid>
-    </Grid>
-  );
+    );
+
+  return <div></div>;
 };
 
 export default Summary;

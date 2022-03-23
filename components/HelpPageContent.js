@@ -70,6 +70,18 @@ const HelpContainer = styled("div")(({ theme }) => ({
   marginTop: "10vh",
   marginRight: "10vw",
   marginLeft: "10vw",
+  [theme.breakpoints.down("sm")]: {
+    marginRight: "2vw",
+    marginLeft: "2vw",
+  },
+  [theme.breakpoints.up("md")]: {
+    marginRight: "10vw",
+    marginLeft: "10vw",
+  },
+  [theme.breakpoints.up("lg")]: {
+    marginRight: "10vw",
+    marginLeft: "10vw",
+  },
   [theme.breakpoints.up("xl")]: {
     marginRight: "20vw",
     marginLeft: "20vw",
@@ -85,36 +97,46 @@ const HelpPageContent = () => {
         Look for papers and get concise summaries
       </Typography>
       <Grid container alignItems="center" sx={{ mt: "5vh" }}>
-        <Grid item md={7}>
+        <Grid item xs={12} lg={7}>
           <Typography variant="h5">
             The whole purpose of this site is to{" "}
             <b>find summaries of academic papers</b>. There are only two main
             functions:
           </Typography>
 
-          <Grid container alignItems="center" sx={{ mt: "3vh", ml: "20%" }}>
-            <Grid item>
+          <Grid
+            container
+            alignItems="center"
+            textAlign="center"
+            sx={{ mt: "3vh" }}
+          >
+            <Grid item xs={12}>
               <FeedIcon color="primary" sx={{ fontSize: "7rem" }} />
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Typography variant="h5">Adding papers...</Typography>
             </Grid>
           </Grid>
 
-          <Grid container alignItems="center" sx={{ mt: "3vh", ml: "20%" }}>
-            <Grid item>
+          <Grid
+            container
+            alignItems="center"
+            textAlign="center"
+            sx={{ mt: "3vh" }}
+          >
+            <Grid item xs={12}>
               <ForumIcon color="primary" sx={{ fontSize: "7rem" }} />
             </Grid>
-            <Grid item>
+            <Grid item xs={12}>
               <Typography variant="h5">...and getting summaries</Typography>
             </Grid>
           </Grid>
 
           <Grid container sx={{ mt: "3vh" }}>
-            <Grid item xs={1}>
+            <Grid item xs={2} sm={1}>
               <KeyboardArrowUpIcon color="primary" sx={{ fontSize: "3rem" }} />
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={10} sm={11}>
               <Typography variant="h5">
                 {" "}
                 Good Summaries are upvoted and <b>rise to the top</b>.
@@ -125,7 +147,7 @@ const HelpPageContent = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item md={5}>
+        <Grid item md={5} sx={{ display: { xs: "none", lg: "flex" } }}>
           <Box sx={{ boxShadow: 2 }}>
             <img src="/HelpPic1.jpg"></img>
           </Box>
@@ -144,28 +166,46 @@ const HelpPageContent = () => {
         justifyContent="center"
         sx={{ mt: "8vh" }}
       >
-        <Grid item md={4}>
+        <Grid item xs={12} lg={4}>
           <Typography variant="h5">
             When people upvote your summary, two scores will be increased:{" "}
             <b>credibility</b> and <b>points</b>
           </Typography>
         </Grid>
 
-        <Grid item md={2} textAlign="center">
+        <Grid
+          item
+          xs={6}
+          lg={2}
+          textAlign="center"
+          sx={{ mt: ["2vh", null, null, "0vh"] }}
+        >
           <Typography variant="h4">+10</Typography>
           <Typography variant="h5">POINTS</Typography>
           <Typography sx={{ mt: "1vh" }}>
             <i>summary is upvoted</i>
           </Typography>
         </Grid>
-        <Grid item md={2} textAlign="center">
+        <Grid
+          item
+          xs={6}
+          lg={2}
+          textAlign="center"
+          sx={{ mt: ["2vh", null, null, "0vh"] }}
+        >
           <Typography variant="h4">+1</Typography>
           <Typography variant="h5">CREDIBILITY</Typography>
           <Typography sx={{ mt: "1vh" }}>
             <i>summary is upvoted</i>
           </Typography>
         </Grid>
-        <Grid item container justifyContent="flex-end" md={3}>
+        <Grid
+          item
+          container
+          justifyContent="flex-end"
+          md={3}
+          sx={{ display: { xs: "none", lg: "flex" } }}
+        >
           <Box sx={{ boxShadow: 2, borderRadius: 1 }}>
             <Box sx={{ mt: 1 }}>
               <UserCard user={user} />
@@ -180,7 +220,7 @@ const HelpPageContent = () => {
         justifyContent="center"
         sx={{ mt: "7vh" }}
       >
-        <Grid item md={6}>
+        <Grid item xs={12} lg={6} sx={{ mr: [null, null, null, "1vw", null] }}>
           <Typography variant="h5">
             Credibility tells other users how much you know about a subject. It
             is earned in <b>each tag</b> associated with the paper you summarize
@@ -189,8 +229,14 @@ const HelpPageContent = () => {
         <Grid
           item
           container
-          md={6}
-          sx={{ boxShadow: 1, borderRadius: 1, p: 2 }}
+          lg={6}
+          sx={{
+            boxShadow: 1,
+            borderRadius: 1,
+            p: 2,
+            mt: [null, null, null, "2vh", null],
+            display: { xs: "none", lg: "flex" },
+          }}
           spacing={1}
         >
           <Grid item xs={4} sx={{ textAlign: "center" }}>
@@ -223,14 +269,14 @@ const HelpPageContent = () => {
         justifyContent="center"
         sx={{ mt: "7vh" }}
       >
-        <Grid item md={6}>
+        <Grid item xs={12} md={6}>
           <Typography variant="h5">
             As you earn <b>credibility</b>, you'll increase your <b>rank</b> and
             get special flares next to your name that tell other users how much
             you know about an area of research.
           </Typography>
         </Grid>
-        <Grid item md={6}>
+        <Grid item xs={12} md={6} sx={{ mt: ["2vh", 0] }}>
           <Box sx={{ ml: "2vw", mr: "2vw", boxShadow: 1, borderRadius: 1 }}>
             <TableContainer>
               <Table aria-label="simple table">
@@ -287,7 +333,7 @@ const HelpPageContent = () => {
         justifyContent="center"
         sx={{ mt: "8vh" }}
       >
-        <Grid item md={6} sx={{ pr: "5vw" }}>
+        <Grid item xs={12} lg={6} sx={{ pr: [null, null, null, "5vw"] }}>
           <Typography variant="h5">
             If you want to draw more attention to a paper, use your{" "}
             <b>points</b> to start a <b>bounty</b>.
@@ -300,7 +346,12 @@ const HelpPageContent = () => {
             users will be able to see it attached to the paper
           </Typography>
         </Grid>
-        <Grid item container md={6}>
+        <Grid
+          item
+          container
+          md={6}
+          sx={{ display: { xs: "none", lg: "flex" } }}
+        >
           <Box sx={{ boxShadow: 1 }}>
             <img src="HelpPic2.jpg"></img>
           </Box>
@@ -358,7 +409,12 @@ const HelpPageContent = () => {
             </i>
           </Typography>
         </Grid>
-        <Grid item container md={5}>
+        <Grid
+          item
+          container
+          md={5}
+          sx={{ display: { xs: "none", sm: "flex" } }}
+        >
           <Box sx={{ boxShadow: 2 }}>
             <img src="HelpPic3.jpg"></img>
           </Box>
@@ -371,7 +427,7 @@ const HelpPageContent = () => {
       </Typography>
 
       <Grid container alignItems="center" sx={{ mt: "8vh" }}>
-        <Grid item md={7} sx={{ pr: "5vw" }}>
+        <Grid item xs={12} lg={7} sx={{ pr: "5vw" }}>
           <Typography variant="h5">
             Each paper will have a number of <b>tags</b>, which describe what
             the paper is written about. Every tag will belong to one of the{" "}
@@ -387,7 +443,13 @@ const HelpPageContent = () => {
             Every paper will have at least one tag and at most five tags.
           </Typography>
         </Grid>
-        <Grid item container md={5} sx={{ boxShadow: 2, p: 2 }}>
+        <Grid
+          item
+          container
+          xs={12}
+          lg={5}
+          sx={{ boxShadow: 2, p: 2, mt: ["2vh", null, null, "0vh"] }}
+        >
           <Grid item textAlign="center" xs={6}>
             <PermDataSettingIcon sx={{ fontSize: "4rem" }} />
             <Typography variant="h5">Physical and Formal Sciences</Typography>
@@ -420,7 +482,12 @@ const HelpPageContent = () => {
             </i>
           </Typography>
         </Grid>
-        <Grid container item md={5}>
+        <Grid
+          container
+          item
+          md={5}
+          sx={{ display: { xs: "none", sm: "flex" } }}
+        >
           <Box sx={{ borderRadius: 1, boxShadow: 1 }}>
             <img src="HelpPic4.jpg"></img>
           </Box>
@@ -428,7 +495,7 @@ const HelpPageContent = () => {
       </Grid>
 
       <Grid container alignItems="center" sx={{ mt: "8vh" }}>
-        <Grid item md={7} sx={{ pr: "5vw" }}>
+        <Grid item xs={12} xl={7} sx={{ pr: "5vw" }}>
           <Typography variant="h5">
             If you don't see the tag you're looking for, click the{" "}
             <Button variant="contained" color="secondary">
@@ -442,7 +509,17 @@ const HelpPageContent = () => {
             menu for you to use.
           </Typography>
         </Grid>
-        <Grid item container md={5}>
+        <Grid
+          item
+          container
+          justifyContent="center"
+          xs={12}
+          xl={5}
+          sx={{
+            mt: ["2vh", null, null, "2vh"],
+            display: { xs: "none", sm: "flex" },
+          }}
+        >
           <Box sx={{ borderRadius: 1, boxShadow: 1 }}>
             <img src="HelpPic5.jpg"></img>
           </Box>

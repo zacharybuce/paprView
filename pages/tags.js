@@ -1,12 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Box, CircularProgress, Grid, Divider } from "@mui/material";
 import Document from "../components/Document";
 import TagHeader from "../components/TagHeader";
 import { styled } from "@mui/material/styles";
@@ -16,17 +10,26 @@ import TagSearch from "../components/TagSearch";
 import TagSearchRefinement from "../components/TagSearchRefinement";
 
 const ResultsContainer = styled("div")(({ theme }) => ({
-  marginTop: "10vh",
-  //marginRight: "10vw",
-  //marginLeft: "10vw",
   marginBottom: "7vh",
-  [theme.breakpoints.up("xl")]: {
+  [theme.breakpoints.up("xs")]: {
+    marginTop: "10vh",
+    marginRight: "3vw",
+    marginLeft: "3vw",
+  },
+  [theme.breakpoints.up("sm")]: {
+    marginRight: "10vw",
+    marginLeft: "10vw",
+  },
+  [theme.breakpoints.up("md")]: { marginTop: "12vh" },
+  [theme.breakpoints.up("lg")]: {
+    marginTop: "15vh",
     marginRight: "15vw",
     marginLeft: "22vw",
   },
-  [theme.breakpoints.down("sm")]: {
-    marginRight: "3vw",
-    marginLeft: "3vw",
+  [theme.breakpoints.up("xl")]: {
+    marginTop: "10vh",
+    marginRight: "15vw",
+    marginLeft: "22vw",
   },
 }));
 
@@ -110,7 +113,6 @@ const tags = ({ tags }) => {
           <WhatIsContainer>
             <WhatIsPaprView />
           </WhatIsContainer>
-
           <WhatIsContainer>
             <TopUsers />
           </WhatIsContainer>

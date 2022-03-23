@@ -23,7 +23,10 @@ const SearchResultsHeader = (props) => {
       <Grid container>
         <Grid item xs={12} sm={8}>
           <Box sx={{ mb: "2vh" }}>
-            <Typography sx={{ fontSize: [15, 20, 20, 20, 20] }}>
+            <Typography
+              data-testid="search-query"
+              sx={{ fontSize: [15, 20, 20, 20, 20] }}
+            >
               Showing results for "{props.query}"
             </Typography>
           </Box>
@@ -33,7 +36,11 @@ const SearchResultsHeader = (props) => {
             {session ? (
               <NextLink prefetch={false} href="/articlecform" passHref>
                 <Link style={{ textDecoration: "none" }}>
-                  <Button color="secondary" variant="contained">
+                  <Button
+                    data-testid="add-a-paper-bttn"
+                    color="secondary"
+                    variant="contained"
+                  >
                     Add a Paper
                   </Button>
                 </Link>
@@ -41,6 +48,7 @@ const SearchResultsHeader = (props) => {
             ) : (
               <Button
                 onClick={() => setOpen(true)}
+                data-testid="sign-in-dialog"
                 color="secondary"
                 variant="contained"
               >
@@ -52,7 +60,9 @@ const SearchResultsHeader = (props) => {
       </Grid>
       <Grid container>
         <Grid item xs={12} sm={6} sx={{ display: { xs: "none", sm: "block" } }}>
-          <ResultsAmount>{props.results} results</ResultsAmount>
+          <ResultsAmount data-testid="search-results-amount">
+            {props.results} results
+          </ResultsAmount>
         </Grid>
         <Grid item xs={12} sm={6} sx={{ mb: "1vh", mt: "1vh" }}>
           <Grid container justifyContent="flex-end">

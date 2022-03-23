@@ -22,7 +22,7 @@ const DisciplineTagIcon = (props) => {
   if (props.withText) {
     return (
       <Box>
-        <Typography>
+        <Typography data-testid="tag-icon-text">
           {setIcon(props.disciplineName)}
           {" " + props.disciplineName}
         </Typography>
@@ -30,7 +30,9 @@ const DisciplineTagIcon = (props) => {
     );
   }
 
-  return <Box>{setIcon(props.disciplineName)}</Box>;
+  return (
+    <Box data-testid="tag-icon-no-text">{setIcon(props.disciplineName)}</Box>
+  );
 };
 
 export default DisciplineTagIcon;
