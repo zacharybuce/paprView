@@ -85,11 +85,7 @@ const Vote = (props) => {
   };
 
   const sendVotes = async () => {
-    console.log(realVote.current);
-    console.log(realUpVote.current);
-    console.log(realDownVote.current);
     const req = configReq();
-    console.log(req);
     const resSum = await fetch("/api/summaries/" + props.summaryId, {
       method: "PUT",
       headers: {
@@ -98,10 +94,7 @@ const Vote = (props) => {
       },
       body: JSON.stringify(req),
     });
-
     const sumData = await resSum.json();
-
-    console.log(sumData);
 
     const resUser = await fetch("/api/users/" + session.user._id, {
       method: "PUT",
@@ -118,8 +111,6 @@ const Vote = (props) => {
       }),
     });
     const userData = await resUser.json();
-
-    console.log(userData);
   };
 
   const configReq = () => {
