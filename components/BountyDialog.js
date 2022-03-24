@@ -39,11 +39,6 @@ const BountyDialog = (props) => {
 
   const handleInputChange = (event) => {
     setValue(event.target.value === "" ? "" : Number(event.target.value));
-    // setValue(
-    //   event.target.value === ""
-    //     ? ""
-    //     : Number(event.target.value) - (Number(event.target.value) % 10)
-    // );
   };
 
   const handleBlur = () => {

@@ -173,17 +173,6 @@ export async function getServerSideProps(context) {
       "public, s-maxage=60, stale-while-revalidate=79"
     );
 
-    // const res = await fetch(
-    //   process.env.NEXT_PUBLIC_ROOT_URL + "/api/search/" + context.query.s,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // );
-    // const data = await res.json()
     const documents = await getDocs(context.query.s);
     return {
       props: {
